@@ -44,7 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
   static const Color colorFlameBlue = Color(0xFF188ACE);
 
   // Delivery Location
-  String _deliveryLocation = 'عمان، عبدون الشمالي';
+  String? _customDeliveryLocation;
+  String get _deliveryLocation =>
+      _customDeliveryLocation ??
+      AppLanguage.tr(ar: 'عمان، عبدون الشمالي', en: 'Amman, North Abdoun');
 
   // Order State
   int _gasQuantity = 1;
@@ -98,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'تمت إضافة المنتج إلى طلبك',
+          AppLanguage.tr(
+            ar: 'تمت إضافة المنتج إلى طلبك',
+            en: 'Product added to your order',
+          ),
           style: GoogleFonts.ibmPlexSansArabic(fontSize: 14, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
@@ -116,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           decoration: const BoxDecoration(
             color: colorSurfaceLowest,
@@ -150,7 +156,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'تم استلام طلبك بنجاح!',
+                AppLanguage.tr(
+                  ar: 'تم استلام طلبك بنجاح!',
+                  en: 'Order Received Successfully!',
+                ),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -159,7 +168,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'تم تأكيد طلبك لـ $_gasQuantity أسطوانة غاز بإجمالي ${_totalPrice.toStringAsFixed(2)} د.أ.\nالكابتن أحمد في طريقه لتوصيل طلبك خلال 20 دقيقة.',
+                AppLanguage.tr(
+                  ar: 'تم تأكيد طلبك لـ $_gasQuantity أسطوانة غاز بإجمالي ${_totalPrice.toStringAsFixed(2)} د.أ.\nالكابتن أحمد في طريقه لتوصيل طلبك خلال 20 دقيقة.',
+                  en: 'Your order for $_gasQuantity cylinder(s) totaling ${_totalPrice.toStringAsFixed(2)} JOD is confirmed.\nCaptain Ahmad is on his way within 20 mins.',
+                ),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 14,
@@ -184,7 +196,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   child: Text(
-                    'متابعة حالة التوصيل',
+                    AppLanguage.tr(
+                      ar: 'متابعة حالة التوصيل',
+                      en: 'Track Delivery Status',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -206,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           decoration: const BoxDecoration(
             color: colorSurfaceLowest,
@@ -232,7 +247,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'تتبع الشحنة المباشر',
+                    AppLanguage.tr(
+                      ar: 'تتبع الشحنة المباشر',
+                      en: 'Live Shipment Tracking',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -246,7 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      'وصول خلال 12 دقيقة',
+                      AppLanguage.tr(
+                        ar: 'وصول خلال 12 دقيقة',
+                        en: 'Arriving in 12 mins',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -798,7 +819,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                   if (newLocation != null && newLocation.isNotEmpty && mounted) {
                     setState(() {
-                      _deliveryLocation = newLocation;
+                      _customDeliveryLocation = newLocation;
                     });
                   }
                 },
@@ -856,7 +877,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'المنطقة نشطة الآن',
+                    AppLanguage.tr(
+                      ar: 'المنطقة نشطة الآن',
+                      en: 'Zone Active Now',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -884,7 +908,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'عمّان والزرقاء',
+                      AppLanguage.tr(
+                        ar: 'عمّان والزرقاء',
+                        en: 'Amman & Zarqa',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -909,14 +936,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'زمن الوصول التقديري: ',
+                    AppLanguage.tr(
+                      ar: 'زمن الوصول التقديري: ',
+                      en: 'Estimated Arrival: ',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       color: colorOnSurfaceVariant,
                     ),
                   ),
                   Text(
-                    '20 - 35 دقيقة',
+                    AppLanguage.tr(
+                      ar: '20 - 35 دقيقة',
+                      en: '20 - 35 mins',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -934,7 +967,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'معتمد رسمياً',
+                    AppLanguage.tr(
+                      ar: 'معتمد رسمياً',
+                      en: 'Officially Certified',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       color: colorOnSurfaceVariant,
@@ -1010,7 +1046,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          'طلبك قيد التوصيل الآن',
+                          AppLanguage.tr(
+                            ar: 'طلبك قيد التوصيل الآن',
+                            en: 'Your order is on the way',
+                          ),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -1030,7 +1069,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'الكابتن أحمد في الطريق إليك (وصول خلال 12 دقيقة)',
+                      AppLanguage.tr(
+                        ar: 'الكابتن أحمد في الطريق إليك (وصول خلال 12 دقيقة)',
+                        en: 'Captain Ahmad is on the way (arrives in 12 mins)',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         color: colorPrimaryFixedDim,
@@ -1053,7 +1095,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   minimumSize: const Size(0, 38),
                 ),
                 child: Text(
-                  'تتبع الطلب',
+                  AppLanguage.tr(ar: 'تتبع الطلب', en: 'Track Order'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
@@ -1085,7 +1127,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'ماذا تحتاج اليوم؟',
+                  AppLanguage.tr(
+                    ar: 'ماذا تحتاج اليوم؟',
+                    en: 'What do you need today?',
+                  ),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -1101,7 +1146,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                'السعر مسعر حكومياً',
+                AppLanguage.tr(
+                  ar: 'السعر مسعر حكومياً',
+                  en: 'Regulated Price',
+                ),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
@@ -1148,7 +1196,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'توصيل فوري لباب المنزل أو الشقة',
+                          AppLanguage.tr(
+                            ar: 'توصيل فوري لباب المنزل أو الشقة',
+                            en: 'Instant Delivery to Doorstep',
+                          ),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
@@ -1159,7 +1210,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Text(
-                    'غاز مسال نقي',
+                    AppLanguage.tr(
+                      ar: 'غاز مسال نقي',
+                      en: 'Pure LPG Gas',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       color: colorOnSurfaceVariant,
@@ -1193,7 +1247,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 children: [
                                   Text(
-                                    'اسطوانة غاز منزلي',
+                                    AppLanguage.tr(
+                                      ar: 'اسطوانة غاز منزلي',
+                                      en: 'Domestic Gas Cylinder',
+                                    ),
                                     style: GoogleFonts.ibmPlexSansArabic(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
@@ -1211,7 +1268,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'الوزن القياسي: 12.5 كغ • اضغط للتفاصيل',
+                                AppLanguage.tr(
+                                  ar: 'الوزن القياسي: 12.5 كغ • اضغط للتفاصيل',
+                                  en: 'Standard: 12.5 kg • Tap for details',
+                                ),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 12,
                                   color: colorSecondary,
@@ -1236,7 +1296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'د.أ',
+                              AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -1245,7 +1305,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              '+ 1.50 د.أ توصيل',
+                              AppLanguage.tr(
+                                ar: '+ 1.50 د.أ توصيل',
+                                en: '+ 1.50 JOD delivery',
+                              ),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 12,
                                 color: colorOnSurfaceVariant,
@@ -1302,7 +1365,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'يتم فحص وتأمين الأسطوانة والختم الحراري عند الاستلام لحمايتكم.',
+                        AppLanguage.tr(
+                          ar: 'يتم فحص وتأمين الأسطوانة والختم الحراري عند الاستلام لحمايتكم.',
+                          en: 'Cylinder safety seal & valve are inspected upon delivery for your safety.',
+                        ),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 12,
                           color: colorOnSurface,
@@ -1380,7 +1446,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              'اطلب الغاز الآن',
+                              AppLanguage.tr(
+                                ar: 'اطلب الغاز الآن',
+                                en: 'Order Gas Now',
+                              ),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -1389,7 +1458,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              '(${((_gasQuantity * _gasUnitPrice) + _deliveryFee).toStringAsFixed(2)} د.أ)',
+                              '(${((_gasQuantity * _gasUnitPrice) + _deliveryFee).toStringAsFixed(2)} ${AppLanguage.tr(ar: 'د.أ', en: 'JOD')})',
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -1542,7 +1611,10 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'الدفع نقداً عند الاستلام فقط',
+                  AppLanguage.tr(
+                    ar: 'الدفع نقداً عند الاستلام فقط',
+                    en: 'Cash on Delivery Only',
+                  ),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -1551,7 +1623,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'خدمتكم بأمان واحترافية في كافة أحياء عمّان ومحافظة الزرقاء. ادفع بعد معاينة الأسطوانة.',
+                  AppLanguage.tr(
+                    ar: 'خدمتكم بأمان واحترافية في كافة أحياء عمّان ومحافظة الزرقاء. ادفع بعد معاينة الأسطوانة.',
+                    en: 'Safe & professional service across Amman and Zarqa. Pay after inspecting the cylinder.',
+                  ),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     height: 1.4,
@@ -1570,33 +1645,45 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildAccessoriesSection() {
     final List<Map<String, dynamic>> accessories = [
       {
-        'title': 'ساعة غاز إيطالي (منظم ضغط عالي الأمان)',
-        'price': '8.50 د.أ',
-        'badge': 'أمان عالي',
+        'title': AppLanguage.tr(
+          ar: 'ساعة غاز إيطالي (منظم ضغط عالي الأمان)',
+          en: 'Italian Gas Regulator (High Safety Pressure)',
+        ),
+        'price': AppLanguage.tr(ar: '8.50 د.أ', en: '8.50 JOD'),
+        'badge': AppLanguage.tr(ar: 'أمان عالي', en: 'High Safety'),
         'imageUrl':
             'https://lh3.googleusercontent.com/aida-public/AB6AXuDP-Dx0IcOHsreYq8eiNbjOM8PKzjtX-GIjWNmFSbHDbOQ7ADvMZvRQXjnvRW9hUUovsdYdWPlBOp6Xf3Gs92FUqQNVZojcqr6Phm4ZOvwg-R4GJucuxfB9dJ8TkZP0US2kzVPQovAHioy0Nwh1EKA19SbW2FKWN6zLsgxA3yFNVNgtcggBIaTvuS_Glie7fL4-tR_FQUJSvn6QgB3NCTYM73rP0n4UVFS_UwkbponMr-U5nG-1os7OkQ',
         'isService': false,
       },
       {
-        'title': 'بربيش غاز مقوى مع مرابط نحاسية',
-        'price': '3.50 د.أ',
-        'badge': '2 متر',
+        'title': AppLanguage.tr(
+          ar: 'بربيش غاز مقوى مع مرابط نحاسية',
+          en: 'Reinforced Gas Hose with Brass Clamps',
+        ),
+        'price': AppLanguage.tr(ar: '3.50 د.أ', en: '3.50 JOD'),
+        'badge': AppLanguage.tr(ar: '2 متر', en: '2 Meters'),
         'imageUrl':
             'https://lh3.googleusercontent.com/aida-public/AB6AXuB2ATd8HPEC1cCG3IyYH6zCwa87Cj5-SNQyqA1L0ViTRGrV3hugqGnmJFV_5zZ49cpb-_kOTQt7dPzyEDEA-Ue2DHPO9ELLLSp7rjnRjIyaWGs_YBF4-1siT49QQazUEj_sKOV9CwXhVFwY6zIaDhKUKXRAscQoTVD1ODCIIxwHWks4aQtWK59LDiJMEnmq9xPktz5ItxttdL1miuVRPdei1dNReBK933ZdPzKvSNjxI7RwEwRvoM3xvA',
         'isService': false,
       },
       {
-        'title': 'مفتاح أسطوانة أوتوماتيكي ذكي',
-        'price': '2.00 د.أ',
-        'badge': 'عملي',
+        'title': AppLanguage.tr(
+          ar: 'مفتاح أسطوانة أوتوماتيكي ذكي',
+          en: 'Smart Auto Cylinder Wrench',
+        ),
+        'price': AppLanguage.tr(ar: '2.00 د.أ', en: '2.00 JOD'),
+        'badge': AppLanguage.tr(ar: 'عملي', en: 'Practical'),
         'imageUrl':
             'https://lh3.googleusercontent.com/aida-public/AB6AXuA5MX03V-XwCQUgLfS3RS5790XmbXM5PPJpZsUB8H_AUzkE8doTKWbiN7WJiTTJHmtiRxmqTSlwla77WoPZKcxTe5CbtwLRjhHFYqfI8O6xShimghJvAINn59nTAOkz9cy1v7CmFo-lE4ki3HGJfaaWSUpF9xQ3qxho46p-T7qJBG6iPjVRKukVAnsddytnxzy2qx2ipSxaFN32XmLJAUtDxyG2xpZNiIA8Wj3m6-AGEGnMT30_Q-64Yg',
         'isService': false,
       },
       {
-        'title': 'فحص تسريب وتركيب مع الكابتن',
-        'price': '0.00 د.أ',
-        'badge': 'خدمة مجانية',
+        'title': AppLanguage.tr(
+          ar: 'فحص تسريب وتركيب مع الكابتن',
+          en: 'Leak Inspection & Installation with Driver',
+        ),
+        'price': AppLanguage.tr(ar: '0.00 د.أ', en: '0.00 JOD'),
+        'badge': AppLanguage.tr(ar: 'خدمة مجانية', en: 'Free Service'),
         'imageUrl': '',
         'isService': true,
       },
@@ -1617,7 +1704,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'ملحقات وإكسسوارات الغاز',
+                  AppLanguage.tr(
+                    ar: 'ملحقات وإكسسوارات الغاز',
+                    en: 'Gas Accessories & Equipment',
+                  ),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -1640,7 +1730,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'عرض المتجر بالكامل',
+                    AppLanguage.tr(
+                      ar: 'عرض المتجر بالكامل',
+                      en: 'View Full Store',
+                    ),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w700,
@@ -1648,8 +1741,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(width: 4),
-                  const Icon(
-                    Icons.arrow_back_rounded,
+                  Icon(
+                    AppLanguage.forwardIcon,
                     size: 14,
                     color: colorSecondary,
                   ),
@@ -1716,7 +1809,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'خدمة مجانية',
+                                  AppLanguage.tr(
+                                    ar: 'خدمة مجانية',
+                                    en: 'Free Service',
+                                  ),
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w700,
@@ -1747,7 +1843,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (item['badge'] != null && item['isService'] != true)
                           Positioned(
                             top: 6,
-                            right: 6,
+                            right: AppLanguage.isArabic ? 6 : null,
+                            left: AppLanguage.isEnglish ? 6 : null,
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
@@ -1807,7 +1904,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              isSelected ? 'محدد' : 'تحديد',
+                              isSelected
+                                  ? AppLanguage.tr(ar: 'محدد', en: 'Selected')
+                                  : AppLanguage.tr(ar: 'تحديد', en: 'Select'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w600,
@@ -1861,7 +1960,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'طلباتك السابقة',
+                  AppLanguage.tr(
+                    ar: 'طلباتك السابقة',
+                    en: 'Past Orders',
+                  ),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -1880,7 +1982,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               child: Text(
-                'عرض الكل',
+                AppLanguage.tr(
+                  ar: 'عرض الكل',
+                  en: 'View All',
+                ),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -1927,7 +2032,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          'طلب #84920',
+                          AppLanguage.tr(
+                            ar: 'طلب #84920',
+                            en: 'Order #84920',
+                          ),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -1935,7 +2043,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          ' • 1 أسطوانة',
+                          AppLanguage.tr(
+                            ar: ' • 1 أسطوانة',
+                            en: ' • 1 Cylinder',
+                          ),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 12,
                             color: colorOnSurfaceVariant,
@@ -1945,7 +2056,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'تم التسليم قبل 3 أسابيع (خلدا)',
+                      AppLanguage.tr(
+                        ar: 'تم التسليم قبل 3 أسابيع (خلدا)',
+                        en: 'Delivered 3 weeks ago (Khalda)',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -1953,7 +2067,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'الإجمالي: 8.50 د.أ',
+                      AppLanguage.tr(
+                        ar: 'الإجمالي: 8.50 د.أ',
+                        en: 'Total: 8.50 JOD',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -1982,7 +2099,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 icon: const Icon(Icons.replay, size: 16),
                 label: Text(
-                  'إعادة الطلب',
+                  AppLanguage.tr(
+                    ar: 'إعادة الطلب',
+                    en: 'Reorder',
+                  ),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,

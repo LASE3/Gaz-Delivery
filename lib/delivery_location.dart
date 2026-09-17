@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'cart_and_checkout.dart';
+import 'app_language.dart';
 
 class DeliveryLocationScreen extends StatefulWidget {
   final String? initialStreet;
@@ -51,7 +52,14 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
   late final TextEditingController _apartmentController;
   late final TextEditingController _driverNotesController;
 
-  String _currentAreaName = 'تلاع العلي - قرب دوار الواحة';
+  String? _customAreaName;
+  String get _currentAreaName =>
+      _customAreaName ??
+      AppLanguage.tr(
+        ar: 'تلاع العلي - قرب دوار الواحة',
+        en: 'Tlaa Al-Ali - Near Al-Waha Circle',
+      );
+  set _currentAreaName(String val) => _customAreaName = val;
 
   @override
   void initState() {
@@ -59,19 +67,28 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
     _selectedCity = widget.initialCity ?? 'amman';
     _streetController = TextEditingController(
       text: widget.initialStreet ??
-          'شارع وصفي التل (الجاردنز) - خلف مجمع جبر',
+          AppLanguage.tr(
+            ar: 'شارع وصفي التل (الجاردنز) - خلف مجمع جبر',
+            en: 'Wasfi Al-Tal St. (Gardens) - Behind Jibr Complex',
+          ),
     );
     _buildingController = TextEditingController(
-      text: widget.initialBuilding ?? 'بناء 42',
+      text: widget.initialBuilding ??
+          AppLanguage.tr(ar: 'بناء 42', en: 'Building 42'),
     );
     _floorController = TextEditingController(
-      text: widget.initialFloor ?? 'الطابق 3',
+      text: widget.initialFloor ??
+          AppLanguage.tr(ar: 'الطابق 3', en: 'Floor 3'),
     );
     _apartmentController = TextEditingController(
-      text: widget.initialApartment ?? 'شقة 6',
+      text: widget.initialApartment ??
+          AppLanguage.tr(ar: 'شقة 6', en: 'Apt 6'),
     );
     _driverNotesController = TextEditingController(
-      text: 'المصعد يعمل، يرجى قرع الجرس وتفقد مفتاح الأمان للأسطوانة...',
+      text: AppLanguage.tr(
+        ar: 'المصعد يعمل، يرجى قرع الجرس وتفقد مفتاح الأمان للأسطوانة...',
+        en: 'Elevator works, please ring bell and inspect valve safety...',
+      ),
     );
   }
 
@@ -87,14 +104,20 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
 
   void _onGpsPressed() {
     setState(() {
-      _currentAreaName = 'عبدون الشمالي - قرب السفارة';
-      _streetController.text = 'شارع دمشق - عبدون الشمالي';
+      _currentAreaName = AppLanguage.tr(
+        ar: 'عبدون الشمالي - قرب السفارة',
+        en: 'North Abdoun - Near Embassy',
+      );
+      _streetController.text = AppLanguage.tr(
+        ar: 'شارع دمشق - عبدون الشمالي',
+        en: 'Damascus St. - North Abdoun',
+      );
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'تم تحديد موقعك الحالي عبر الـ GPS بنجاح',
+          AppLanguage.tr(ar: 'تم تحديد موقعك الحالي عبر الـ GPS بنجاح', en: 'Current location identified via GPS successfully'),
           style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
           textAlign: TextAlign.center,
         ),
@@ -108,7 +131,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
 
   void _onConfirmLocation() {
     final String fullAddress =
-        '${_selectedCity == 'amman' ? 'عمّان' : 'الزرقاء'}، ${_streetController.text.trim()}، ${_buildingController.text.trim()}، ${_floorController.text.trim()}، ${_apartmentController.text.trim()}';
+        '${_selectedCity == 'amman' ? AppLanguage.tr(ar: 'عمّان', en: 'Amman') : AppLanguage.tr(ar: 'الزرقاء', en: 'Zarqa')}، ${_streetController.text.trim()}، ${_buildingController.text.trim()}، ${_floorController.text.trim()}، ${_apartmentController.text.trim()}';
 
     // If popped from another screen expecting result
     if (Navigator.canPop(context)) {
@@ -126,9 +149,12 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         body: SafeArea(
           bottom: false,
@@ -170,6 +196,8 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
         ),
       ),
     );
+      },
+    );
   }
 
   // HEADER
@@ -198,12 +226,12 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                     Navigator.pop(context);
                   }
                 },
-                icon: const Icon(
-                  Icons.arrow_forward_rounded,
+                icon: Icon(
+                  AppLanguage.backIcon,
                   color: colorOnSurface,
                   size: 24,
                 ),
-                tooltip: 'رجوع',
+                tooltip: AppLanguage.tr(ar: 'رجوع', en: 'Back'),
               ),
               const SizedBox(width: 4),
               Container(
@@ -227,7 +255,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
               ),
               const SizedBox(width: 8),
               Text(
-                'تحديد موقع التوصيل',
+                AppLanguage.tr(ar: 'تحديد موقع التوصيل', en: 'Set Delivery Location'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -337,7 +365,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                               ),
                               const SizedBox(width: 6),
                               Text(
-                                'نطاق التغطية الفورية نشط',
+                                AppLanguage.tr(ar: 'نطاق التغطية الفورية نشط', en: 'Instant Coverage Active'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -392,7 +420,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'سيتم التوصيل إلى هنا',
+                                AppLanguage.tr(ar: 'سيتم التوصيل إلى هنا', en: 'Will deliver here'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -472,7 +500,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                             size: 18,
                           ),
                           label: Text(
-                            'موقعي الحالي',
+                            AppLanguage.tr(ar: 'موقعي الحالي', en: 'Current Location'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -513,7 +541,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'خدمة التوصيل متاحة في منطقتك',
+                          AppLanguage.tr(ar: 'خدمة التوصيل متاحة في منطقتك', en: 'Delivery available in your area'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -521,7 +549,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                           ),
                         ),
                         Text(
-                          'عمّان - تلاع العلي (متوسط الوصول: 18 - 25 دقيقة)',
+                          AppLanguage.tr(ar: 'عمّان - تلاع العلي (متوسط الوصول: 18 - 25 دقيقة)', en: 'Amman - Tlaa Al-Ali (Avg arrival: 18 - 25 mins)'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             color: colorOnSurfaceVariant,
@@ -566,7 +594,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'اختر المحافظة / المدينة',
+            AppLanguage.tr(ar: 'اختر المحافظة / المدينة', en: 'Select City / Governorate'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -609,7 +637,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                             : null,
                       ),
                       child: Text(
-                        'عمّان (العاصمة)',
+                        AppLanguage.tr(ar: 'عمّان (العاصمة)', en: 'Amman (Capital)'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 13,
@@ -652,7 +680,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                             : null,
                       ),
                       child: Text(
-                        'الزرقاء والرصيفة',
+                        AppLanguage.tr(ar: 'الزرقاء والرصيفة', en: 'Zarqa & Ruseifa'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 13,
@@ -678,10 +706,10 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
   // 3. BUILDING & APARTMENT DETAILS FORM CARD
   Widget _buildBuildingDetailsCard() {
     final List<Map<String, dynamic>> addressTypes = [
-      {'icon': Icons.home_rounded, 'label': 'المنزل'},
-      {'icon': Icons.apartment_rounded, 'label': 'العمل'},
-      {'icon': Icons.cottage_rounded, 'label': 'بيت العائلة'},
-      {'icon': Icons.location_on_rounded, 'label': 'أخرى'},
+      {'icon': Icons.home_rounded, 'label': AppLanguage.tr(ar: 'المنزل', en: 'Home')},
+      {'icon': Icons.apartment_rounded, 'label': AppLanguage.tr(ar: 'العمل', en: 'Work')},
+      {'icon': Icons.cottage_rounded, 'label': AppLanguage.tr(ar: 'بيت العائلة', en: 'Family Home')},
+      {'icon': Icons.location_on_rounded, 'label': AppLanguage.tr(ar: 'أخرى', en: 'Other')},
     ];
 
     return Container(
@@ -709,7 +737,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
               ),
               const SizedBox(width: 6),
               Text(
-                'تفاصيل البناء والشقة',
+                AppLanguage.tr(ar: 'تفاصيل البناء والشقة', en: 'Building & Apartment Details'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -722,7 +750,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
 
           // Street & Landmark
           Text(
-            'اسم الشارع أو المعلم القريب',
+            AppLanguage.tr(ar: 'اسم الشارع أو المعلم القريب', en: 'Street Name or Landmark'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -770,7 +798,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'رقم العمارة',
+                      AppLanguage.tr(ar: 'رقم العمارة', en: 'Building No.'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -807,7 +835,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'الطابق',
+                      AppLanguage.tr(ar: 'الطابق', en: 'Floor'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -844,7 +872,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'رقم الشقة',
+                      AppLanguage.tr(ar: 'رقم الشقة', en: 'Apartment No.'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -881,7 +909,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
 
           // Address Type Segment
           Text(
-            'تصنيف العنوان',
+            AppLanguage.tr(ar: 'تصنيف العنوان', en: 'Address Label'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -945,7 +973,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'ملاحظات دقيقة لكابتن الغاز',
+                AppLanguage.tr(ar: 'ملاحظات دقيقة لكابتن الغاز', en: 'Notes for Gas Driver'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -953,7 +981,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                 ),
               ),
               Text(
-                'مهم لسلامة الوصول',
+                AppLanguage.tr(ar: 'مهم لسلامة الوصول', en: 'Important for safe arrival'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -987,8 +1015,10 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                       color: colorOnSurface,
                     ),
                     decoration: InputDecoration(
-                      hintText:
-                          'المصعد يعمل، يرجى قرع الجرس وتفقد مفتاح الأمان للأسطوانة...',
+                      hintText: AppLanguage.tr(
+                        ar: 'المصعد يعمل، يرجى قرع الجرس وتفقد مفتاح الأمان للأسطوانة...',
+                        en: 'Elevator works, please ring bell and inspect valve safety...',
+                      ),
                       hintStyle: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOutline,
@@ -1037,7 +1067,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'الدفع نقداً عند استلام الأسطوانة',
+                    AppLanguage.tr(ar: 'الدفع نقداً عند استلام الأسطوانة', en: 'Cash on delivery upon receiving cylinder'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -1045,7 +1075,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
                     ),
                   ),
                   Text(
-                    'السعر الرسمي محدد من وزارة الطاقة الأردنية',
+                    AppLanguage.tr(ar: 'السعر الرسمي محدد من وزارة الطاقة الأردنية', en: 'Official price regulated by Jordan Ministry of Energy'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 11,
                       color: colorOnSurfaceVariant,
@@ -1085,7 +1115,7 @@ class _DeliveryLocationScreenState extends State<DeliveryLocationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'تأكيد الموقع ومتابعة الطلب',
+              AppLanguage.tr(ar: 'تأكيد الموقع ومتابعة الطلب', en: 'Confirm Location & Continue'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,

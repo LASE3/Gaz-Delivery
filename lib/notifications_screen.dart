@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'app_language.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'home_screen.dart';
@@ -43,7 +44,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
   // Active Category: 'all', 'orders', 'safety', 'updates'
   String _selectedCategory = 'all';
 
-  // Bottom Navigation Index: 2 = 'الإشعارات'
+  // Bottom Navigation Index: 2 = AppLanguage.tr(ar: 'الإشعارات', en: 'Notifications')
   final int _navIndex = 2;
 
   // Notification Data Items
@@ -60,36 +61,36 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       NotificationModel(
         id: '1',
         category: 'orders',
-        tag: 'تحديث مباشر للرحلة',
-        time: 'قبل 4 دقائق',
-        title: 'الكابتن أحمد الخوالدة على وشك الوصول!',
+        tag: AppLanguage.tr(ar: 'تحديث مباشر للرحلة', en: 'Trip Live Update'),
+        time: AppLanguage.tr(ar: 'قبل 4 دقائق', en: '4 mins ago'),
+        title: AppLanguage.tr(ar: 'الكابتن أحمد الخوالدة على وشك الوصول!', en: 'Driver Ahmad Al-Khawaldeh is arriving!'),
         description:
-            'يبعد الشاحن 300 متر فقط عن موقعك (عمارة 42 - شارع وصفي التل). يرجى تجهيز الأسطوانة الفارغة والمبلغ نقداً.',
+            AppLanguage.tr(ar: 'يبعد الشاحن 300 متر فقط عن موقعك (عمارة 42 - شارع وصفي التل). يرجى تجهيز الأسطوانة الفارغة والمبلغ نقداً.', en: 'Driver is only 300m away (Bldg 42 - Wasfi Al-Tal St). Please prepare empty cylinder and cash.'),
         isUnread: true,
         isUrgentLive: true,
-        amountDue: '17.00 د.أ',
+        amountDue: AppLanguage.tr(ar: '17.00 د.أ', en: '17.00 JOD'),
         driverPhone: '0790000000',
         icon: Icons.directions_car_rounded,
       ),
       NotificationModel(
         id: '2',
         category: 'orders',
-        tag: 'حالة الطلب',
-        time: 'قبل 18 دقيقة',
-        title: 'تم تعيين سائق لطلبك #84935',
+        tag: AppLanguage.tr(ar: 'حالة الطلب', en: 'Order Status'),
+        time: AppLanguage.tr(ar: 'قبل 18 دقيقة', en: '18 mins ago'),
+        title: AppLanguage.tr(ar: 'تم تعيين سائق لطلبك #84935', en: 'Driver assigned to order #84935'),
         description:
-            'استلم الكابتن أحمد طلبك من المحطة المركزية، ومعه أسطوانة جديدة ومختومة بالليزر مع منظم غاز إيطالي حسب طلبك.',
+            AppLanguage.tr(ar: 'استلم الكابتن أحمد طلبك من المحطة المركزية، ومعه أسطوانة جديدة ومختومة بالليزر مع منظم غاز إيطالي حسب طلبك.', en: 'Driver Ahmad picked up your order with a laser-sealed cylinder and Italian regulator as requested.'),
         isUnread: true,
         icon: Icons.assignment_turned_in_rounded,
       ),
       NotificationModel(
         id: '3',
         category: 'updates',
-        tag: 'بلاغ رسمي',
-        time: 'أمس',
-        title: 'اعتماد التسعيرة الشهرية الرسمية لأسطوانة الغاز',
+        tag: AppLanguage.tr(ar: 'بلاغ رسمي', en: 'Official Notice'),
+        time: AppLanguage.tr(ar: 'أمس', en: 'Yesterday'),
+        title: AppLanguage.tr(ar: 'اعتماد التسعيرة الشهرية الرسمية لأسطوانة الغاز', en: 'Official monthly gas cylinder tariff approved'),
         description:
-            'أعلنت هيئة تنظيم قطاع الطاقة والمعادن الأردنية ثبات سعر بيع أسطوانة الغاز المنزلي (12.5 كغ) عند 7.00 دنانير للمستهلك دون تغيير.',
+            AppLanguage.tr(ar: 'أعلنت هيئة تنظيم قطاع الطاقة والمعادن الأردنية ثبات سعر بيع أسطوانة الغاز المنزلي (12.5 كغ) عند 7.00 دنانير للمستهلك دون تغيير.', en: 'Jordan EMRC confirmed the household gas cylinder price (12.5 kg) remains at 7.00 JOD without change.'),
         isUnread: true,
         isOfficial: true,
         icon: Icons.verified_rounded,
@@ -97,11 +98,11 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       NotificationModel(
         id: '4',
         category: 'orders',
-        tag: 'منجز',
-        time: 'قبل 3 أسابيع',
-        title: 'تم تسليم طلبك #84920 بنجاح',
+        tag: AppLanguage.tr(ar: 'منجز', en: 'Completed'),
+        time: AppLanguage.tr(ar: 'قبل 3 أسابيع', en: '3 weeks ago'),
+        title: AppLanguage.tr(ar: 'تم تسليم طلبك #84920 بنجاح', en: 'Order #84920 delivered successfully'),
         description:
-            'نشكرك لاختيارك تطبيق غاز الأردن. تم تركيب الأسطوانة وفحص صمام الأمان مجاناً بفقاعات الصابون لضمان سلامة عائلتك.',
+            AppLanguage.tr(ar: 'نشكرك لاختيارك تطبيق غاز الأردن. تم تركيب الأسطوانة وفحص صمام الأمان مجاناً بفقاعات الصابون لضمان سلامة عائلتك.', en: 'Thank you for choosing Jordan Gas. Cylinder installed and valve tested free for family safety.'),
         isUnread: false,
         hasInvoiceAction: true,
         icon: Icons.task_alt_rounded,
@@ -109,11 +110,11 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       NotificationModel(
         id: '5',
         category: 'safety',
-        tag: 'إرشادات السلامة العامة',
-        time: 'قبل شهر',
-        title: 'نصيحة أمان منزلية: سلامة خرطوم الغاز (البربيش)',
+        tag: AppLanguage.tr(ar: 'إرشادات السلامة العامة', en: 'General Safety Guide'),
+        time: AppLanguage.tr(ar: 'قبل شهر', en: '1 month ago'),
+        title: AppLanguage.tr(ar: 'نصيحة أمان منزلية: سلامة خرطوم الغاز (البربيش)', en: 'Home safety tip: Gas hose maintenance'),
         description:
-            'احرص دائماً على فحص خرطوم التوصيل والتأكد من مرونته وعدم وجود تشققات، مع ضرورة استبداله كل سنتين على الأكثر واستخدام المرابط المعدنية الأصلية فقط.',
+            AppLanguage.tr(ar: 'احرص دائماً على فحص خرطوم التوصيل والتأكد من مرونته وعدم وجود تشققات، مع ضرورة استبداله كل سنتين على الأكثر واستخدام المرابط المعدنية الأصلية فقط.', en: 'Always inspect the gas hose for cracks, replace every 2 years, and use authentic metal clamps.'),
         isUnread: false,
         isSafetyTip: true,
         imageUrl:
@@ -144,7 +145,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'تم تحديد جميع الإشعارات كمقروءة',
+          AppLanguage.tr(ar: 'تم تحديد جميع الإشعارات كمقروءة', en: 'All notifications marked as read'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 13,
             fontWeight: FontWeight.w600,
@@ -166,30 +167,35 @@ class _NotificationsScreenState extends State<NotificationsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: colorSurface,
-        appBar: _buildTopAppBar(),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildHeaderBar(),
-              const SizedBox(height: 14),
-              _buildFilterPills(),
-              const SizedBox(height: 16),
-              _buildNotificationsFeed(),
-              const SizedBox(height: 24),
-              _buildEndOfStreamIndicator(),
-              const SizedBox(height: 80), // Space for bottom nav
-            ],
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
+            backgroundColor: colorSurface,
+            appBar: _buildTopAppBar(),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildHeaderBar(),
+                  const SizedBox(height: 14),
+                  _buildFilterPills(),
+                  const SizedBox(height: 16),
+                  _buildNotificationsFeed(),
+                  const SizedBox(height: 24),
+                  _buildEndOfStreamIndicator(),
+                  const SizedBox(height: 80), // Space for bottom nav
+                ],
+              ),
+            ),
+            bottomNavigationBar: _buildBottomNav(),
           ),
-        ),
-        bottomNavigationBar: _buildBottomNav(),
-      ),
+        );
+      },
     );
   }
 
@@ -228,7 +234,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'الإشعارات والتنبيهات',
+                AppLanguage.tr(ar: 'الإشعارات والتنبيهات', en: 'Notifications & Alerts'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -329,7 +335,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         Row(
           children: [
             Text(
-              'الإشعارات',
+              AppLanguage.tr(ar: 'الإشعارات', en: 'Notifications'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
@@ -356,7 +362,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                     : null,
               ),
               child: Text(
-                unread > 0 ? '$unread غير مقروءة' : '0 غير مقروءة',
+                unread > 0 ? AppLanguage.tr(ar: '$unread غير مقروءة', en: '$unread unread') : AppLanguage.tr(ar: '0 غير مقروءة', en: '0 unread'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
@@ -382,7 +388,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'تحديد الكل كمقروء',
+                  AppLanguage.tr(ar: 'تحديد الكل كمقروء', en: 'Mark all as read'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12.5,
                     fontWeight: FontWeight.w600,
@@ -410,25 +416,25 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         children: [
           _buildFilterPill(
             id: 'all',
-            label: 'الكل',
+            label: AppLanguage.tr(ar: 'الكل', en: 'All'),
             hasDot: true,
           ),
           const SizedBox(width: 8),
           _buildFilterPill(
             id: 'orders',
-            label: 'حالة الطلب',
+            label: AppLanguage.tr(ar: 'حالة الطلب', en: 'Order Status'),
             icon: Icons.local_shipping_rounded,
           ),
           const SizedBox(width: 8),
           _buildFilterPill(
             id: 'safety',
-            label: 'تنبيهات الأمان',
+            label: AppLanguage.tr(ar: 'تنبيهات الأمان', en: 'Safety Alerts'),
             icon: Icons.health_and_safety_rounded,
           ),
           const SizedBox(width: 8),
           _buildFilterPill(
             id: 'updates',
-            label: 'عروض وتحديثات',
+            label: AppLanguage.tr(ar: 'عروض وتحديثات', en: 'Offers & News'),
             icon: Icons.campaign_rounded,
           ),
         ],
@@ -526,7 +532,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
             ),
             const SizedBox(height: 12),
             Text(
-              'لا توجد إشعارات في هذا التصنيف حالياً',
+              AppLanguage.tr(ar: 'لا توجد إشعارات في هذا التصنيف حالياً', en: 'No notifications in this category currently'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -710,10 +716,10 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                           height: 1.5,
                           color: colorOnSurfaceVariant,
                         ),
-                        children: const [
-                          TextSpan(text: 'يبعد الشاحن '),
+                        children: [
+                          TextSpan(text: AppLanguage.tr(ar: 'يبعد الشاحن ', en: 'Driver is ')),
                           TextSpan(
-                            text: '300 متر',
+                            text: AppLanguage.tr(ar: '300 متر', en: '300 meters away'),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: colorOnSurface,
@@ -721,7 +727,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                           ),
                           TextSpan(
                             text:
-                                ' فقط عن موقعك (عمارة 42 - شارع وصفي التل). يرجى تجهيز الأسطوانة الفارغة والمبلغ نقداً.',
+                                AppLanguage.tr(ar: ' فقط عن موقعك (عمارة 42 - شارع وصفي التل). يرجى تجهيز الأسطوانة الفارغة والمبلغ نقداً.', en: ' from your location (Building 42 - Wasfi Al-Tal St). Please prepare empty cylinder and cash.'),
                           ),
                         ],
                       ),
@@ -752,7 +758,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              'المبلغ الإجمالي المستحق:',
+                              AppLanguage.tr(ar: 'المبلغ الإجمالي المستحق:', en: 'Total Amount Due:'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -762,7 +768,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                           ],
                         ),
                         Text(
-                          item.amountDue ?? '17.00 د.أ',
+                          item.amountDue ?? AppLanguage.tr(ar: '17.00 د.أ', en: '17.00 JOD'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 17,
                             fontWeight: FontWeight.w800,
@@ -816,7 +822,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                                 ),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'تتبع مسار الشاحنة',
+                                  AppLanguage.tr(ar: 'تتبع مسار الشاحنة', en: 'Track Truck Live'),
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 13.5,
                                     fontWeight: FontWeight.w700,
@@ -1000,7 +1006,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'عرض الفاتورة الإلكترونية',
+                        AppLanguage.tr(ar: 'عرض الفاتورة الإلكترونية', en: 'View E-Invoice'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
@@ -1137,19 +1143,19 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                       height: 1.5,
                       color: colorOnSurfaceVariant,
                     ),
-                    children: const [
+                    children: [
                       TextSpan(
                         text:
-                            'أعلنت هيئة تنظيم قطاع الطاقة والمعادن الأردنية ثبات سعر بيع أسطوانة الغاز المنزلي (12.5 كغ) عند ',
+                            AppLanguage.tr(ar: 'أعلنت هيئة تنظيم قطاع الطاقة والمعادن الأردنية ثبات سعر بيع أسطوانة الغاز المنزلي (12.5 كغ) عند ', en: 'Jordan EMRC announced that official household LPG cylinder price (12.5 kg) remains fixed at '),
                       ),
                       TextSpan(
-                        text: '7.00 دنانير',
+                        text: AppLanguage.tr(ar: '7.00 دنانير', en: '7.00 JOD'),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: colorOnSurface,
                         ),
                       ),
-                      TextSpan(text: ' للمستهلك دون تغيير.'),
+                      TextSpan(text: AppLanguage.tr(ar: ' للمستهلك دون تغيير.', en: ' for consumers without changes.')),
                     ],
                   ),
                 ),
@@ -1161,7 +1167,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'تطبيق الأسعار الحكومية المعتمدة دائماً',
+                        AppLanguage.tr(ar: 'تطبيق الأسعار الحكومية المعتمدة دائماً', en: 'Always applying official certified tariffs'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
@@ -1335,7 +1341,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         ),
         const SizedBox(height: 4),
         Text(
-          'أنت مطلع على جميع الإشعارات السابقة',
+          AppLanguage.tr(ar: 'أنت مطلع على جميع الإشعارات السابقة', en: 'You are all caught up with all notifications'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 11,
             color: colorOnSurfaceVariant.withValues(alpha: 0.7),
@@ -1376,23 +1382,23 @@ class _NotificationsScreenState extends State<NotificationsScreen>
               _buildNavItem(
                 index: 0,
                 icon: Icons.local_gas_station_rounded,
-                label: 'الرئيسية',
+                label: AppLanguage.tr(ar: 'الرئيسية', en: 'Home'),
               ),
               _buildNavItem(
                 index: 1,
                 icon: Icons.inventory_2_outlined,
-                label: 'طلباتي',
+                label: AppLanguage.tr(ar: 'طلباتي', en: 'Orders'),
               ),
               _buildNavItem(
                 index: 2,
                 icon: Icons.notifications_rounded,
-                label: 'الإشعارات',
+                label: AppLanguage.tr(ar: 'الإشعارات', en: 'Notifications'),
                 hasBadge: false,
               ),
               _buildNavItem(
                 index: 3,
                 icon: Icons.person_outline_rounded,
-                label: 'حسابي',
+                label: AppLanguage.tr(ar: 'حسابي', en: 'Profile'),
               ),
             ],
           ),
@@ -1492,7 +1498,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     showDialog(
       context: context,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           backgroundColor: colorSurfaceLowest,
@@ -1501,7 +1507,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
               const Icon(Icons.phone_in_talk_rounded, color: colorSecondary),
               const SizedBox(width: 8),
               Text(
-                'الاتصال بالكابتن',
+                AppLanguage.tr(ar: 'الاتصال بالكابتن', en: 'Call Driver'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -1510,7 +1516,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
             ],
           ),
           content: Text(
-            'هل ترغب في الاتصال بالكابتن أحمد الخوالدة على الرقم $phone لتنسيق استلام الأسطوانة؟',
+            AppLanguage.tr(ar: 'هل ترغب في الاتصال بالكابتن أحمد الخوالدة على الرقم $phone لتنسيق استلام الأسطوانة؟', en: 'Do you want to call driver Ahmad Al-Khawaldeh on $phone to coordinate delivery?'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               color: colorOnSurfaceVariant,
@@ -1520,7 +1526,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
             TextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(
-                'إلغاء',
+                AppLanguage.tr(ar: 'إلغاء', en: 'Cancel'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   color: colorOnSurfaceVariant,
                   fontWeight: FontWeight.w600,
@@ -1533,7 +1539,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'جاري الاتصال بـ $phone ...',
+                      AppLanguage.tr(ar: 'جاري الاتصال بـ $phone ...', en: 'Calling $phone ...'),
                       style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     ),
                     backgroundColor: const Color(0xFF131B2E),
@@ -1549,7 +1555,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                 ),
               ),
               child: Text(
-                'اتصال الآن',
+                AppLanguage.tr(ar: 'اتصال الآن', en: 'Call Now'),
                 style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.w700),
               ),
             ),
@@ -1565,7 +1571,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
@@ -1591,7 +1597,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'الفاتورة الضريبية الإلكترونية',
+                    AppLanguage.tr(ar: 'الفاتورة الضريبية الإلكترونية', en: 'Electronic Tax Invoice'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
@@ -1608,7 +1614,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      'مدفوع نقدًا',
+                      AppLanguage.tr(ar: 'مدفوع نقدًا', en: 'Paid in Cash'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
@@ -1620,22 +1626,22 @@ class _NotificationsScreenState extends State<NotificationsScreen>
               ),
               const SizedBox(height: 8),
               Text(
-                'طلب رقم #84920 • تاريخ 24 آب 2026',
+                AppLanguage.tr(ar: 'طلب رقم #84920 • تاريخ 24 آب 2026', en: 'Order #84920 • August 24, 2026'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   color: colorOutline,
                 ),
               ),
               const Divider(height: 24),
-              _buildInvoiceRow('أسطوانة غاز منزلي (تبديل)', '7.00 د.أ'),
-              _buildInvoiceRow('أجور التوصيل والتركيب', '1.50 د.أ'),
-              _buildInvoiceRow('فحص التسريب بفقاعات الصابون', 'مجاناً'),
+              _buildInvoiceRow(AppLanguage.tr(ar: 'أسطوانة غاز منزلي (تبديل)', en: 'LPG Gas Cylinder (Exchange)'), AppLanguage.tr(ar: AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD'), en: '7.00 JOD')),
+              _buildInvoiceRow(AppLanguage.tr(ar: 'أجور التوصيل والتركيب', en: 'Delivery & Installation Fee'), AppLanguage.tr(ar: '1.50 د.أ', en: '1.50 JOD')),
+              _buildInvoiceRow(AppLanguage.tr(ar: 'فحص التسريب بفقاعات الصابون', en: 'Soap Bubble Leak Inspection'), AppLanguage.tr(ar: 'مجاناً', en: 'Free')),
               const Divider(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'المجموع الإجمالي:',
+                    AppLanguage.tr(ar: 'المجموع الإجمالي:', en: 'Total Amount:'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
@@ -1643,7 +1649,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                     ),
                   ),
                   Text(
-                    '8.50 د.أ',
+                    AppLanguage.tr(ar: '8.50 د.أ', en: '8.50 JOD'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -1664,7 +1670,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   ),
                 ),
                 child: Text(
-                  'إغلاق الفاتورة',
+                  AppLanguage.tr(ar: 'إغلاق الفاتورة', en: 'Close Invoice'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -1711,7 +1717,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           padding: const EdgeInsets.all(22),
           decoration: const BoxDecoration(
@@ -1742,7 +1748,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'التسعيرة الرسمية المعتمدة - EMRC',
+                    AppLanguage.tr(ar: 'التسعيرة الرسمية المعتمدة - EMRC', en: 'Official Certified Tariff - EMRC'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -1753,7 +1759,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
               ),
               const SizedBox(height: 12),
               Text(
-                'تلتزم شركة غاز الأردن بالتسعيرة الشهرية الرسمية الصادرة عن لجنة تسعير المشتقات النفطية وهيئة تنظيم قطاع الطاقة والمعادن دون أي زيادة إضافية على سعر مادة الغاز البترولي المسال.',
+                AppLanguage.tr(ar: 'تلتزم شركة غاز الأردن بالتسعيرة الشهرية الرسمية الصادرة عن لجنة تسعير المشتقات النفطية وهيئة تنظيم قطاع الطاقة والمعادن دون أي زيادة إضافية على سعر مادة الغاز البترولي المسال.', en: 'Jordan Gas adheres strictly to official monthly fuel pricing set by the Fuel Pricing Committee and EMRC without any extra markups on LPG.'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12.5,
                   height: 1.5,
@@ -1771,14 +1777,14 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'سعر أسطوانة 12.5 كغ الرسمي:',
+                      AppLanguage.tr(ar: 'سعر أسطوانة 12.5 كغ الرسمي:', en: 'Official 12.5 kg Cylinder Price:'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
-                      '7.00 د.أ',
+                      AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
@@ -1800,7 +1806,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   ),
                 ),
                 child: Text(
-                  'حسناً، فهمت',
+                  AppLanguage.tr(ar: 'حسناً، فهمت', en: 'Got it'),
                   style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.w700),
                 ),
               ),

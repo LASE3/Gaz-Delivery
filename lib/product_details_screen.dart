@@ -1,19 +1,27 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'app_language.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'cart_and_checkout.dart';
 import 'login_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final String productName;
+  final String? productName;
   final double basePrice;
 
   const ProductDetailsScreen({
     super.key,
-    this.productName = 'أسطوانة غاز منزلي معبأة (12.5 كغ)',
+    this.productName,
     this.basePrice = 7.00,
   });
+
+  String get effectiveProductName =>
+      productName ??
+      AppLanguage.tr(
+        ar: 'أسطوانة غاز منزلي معبأة (12.5 كغ)',
+        en: 'Domestic LPG Gas Cylinder (12.5 kg)',
+      );
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -99,8 +107,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       SnackBar(
         content: Text(
           _isFavorite
-              ? 'تمت إضافة المنتج إلى المفضلة'
-              : 'تمت إزالة المنتج من المفضلة',
+              ? AppLanguage.tr(
+                  ar: 'تمت إضافة المنتج إلى المفضلة',
+                  en: 'Added product to favorites',
+                )
+              : AppLanguage.tr(
+                  ar: 'تمت إزالة المنتج من المفضلة',
+                  en: 'Removed product from favorites',
+                ),
           style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
           textAlign: TextAlign.center,
         ),
@@ -116,7 +130,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'تم نسخ رابط المنتج بنجاح لمشاركته',
+          AppLanguage.tr(ar: 'تم نسخ رابط المنتج بنجاح لمشاركته', en: 'Product link copied to clipboard'),
           style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
           textAlign: TextAlign.center,
         ),
@@ -151,9 +165,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         // Header
         appBar: PreferredSize(
@@ -177,8 +194,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       color: colorSurfaceContainer,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.arrow_forward_ios_rounded,
+                    child: Icon(
+                      AppLanguage.chevronBack,
                       size: 16,
                       color: colorOnSurface,
                     ),
@@ -200,7 +217,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'تفاصيل المنتج',
+                  AppLanguage.tr(ar: 'تفاصيل المنتج', en: 'Product Details'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -293,6 +310,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         bottomNavigationBar: _buildStickyBottomBar(),
       ),
     );
+      },
+    );
   }
 
   // 1. TOP ACTION STRIP
@@ -316,7 +335,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
               const SizedBox(width: 4),
               Text(
-                'معتمد رسمياً • مصفاة البترول الأردنية',
+                AppLanguage.tr(ar: 'معتمد رسمياً • مصفاة البترول الأردنية', en: 'Officially Certified • Jordan Petroleum Refinery'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -450,7 +469,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'ختم حراري مشفر رقمياً',
+                          AppLanguage.tr(ar: 'ختم حراري مشفر رقمياً', en: 'Digitally Encrypted Heat Seal'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
@@ -476,7 +495,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'فحص أمان 100%',
+                          AppLanguage.tr(ar: 'فحص أمان 100%', en: '100% Safety Inspected'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
@@ -501,7 +520,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.productName,
+          widget.effectiveProductName,
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 20,
             fontWeight: FontWeight.w800,
@@ -510,7 +529,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ),
         const SizedBox(height: 4),
         Text(
-          'غاز بترولي مسال نقي (LPG) مطابق للمواصفات القياسية الأردنية',
+          AppLanguage.tr(ar: 'غاز بترولي مسال نقي (LPG) مطابق للمواصفات القياسية الأردنية', en: 'Pure Liquefied Petroleum Gas (LPG) compliant with Jordan Standards'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 12,
             color: colorOnSurfaceVariant,
@@ -558,7 +577,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'د.أ',
+                        AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -567,7 +586,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '/ للأسطوانة',
+                        AppLanguage.tr(ar: '/ للأسطوانة', en: '/ cylinder'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -585,7 +604,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'سعر حكومي رسمي محدد من هيئة تنظيم الطاقة (EMRC)',
+                        AppLanguage.tr(ar: 'سعر حكومي رسمي محدد من هيئة تنظيم الطاقة (EMRC)', en: 'Official price set by Energy Commission (EMRC)'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
@@ -606,14 +625,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'أجرة التوصيل',
+                      AppLanguage.tr(ar: 'أجرة التوصيل', en: 'Delivery Fee'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 10,
                         color: colorOnSurfaceVariant,
                       ),
                     ),
                     Text(
-                      '1.50 د.أ',
+                      AppLanguage.tr(ar: '1.50 د.أ', en: '1.50 JOD'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -641,7 +660,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'يشمل التوصيل الصعود بالدرج والتركيب عند باب الشقة مجاناً.',
+                  AppLanguage.tr(ar: 'يشمل التوصيل الصعود بالدرج والتركيب عند باب الشقة مجاناً.', en: 'Includes stair delivery and doorstep installation free.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     color: colorOnSurface,
@@ -664,7 +683,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'نوع الخدمة',
+              AppLanguage.tr(ar: 'نوع الخدمة', en: 'Service Type'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -672,7 +691,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ),
             Text(
-              'يرجى الاختيار بدقة',
+              AppLanguage.tr(ar: 'يرجى الاختيار بدقة', en: 'Please select carefully'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 11,
                 color: colorOnSurfaceVariant,
@@ -748,7 +767,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Row(
                         children: [
                           Text(
-                            'استبدال أسطوانة فارغة بأسطوانة معبأة',
+                            AppLanguage.tr(ar: 'استبدال أسطوانة فارغة بأسطوانة معبأة', en: 'Exchange empty cylinder for filled one'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
@@ -764,7 +783,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              'الأكثر طلباً',
+                              AppLanguage.tr(ar: 'الأكثر طلباً', en: 'Most Popular'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 9,
                                 fontWeight: FontWeight.bold,
@@ -776,7 +795,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'يتم تسليم الأسطوانة الفارغة للكابتن عند الاستلام بنفس الحالة الجيدة',
+                        AppLanguage.tr(ar: 'يتم تسليم الأسطوانة الفارغة للكابتن عند الاستلام بنفس الحالة الجيدة', en: 'Hand over empty cylinder to driver in good condition'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -786,7 +805,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ),
                 Text(
-                  '+0.00 د.أ',
+                  AppLanguage.tr(ar: '+0.00 د.أ', en: '+0.00 JOD'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -863,7 +882,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'شراء أسطوانة حديد جديدة مع الغاز',
+                        AppLanguage.tr(ar: 'شراء أسطوانة حديد جديدة مع الغاز', en: 'Buy new steel cylinder with gas'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -872,7 +891,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'أسطوانة جديدة مختومة وغير مستعملة مع ملكية كاملة',
+                        AppLanguage.tr(ar: 'أسطوانة جديدة مختومة وغير مستعملة مع ملكية كاملة', en: 'New sealed unused cylinder with full ownership'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -882,7 +901,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ),
                 Text(
-                  '+45.00 د.أ',
+                  AppLanguage.tr(ar: '+45.00 د.أ', en: '+45.00 JOD'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -903,7 +922,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'المواصفات وضمانات الأمان',
+          AppLanguage.tr(ar: 'المواصفات وضمانات الأمان', en: 'Specs & Safety Guarantees'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 15,
             fontWeight: FontWeight.bold,
@@ -945,14 +964,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'الوزن الصافي للغاز',
+                                AppLanguage.tr(ar: 'الوزن الصافي للغاز', en: 'Net Gas Weight'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 10,
                                   color: colorOnSurfaceVariant,
                                 ),
                               ),
                               Text(
-                                '12.5 كغم LPG',
+                                AppLanguage.tr(ar: '12.5 كغم LPG', en: '12.5 kg LPG'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -982,14 +1001,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'الوزن الإجمالي',
+                                AppLanguage.tr(ar: 'الوزن الإجمالي', en: 'Total Weight'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 10,
                                   color: colorOnSurfaceVariant,
                                 ),
                               ),
                               Text(
-                                '~ 27 كغم',
+                                AppLanguage.tr(ar: '~ 27 كغم', en: '~ 27 kg'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -1009,23 +1028,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               // Checklist
               _buildGuaranteeCheckItem(
                 icon: Icons.done_all_rounded,
-                title: 'فحص رغوة الصمام مجاناً:',
+                title: AppLanguage.tr(ar: 'فحص رغوة الصمام مجاناً:', en: 'Free Foam Leak Inspection:'),
                 subtitle:
-                    'يقوم الكابتن باختبار تسريب الغاز بالرغوة والتأكد من إحكام الشد قبل المغادرة.',
+                    AppLanguage.tr(ar: 'يقوم الكابتن باختبار تسريب الغاز بالرغوة والتأكد من إحكام الشد قبل المغادرة.', en: 'Driver conducts foam bubble test to ensure no gas leaks before departure.'),
               ),
               const SizedBox(height: 8),
               _buildGuaranteeCheckItem(
                 icon: Icons.lock_outline_rounded,
-                title: 'ختم الأمان الحراري:',
+                title: AppLanguage.tr(ar: 'ختم الأمان الحراري:', en: 'Tamper-Evident Heat Seal:'),
                 subtitle:
-                    'غطاء بلاستيكي منكمش بالحرارة برقم تسلسلي موثق لمنع العبث وضمان المنشأ.',
+                    AppLanguage.tr(ar: 'غطاء بلاستيكي منكمش بالحرارة برقم تسلسلي موثق لمنع العبث وضمان المنشأ.', en: 'Serialized heat-shrunk cap ensuring origin and preventing tampering.'),
               ),
               const SizedBox(height: 8),
               _buildGuaranteeCheckItem(
                 icon: Icons.verified_user_rounded,
-                title: 'فحص صلاحية الصمام ومفتاح الغاز:',
+                title: AppLanguage.tr(ar: 'فحص صلاحية الصمام ومفتاح الغاز:', en: 'Valve Safety Certification:'),
                 subtitle:
-                    'أسطوانات خاضعة لإعادة التأهيل الدوري وضغط الهيدروستاتيك.',
+                    AppLanguage.tr(ar: 'أسطوانات خاضعة لإعادة التأهيل الدوري وضغط الهيدروستاتيك.', en: 'All cylinders undergo hydrostatic pressure safety verification.'),
               ),
             ],
           ),
@@ -1099,7 +1118,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'تنبيهات السلامة المنزلية',
+                  AppLanguage.tr(ar: 'تنبيهات السلامة المنزلية', en: 'Home Safety Alerts'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -1108,7 +1127,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'تأكد من تركيب الأسطوانة بوضعية عمودية، في مكان جيد التهوية بعيداً عن مصادر اللهب المباشر والكهرباء. تجنب فحص التسريب بالقداحة أو أعواد الثقاب نهائياً.',
+                  AppLanguage.tr(ar: 'تأكد من تركيب الأسطوانة بوضعية عمودية، في مكان جيد التهوية بعيداً عن مصادر اللهب المباشر والكهرباء. تجنب فحص التسريب بالقداحة أو أعواد الثقاب نهائياً.', en: 'Keep cylinder upright in well-ventilated area away from direct flame or electricity. Never test leaks with lighters or matches.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     color: colorOnSecondaryFixedVariant,
@@ -1135,7 +1154,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'ملحقات الأمان الموصى بها',
+                  AppLanguage.tr(ar: 'ملحقات الأمان الموصى بها', en: 'Recommended Safety Accessories'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -1143,7 +1162,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ),
                 Text(
-                  'تركيب وفحص فوري مع نفس الطلب',
+                  AppLanguage.tr(ar: 'تركيب وفحص فوري مع نفس الطلب', en: 'Instant installation & testing with same order'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     color: colorOnSurfaceVariant,
@@ -1152,7 +1171,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ],
             ),
             Text(
-              'إضافات موثوقة',
+              AppLanguage.tr(ar: 'إضافات موثوقة', en: 'Trusted Add-ons'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
@@ -1171,11 +1190,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               // Add-on 1: Italian Regulator
               _buildAddonCard(
                 keyId: 'regulator',
-                title: 'ساعة غاز إيطالي أصلية (منظم)',
+                title: AppLanguage.tr(ar: 'ساعة غاز إيطالي أصلية (منظم)', en: 'Italian Gas Regulator (Original)'),
                 subtitle:
-                    'منظم ضغط منزلي عالي الكفاءة مع صمام أمان تلقائي ضد التسريب.',
+                    AppLanguage.tr(ar: 'منظم ضغط منزلي عالي الكفاءة مع صمام أمان تلقائي ضد التسريب.', en: 'High-efficiency regulator with automatic leak shutoff valve.'),
                 price: 5.50,
-                badge: 'صنع إيطاليا',
+                badge: AppLanguage.tr(ar: 'صنع إيطاليا', en: 'Made in Italy'),
                 image:
                     'https://lh3.googleusercontent.com/aida-public/AB6AXuCLoxgYEE_bad2MJxt6_KGMFb3tDNMkpKur6S-nYID_kiYUZTB5vf_qJDUfJmrrbusnn-xNIyMvruWqlKlUW-L8Emq7N0s8kXZtZQIYof_FyztmKTDQMUo1BAZ5AETmH3gPwnXBQHDWjTHP3ZikqF4DUfxcV88GE_ehjTFXGpxo9d-tng5lT-SSEGrWFj2uxYSH3GJWXALaMpICkh2CtC8S5ryX2dP4wJTzSDxh533-08hA-5A3wyC67A',
               ),
@@ -1184,11 +1203,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               // Add-on 2: Safety Hose
               _buildAddonCard(
                 keyId: 'hose',
-                title: 'خرطوم أمان مقوى (2 متر) + مرابط',
+                title: AppLanguage.tr(ar: 'خرطوم أمان مقوى (2 متر) + مرابط', en: 'Reinforced Safety Hose (2m) + Clamps'),
                 subtitle:
-                    'مطاط مقوى بثلاث طبقات مع 2 مرابط ستانلس ستيل أصلية مقاومة للحرارة.',
+                    AppLanguage.tr(ar: 'مطاط مقوى بثلاث طبقات مع 2 مرابط ستانلس ستيل أصلية مقاومة للحرارة.', en: '3-layer reinforced rubber with 2 stainless steel heat-resistant clamps.'),
                 price: 3.00,
-                badge: 'مقاوم للتلف',
+                badge: AppLanguage.tr(ar: 'مقاوم للتلف', en: 'Durable'),
                 image:
                     'https://lh3.googleusercontent.com/aida-public/AB6AXuCxD5Tt6bLmqqBGpnxjXap7tABpEgHQ6Hi3J5gw_MQUb9CExRyfDr6EaXvAGSrVGUc9b4L2mv6Zy_Julso3In-q4mtP423OE8lJzuOd2Hg4kqjHtYCOSqYBkEqi_sDcG1ff_JtYbFN9gWBItVysD_3LjXJb-iVZ5WY34DLGtZafpXrI8pOgmqG-U_PR_iKjAVSQy30fRZRlsso8HRub4aa0kHhFfcNJJSATqMwfQdwPR1iX7qa0yrrLxA',
               ),
@@ -1197,11 +1216,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               // Add-on 3: Magnetic Wrench
               _buildAddonCard(
                 keyId: 'wrench',
-                title: 'مفتاح غاز ذكي مغناطيسي',
+                title: AppLanguage.tr(ar: 'مفتاح غاز ذكي مغناطيسي', en: 'Smart Magnetic Gas Wrench'),
                 subtitle:
-                    'مقبض هندسي مريح مصمم لإحكام صمام الأسطوانة دون إتلاف العزقة.',
+                    AppLanguage.tr(ar: 'مقبض هندسي مريح مصمم لإحكام صمام الأسطوانة دون إتلاف العزقة.', en: 'Ergonomic handle designed to tighten cylinder valve safely.'),
                 price: 2.00,
-                badge: 'مريح وسهل',
+                badge: AppLanguage.tr(ar: 'مريح وسهل', en: 'Ergonomic'),
                 image:
                     'https://lh3.googleusercontent.com/aida-public/AB6AXuCCDpmyXproovbjVVLQWI-k6-iqKYAsMZPLsyrTlf7yN1PYUjhkSALbOhX66vSNGEU3anu8oDHIbSF3wyj0KdP7D5rEXPaR6L0l5tP_OjXlVI1LA-j-MbFBLnrbQDKdWQVc6ZhwUQot02rEgs_3pu7Hku4dIbbAzLpbd3uMsJhElptDZPAzqcDBfCN6MV_BTI0oI3wlTWn60ymAoB8U_nr4F-m2DBUz02C1esv7isdLDZxyreQ5ZduL5A',
               ),
@@ -1316,7 +1335,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${price.toStringAsFixed(2)} د.أ',
+                AppLanguage.tr(ar: '${price.toStringAsFixed(2)} د.أ', en: '${price.toStringAsFixed(2)} JOD'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1343,7 +1362,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        isAdded ? 'تم' : 'إضافة',
+                        isAdded ? AppLanguage.tr(ar: 'تم', en: 'Added') : AppLanguage.tr(ar: 'إضافة', en: 'Add'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -1392,7 +1411,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'توصيل سريع خلال 20 - 35 دقيقة',
+                    AppLanguage.tr(ar: 'توصيل سريع خلال 20 - 35 دقيقة', en: 'Fast Delivery in 20 - 35 mins'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -1400,7 +1419,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                   Text(
-                    'أقرب سيارة غاز متواجدة في منطقتك الآن',
+                    AppLanguage.tr(ar: 'أقرب سيارة غاز متواجدة في منطقتك الآن', en: 'Nearest gas truck is in your neighborhood now'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 10,
                       color: colorOnSurfaceVariant,
@@ -1515,7 +1534,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'المجموع الإجمالي',
+                      AppLanguage.tr(ar: 'المجموع الإجمالي', en: 'Total Amount'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 10,
                         color: colorOnSurfaceVariant,
@@ -1535,7 +1554,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         const SizedBox(width: 3),
                         Text(
-                          'د.أ',
+                          AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -1580,7 +1599,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           const Icon(Icons.shopping_cart_outlined, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            'إضافة إلى الطلب والمتابعة',
+                            AppLanguage.tr(ar: 'إضافة إلى الطلب والمتابعة', en: 'Add to Cart & Proceed'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -1603,7 +1622,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'الدفع نقداً عند الاستلام فقط (كاش) بعد التركيب والفحص',
+                  AppLanguage.tr(ar: 'الدفع نقداً عند الاستلام فقط (كاش) بعد التركيب والفحص', en: 'Cash on delivery only after installation and inspection'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 10,
                     color: colorOnSurfaceVariant,

@@ -7,22 +7,46 @@ import 'permission_helper.dart';
 import 'driver_profile_screen.dart';
 
 class DriverChatScreen extends StatefulWidget {
-  final String driverName;
+  final String? driverName;
   final String plateNumber;
   final double rating;
-  final String orderDescription;
-  final String orderPrice;
-  final String etaText;
+  final String? orderDescription;
+  final String? orderPrice;
+  final String? etaText;
 
   const DriverChatScreen({
     super.key,
-    this.driverName = 'الكابتن أحمد الخوالدة',
+    this.driverName,
     this.plateNumber = '42-8921',
     this.rating = 4.9,
-    this.orderDescription = 'طلبك: أسطوانة غاز منزلي 12.5 كغ (استبدال)',
-    this.orderPrice = '7.00 د.أ',
-    this.etaText = 'في الطريق إليك • على بعد 6 دقائق (شارع وصفي التل)',
+    this.orderDescription,
+    this.orderPrice,
+    this.etaText,
   });
+
+  String get effectiveDriverName =>
+      driverName ??
+      AppLanguage.tr(
+        ar: 'الكابتن أحمد الخوالدة',
+        en: 'Captain Ahmad Al-Khawaldeh',
+      );
+
+  String get effectiveOrderDescription =>
+      orderDescription ??
+      AppLanguage.tr(
+        ar: 'طلبك: أسطوانة غاز منزلي 12.5 كغ (استبدال)',
+        en: 'Order: Domestic 12.5kg Gas Cylinder (Exchange)',
+      );
+
+  String get effectiveOrderPrice =>
+      orderPrice ?? AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD');
+
+  String get effectiveEtaText =>
+      etaText ??
+      AppLanguage.tr(
+        ar: 'في الطريق إليك • على بعد 6 دقائق (شارع وصفي التل)',
+        en: 'On the way • 6 mins away (Wasfi Al-Tal St.)',
+      );
 
   @override
   State<DriverChatScreen> createState() => _DriverChatScreenState();
@@ -90,22 +114,38 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
   late List<_ChatMessage> _supportMessages;
 
   // Quick reply chips for driver chat
-  final List<String> _driverQuickChips = [
-    'أنا بالبناية الآن 🏢',
-    'يرجى رن الجرس عند الوصول 🔔',
-    'أنا نازل استلم الأسطوانة 🚶‍♂️',
-    'المبلغ كاش جاهز 💵',
-    'فحص الصمام مشمول؟ 🛡️',
-  ];
+  List<String> get _driverQuickChips => AppLanguage.isArabic
+      ? [
+          'أنا بالبناية الآن 🏢',
+          'يرجى رن الجرس عند الوصول 🔔',
+          'أنا نازل استلم الأسطوانة 🚶‍♂️',
+          'المبلغ كاش جاهز 💵',
+          'فحص الصمام مشمول؟ 🛡️',
+        ]
+      : [
+          'I am at the building now 🏢',
+          'Please ring the bell upon arrival 🔔',
+          'Coming down to receive cylinder 🚶‍♂️',
+          'Cash is ready 💵',
+          'Is valve check included? 🛡️',
+        ];
 
   // Quick reply chips for customer support
-  final List<String> _supportQuickChips = [
-    'استفسار عن موعد التوصيل ⏱️',
-    'تغيير موقع أو رقم الهاتف 📍',
-    'طلب فحص صمام أمان إضافي 🔍',
-    'تقديم شكوى أو ملاحظة 💬',
-    'تأكيد الدفع والاستلام 🧾',
-  ];
+  List<String> get _supportQuickChips => AppLanguage.isArabic
+      ? [
+          'استفسار عن موعد التوصيل ⏱️',
+          'تغيير موقع أو رقم الهاتف 📍',
+          'طلب فحص صمام أمان إضافي 🔍',
+          'تقديم شكوى أو ملاحظة 💬',
+          'تأكيد الدفع والاستلام 🧾',
+        ]
+      : [
+          'Inquire about delivery time ⏱️',
+          'Change address or phone number 📍',
+          'Request extra valve inspection 🔍',
+          'Submit a complaint or note 💬',
+          'Confirm payment & receipt 🧾',
+        ];
 
   @override
   void initState() {
@@ -117,32 +157,44 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
     _driverMessages = [
       _ChatMessage(
         id: '1',
-        text:
-            'السلام عليكم، أنا بالطريق لشارع وصفي التل. هل المصعد يعمل لنقل الأسطوانة؟',
-        time: '02:30 م',
+        text: AppLanguage.tr(
+          ar: 'السلام عليكم، أنا بالطريق لشارع وصفي التل. هل المصعد يعمل لنقل الأسطوانة؟',
+          en: 'Hello, I am on Wasfi Al-Tal St. Is the elevator working for the cylinder?',
+        ),
+        time: AppLanguage.tr(ar: '02:30 م', en: '02:30 PM'),
         isFromDriver: true,
       ),
       _ChatMessage(
         id: '2',
-        text: 'أهلاً كابتن، نعم المصعد يعمل، العمارة 42 الطابق الثالث شقة 6.',
-        time: '02:31 م',
+        text: AppLanguage.tr(
+          ar: 'أهلاً كابتن، نعم المصعد يعمل، العمارة 42 الطابق الثالث شقة 6.',
+          en: 'Hello Captain, yes the elevator is working. Building 42, 3rd floor, Apt 6.',
+        ),
+        time: AppLanguage.tr(ar: '02:31 م', en: '02:31 PM'),
         isCustomer: true,
       ),
       _ChatMessage(
         id: '3',
-        text:
-            'تمام، معي جهاز فحص تسريب الغاز لتركيبها وفحص الصمام مجاناً 👍',
-        time: '02:32 م',
+        text: AppLanguage.tr(
+          ar: 'تمام، معي جهاز فحص تسريب الغاز لتركيبها وفحص الصمام مجاناً 👍',
+          en: 'Got it, I have a gas leak detector to install and check the valve for free 👍',
+        ),
+        time: AppLanguage.tr(ar: '02:32 م', en: '02:32 PM'),
         isFromDriver: true,
       ),
       _ChatMessage(
         id: '4',
         text: '',
-        time: '02:32 م',
+        time: AppLanguage.tr(ar: '02:32 م', en: '02:32 PM'),
         isInfoCard: true,
-        infoTitle: 'خدمة فحص الأمان والسلامة الذكية',
-        infoSubtitle:
-            'سيقوم الكابتن بفحص جلدة الغاز الإلكتروني والتأكد من ضغط المنظم',
+        infoTitle: AppLanguage.tr(
+          ar: 'خدمة فحص الأمان والسلامة الذكية',
+          en: 'Smart Safety Inspection Service',
+        ),
+        infoSubtitle: AppLanguage.tr(
+          ar: 'سيقوم الكابتن بفحص جلدة الغاز الإلكتروني والتأكد من ضغط المنظم',
+          en: 'Captain will inspect electronic valve seal and regulator pressure',
+        ),
         infoIcon: Icons.gas_meter_rounded,
       ),
     ];
@@ -150,16 +202,20 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
     _supportMessages = [
       _ChatMessage(
         id: 's1',
-        text:
-            'مرحباً بك في خدمة عملاء غاز الأردن! 👋\nنحن هنا لمساعدتك على مدار الساعة بخصوص طلباتك واستفسارات السلامة.',
-        time: '02:15 م',
+        text: AppLanguage.tr(
+          ar: 'مرحباً بك في خدمة عملاء غاز الأردن! 👋\nنحن هنا لمساعدتك على مدار الساعة بخصوص طلباتك واستفسارات السلامة.',
+          en: 'Welcome to Jordan Gas Support! 👋\nWe are here 24/7 to assist with orders and safety inquiries.',
+        ),
+        time: AppLanguage.tr(ar: '02:15 م', en: '02:15 PM'),
         isFromSupport: true,
       ),
       _ChatMessage(
         id: 's2',
-        text:
-            'طلبك الحالي قيد التوصيل مع الكابتن أحمد الخوالدة، هل تواجه أي صعوبة أو تحتاج لمساعدة في تحديد العنوان؟',
-        time: '02:16 م',
+        text: AppLanguage.tr(
+          ar: 'طلبك الحالي قيد التوصيل مع الكابتن أحمد الخوالدة، هل تواجه أي صعوبة أو تحتاج لمساعدة في تحديد العنوان؟',
+          en: 'Your order is on the way with Captain Ahmad Al-Khawaldeh. Do you need any assistance?',
+        ),
+        time: AppLanguage.tr(ar: '02:16 م', en: '02:16 PM'),
         isFromSupport: true,
       ),
     ];
@@ -191,7 +247,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
     final now = DateTime.now();
     final hour = now.hour % 12 == 0 ? 12 : now.hour % 12;
     final minute = now.minute.toString().padLeft(2, '0');
-    final period = now.hour >= 12 ? 'م' : 'ص';
+    final period = now.hour >= 12 ? (AppLanguage.isArabic ? 'م' : 'PM') : (AppLanguage.isArabic ? 'ص' : 'AM');
     final timeStr = '$hour:$minute $period';
 
     final userMsg = _ChatMessage(
@@ -224,21 +280,37 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
     Future.delayed(const Duration(milliseconds: 1400), () {
       if (!mounted) return;
 
-      String reply = 'وصلت رسالتك أخي الكريم، أنا قريب جداً منك 🚚';
-      if (userText.contains('بناية') || userText.contains('نازل')) {
-        reply = 'ممتاز، أنا وصلت مدخل العمارة ومعي الأسطوانة المفحوصة 👍';
-      } else if (userText.contains('جرس')) {
-        reply = 'تم، سأقوم برن الجرس فور الصعود للطابق الثالث.';
-      } else if (userText.contains('كاش') || userText.contains('المبلغ')) {
-        reply = 'شكراً لك، الفكة متوفرة معي دائماً.';
-      } else if (userText.contains('صمام') || userText.contains('فحص')) {
-        reply = 'أكيد، فحص الصمام الإلكتروني ومانع التسريب مجاني مئة بالمئة مع التركيب.';
+      String reply = AppLanguage.tr(
+        ar: 'وصلت رسالتك أخي الكريم، أنا قريب جداً منك 🚚',
+        en: 'Got your message! I am very close to your location 🚚',
+      );
+      final lower = userText.toLowerCase();
+      if (userText.contains('بناية') || userText.contains('نازل') || lower.contains('building') || lower.contains('down')) {
+        reply = AppLanguage.tr(
+          ar: 'ممتاز، أنا وصلت مدخل العمارة ومعي الأسطوانة المفحوصة 👍',
+          en: 'Great, I have arrived at the entrance with the tested cylinder 👍',
+        );
+      } else if (userText.contains('جرس') || lower.contains('bell') || lower.contains('ring')) {
+        reply = AppLanguage.tr(
+          ar: 'تم، سأقوم برن الجرس فور الصعود للطابق الثالث.',
+          en: 'Will do, I will ring the bell as soon as I head up.',
+        );
+      } else if (userText.contains('كاش') || userText.contains('المبلغ') || lower.contains('cash') || lower.contains('change')) {
+        reply = AppLanguage.tr(
+          ar: 'شكراً لك، الفكة متوفرة معي دائماً.',
+          en: 'Thank you, exact change is always available.',
+        );
+      } else if (userText.contains('صمام') || userText.contains('فحص') || lower.contains('valve') || lower.contains('check')) {
+        reply = AppLanguage.tr(
+          ar: 'أكيد، فحص الصمام الإلكتروني ومانع التسريب مجاني مئة بالمئة مع التركيب.',
+          en: 'Sure thing, electronic valve inspection and leak check is 100% free with installation.',
+        );
       }
 
       final now = DateTime.now();
       final hour = now.hour % 12 == 0 ? 12 : now.hour % 12;
       final minute = now.minute.toString().padLeft(2, '0');
-      final period = now.hour >= 12 ? 'م' : 'ص';
+      final period = now.hour >= 12 ? (AppLanguage.isArabic ? 'م' : 'PM') : (AppLanguage.isArabic ? 'ص' : 'AM');
       final timeStr = '$hour:$minute $period';
 
       setState(() {
@@ -259,19 +331,32 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
     Future.delayed(const Duration(milliseconds: 1200), () {
       if (!mounted) return;
 
-      String reply = 'شكراً لتواصلك مع مركز خدمة العملاء. تم تسجيل استفسارك وسنتابعه فوراً مع فريق العمليات.';
-      if (userText.contains('موعد') || userText.contains('توصيل')) {
-        reply = 'الكابتن أحمد في منطقتك حالياً ومتبقي حوالي 5 دقائق للوصول. سنبقيك على اطلاع دائم.';
-      } else if (userText.contains('موقع') || userText.contains('هاتف')) {
-        reply = 'تم تحديث بيانات التوصيل وإرسال إشعار فوري لسائق الشاحنة المسؤول عن منطقتك.';
-      } else if (userText.contains('شكوى') || userText.contains('ملاحظة')) {
-        reply = 'نعتذر عن أي إزعاج، تم تحويل ملاحظتك لمدير الجودة وسيقوم بالاتصال بك خلال دقائق.';
+      String reply = AppLanguage.tr(
+        ar: 'شكراً لتواصلك مع مركز خدمة العملاء. تم تسجيل استفسارك وسنتابعه فوراً مع فريق العمليات.',
+        en: 'Thank you for contacting customer support. Your inquiry has been noted and followed up with dispatch.',
+      );
+      final lower = userText.toLowerCase();
+      if (userText.contains('موعد') || userText.contains('توصيل') || lower.contains('time') || lower.contains('delivery')) {
+        reply = AppLanguage.tr(
+          ar: 'الكابتن أحمد في منطقتك حالياً ومتبقي حوالي 5 دقائق للوصول. سنبقيك على اطلاع دائم.',
+          en: 'Captain Ahmad is in your neighborhood, approximately 5 mins away. We will keep you updated.',
+        );
+      } else if (userText.contains('موقع') || userText.contains('هاتف') || lower.contains('address') || lower.contains('phone') || lower.contains('location')) {
+        reply = AppLanguage.tr(
+          ar: 'تم تحديث بيانات التوصيل وإرسال إشعار فوري لسائق الشاحنة المسؤول عن منطقتك.',
+          en: 'Delivery details have been updated and sent directly to your area truck captain.',
+        );
+      } else if (userText.contains('شكوى') || userText.contains('ملاحظة') || lower.contains('complaint') || lower.contains('issue')) {
+        reply = AppLanguage.tr(
+          ar: 'نعتذر عن أي إزعاج، تم تحويل ملاحظتك لمدير الجودة وسيقوم بالاتصال بك خلال دقائق.',
+          en: 'We apologize for any inconvenience. Your note has been escalated to our quality manager.',
+        );
       }
 
       final now = DateTime.now();
       final hour = now.hour % 12 == 0 ? 12 : now.hour % 12;
       final minute = now.minute.toString().padLeft(2, '0');
-      final period = now.hour >= 12 ? 'م' : 'ص';
+      final period = now.hour >= 12 ? (AppLanguage.isArabic ? 'م' : 'PM') : (AppLanguage.isArabic ? 'ص' : 'AM');
       final timeStr = '$hour:$minute $period';
 
       setState(() {
@@ -420,7 +505,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
     final now = DateTime.now();
     final hour = now.hour % 12 == 0 ? 12 : now.hour % 12;
     final minute = now.minute.toString().padLeft(2, '0');
-    final period = now.hour >= 12 ? 'م' : 'ص';
+    final period = now.hour >= 12 ? (AppLanguage.isArabic ? 'م' : 'PM') : (AppLanguage.isArabic ? 'ص' : 'AM');
     final timeStr = '$hour:$minute $period';
 
     final photoMsg = _ChatMessage(
@@ -456,7 +541,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
@@ -490,7 +575,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                'بروتوكول السلامة وفحص الأمان المجاني',
+                AppLanguage.tr(ar: 'بروتوكول السلامة وفحص الأمان المجاني', en: 'Safety Protocol & Free Inspection'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -499,7 +584,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'جميع كباتن غاز الأردن مزودون بأجهزة كشف تسريب غاز إلكترونية دقيقة ومعتمدة من مصفاة البترول والدفاع المدني. يقوم الكابتن بتركيب الأسطوانة وفحص الصمام الجلدي والتأكد من ضغط المنظم دون أي تكلفة إضافية.',
+                AppLanguage.tr(ar: 'جميع كباتن غاز الأردن مزودون بأجهزة كشف تسريب غاز إلكترونية دقيقة ومعتمدة من مصفاة البترول والدفاع المدني. يقوم الكابتن بتركيب الأسطوانة وفحص الصمام الجلدي والتأكد من ضغط المنظم دون أي تكلفة إضافية.', en: 'All Jordan Gas captains are equipped with calibrated digital gas leak detectors certified by JPRC and Civil Defense. Captain installs cylinder and tests regulator at zero extra charge.'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
@@ -521,7 +606,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                     ),
                   ),
                   child: Text(
-                    'فهمت ذلك، شكراً',
+                    AppLanguage.tr(ar: 'فهمت ذلك، شكراً', en: 'Understood, Thanks'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -752,7 +837,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'الكابتن الموصّل',
+                      AppLanguage.tr(ar: 'الكابتن الموصّل', en: 'Delivery Captain'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: _activeTab == 0 ? FontWeight.bold : FontWeight.w500,
@@ -799,7 +884,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'خدمة العملاء (24/7)',
+                      AppLanguage.tr(ar: 'خدمة العملاء (24/7)', en: 'Customer Care (24/7)'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: _activeTab == 1 ? FontWeight.bold : FontWeight.w500,
@@ -884,7 +969,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                         Row(
                           children: [
                             Text(
-                              widget.driverName,
+                              widget.effectiveDriverName,
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -950,7 +1035,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                               color: Colors.white, size: 18),
                           const SizedBox(width: 8),
                           Text(
-                            'جاري الاتصال بالكابتن أحمد: 0790000000',
+                            AppLanguage.tr(ar: 'جاري الاتصال بالكابتن أحمد: 0790000000', en: 'Calling Captain Ahmad: 0790000000'),
                             style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                           ),
                         ],
@@ -1009,7 +1094,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                       const SizedBox(width: 6),
                       Expanded(
                         child: Text(
-                          widget.etaText,
+                          widget.effectiveEtaText,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
@@ -1042,7 +1127,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'فحص أمان مجاني',
+                          AppLanguage.tr(ar: 'فحص أمان مجاني', en: 'Free Safety Check'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -1100,7 +1185,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'مركز رعاية عملاء غاز الأردن',
+                    AppLanguage.tr(ar: 'مركز رعاية عملاء غاز الأردن', en: 'Jordan Gas Customer Care Center'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -1109,7 +1194,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'متاح للمساعدة الفورية وتعديل الطلبات',
+                    AppLanguage.tr(ar: 'متاح للمساعدة الفورية وتعديل الطلبات', en: 'Available for instant help and order updates'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 11,
                       color: colorOnSurfaceVariant,
@@ -1124,7 +1209,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    'الخط الساخن لخدمة العملاء: 065000000',
+                    AppLanguage.tr(ar: 'الخط الساخن لخدمة العملاء: 065000000', en: 'Customer Care Hotline: 065000000'),
                     style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     textAlign: TextAlign.center,
                   ),
@@ -1147,7 +1232,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                   const Icon(Icons.call, size: 14, color: colorSecondary),
                   const SizedBox(width: 4),
                   Text(
-                    'اتصال مباشر',
+                    AppLanguage.tr(ar: 'اتصال مباشر', en: 'Direct Call'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -1184,7 +1269,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
               ),
               const SizedBox(width: 8),
               Text(
-                widget.orderDescription,
+                widget.effectiveOrderDescription,
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
@@ -1194,7 +1279,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
             ],
           ),
           Text(
-            widget.orderPrice,
+            widget.effectiveOrderPrice,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -1217,7 +1302,7 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
-          'اليوم • صمام الأمان مشمول',
+          AppLanguage.tr(ar: 'اليوم • صمام الأمان مشمول', en: 'Today • Safety Valve Included'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 11,
             color: colorOnSurfaceVariant,
@@ -1570,8 +1655,8 @@ class _DriverChatScreenState extends State<DriverChatScreen> {
                     ),
                     decoration: InputDecoration(
                       hintText: _activeTab == 0
-                          ? 'اكتب رسالتك للكابتن...'
-                          : 'اكتب استفسارك لخدمة العملاء...',
+                          ? AppLanguage.tr(ar: 'اكتب رسالتك للكابتن...', en: 'Type a message to captain...')
+                          : AppLanguage.tr(ar: 'اكتب استفسارك لخدمة العملاء...', en: 'Type a query to customer support...'),
                       hintStyle: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 13,
                         color: colorOnSurfaceVariant,

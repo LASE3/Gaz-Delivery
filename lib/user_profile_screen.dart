@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app_language.dart';
 import 'home_screen.dart';
 import 'orders_history_screen.dart';
 import 'delivery_location.dart';
@@ -38,15 +39,60 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   // Profile State
   String _userName = 'محمد القضاة';
+  String get _displayUserName =>
+      _userName == 'محمد القضاة'
+          ? AppLanguage.tr(ar: 'محمد القضاة', en: 'Mohammad Al-Qudah')
+          : _userName;
   String _userPhone = '+962 7 9123 4567';
   String _userEmail = 'm.qudah@example.com';
-  final String _userCity = 'عمان';
-  String _selectedValveType = 'سريع (كبس أزرق)';
-  String _selectedPaymentMethod = 'نقدًا عند الاستلام';
+  String get _displayCity => AppLanguage.tr(ar: 'عمان', en: 'Amman');
+  String _selectedValveType = 'quick';
+  String get _displayValveType => _selectedValveType == 'quick'
+      ? AppLanguage.tr(ar: 'سريع (كبس أزرق)', en: 'Quick Click-on')
+      : AppLanguage.tr(ar: 'لولبي (سن يدوي)', en: 'Screw-on Thread');
+
+  String _selectedPaymentMethod = 'cod';
+  String get _displayPaymentMethod {
+    if (_selectedPaymentMethod == 'cod') {
+      return AppLanguage.tr(ar: 'نقدًا عند الاستلام', en: 'Cash on Delivery');
+    } else if (_selectedPaymentMethod == 'cliq') {
+      return AppLanguage.tr(ar: 'دفع فوري عبر كليك CliQ', en: 'Instant via CliQ');
+    } else {
+      return AppLanguage.tr(ar: 'بطاقة بنكية إلكترونية', en: 'Credit/Debit Card');
+    }
+  }
+
+  String _getAddressTitle(Map<String, dynamic> addr) {
+    if (addr['id'] == '1') return AppLanguage.tr(ar: 'المنزل', en: 'Home');
+    if (addr['id'] == '2') return AppLanguage.tr(ar: 'مكتب العمل', en: 'Work Office');
+    return addr['title']?.toString() ?? '';
+  }
+
+  String _getAddressText(Map<String, dynamic> addr) {
+    if (addr['id'] == '1') {
+      return AppLanguage.tr(
+        ar: 'عمان، تلاع العلي، شارع وصفي التل، عمارة 42، طابق 3، شقة 6',
+        en: 'Amman, Tlaa Al-Ali, Wasfi Al-Tal St, Bldg 42, Floor 3, Apt 6',
+      );
+    }
+    if (addr['id'] == '2') {
+      return AppLanguage.tr(
+        ar: 'عمان، الدوار السابع، مجمع جوهرة عمان، طابق 2',
+        en: 'Amman, 7th Circle, Jawharat Amman Complex, Floor 2',
+      );
+    }
+    return addr['address']?.toString() ?? '';
+  }
+
+  String? _getAddressLandmark(Map<String, dynamic> addr) {
+    if (addr['id'] == '1') return AppLanguage.tr(ar: 'قرب حلويات حبيبة', en: 'Near Habiba Sweets');
+    if (addr['id'] == '2') return AppLanguage.tr(ar: 'بجانب بنك الإسكان', en: 'Next to Housing Bank');
+    return addr['landmark']?.toString();
+  }
 
   // Settings State
   bool _notificationsEnabled = true;
-  String _selectedLanguage = 'ar'; // 'ar' or 'en'
+  // Selected language tracked via AppLanguage
 
   // Saved Addresses State
   final List<Map<String, dynamic>> _savedAddresses = [
@@ -75,34 +121,39 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: colorSurface,
-        appBar: _buildTopAppBar(),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildProfileHeaderCard(),
-              const SizedBox(height: 16),
-              _buildQuickUtilityStrip(),
-              const SizedBox(height: 20),
-              _buildSavedAddressesSection(),
-              const SizedBox(height: 20),
-              _buildAccountSettingsSection(),
-              const SizedBox(height: 20),
-              _buildEmergencyHotlineCard(),
-              const SizedBox(height: 24),
-              _buildLogoutAndVersion(),
-              const SizedBox(height: 80), // Padding for bottom nav
-            ],
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
+            backgroundColor: colorSurface,
+            appBar: _buildTopAppBar(),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildProfileHeaderCard(),
+                  const SizedBox(height: 16),
+                  _buildQuickUtilityStrip(),
+                  const SizedBox(height: 20),
+                  _buildSavedAddressesSection(),
+                  const SizedBox(height: 20),
+                  _buildAccountSettingsSection(),
+                  const SizedBox(height: 20),
+                  _buildEmergencyHotlineCard(),
+                  const SizedBox(height: 24),
+                  _buildLogoutAndVersion(),
+                  const SizedBox(height: 80), // Padding for bottom nav
+                ],
+              ),
+            ),
+            bottomNavigationBar: _buildBottomNav(),
           ),
-        ),
-        bottomNavigationBar: _buildBottomNav(),
-      ),
+        );
+      },
     );
   }
 
@@ -141,7 +192,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'الملف الشخصي',
+                AppLanguage.tr(ar: 'الملف الشخصي', en: 'User Profile'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -325,7 +376,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  _userName,
+                                  _displayUserName,
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 19,
                                     fontWeight: FontWeight.w700,
@@ -357,7 +408,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      _userCity,
+                                      _displayCity,
                                       style: GoogleFonts.ibmPlexSansArabic(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w600,
@@ -421,7 +472,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'عميل معتمد وموثق بالهوية ومعايير الأمان الأردنية',
+                          AppLanguage.tr(
+                            ar: 'عميل معتمد وموثق بالهوية ومعايير الأمان الأردنية',
+                            en: 'Verified under Jordan Safety Standards',
+                          ),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
@@ -459,7 +513,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'تعديل الملف الشخصي',
+                          AppLanguage.tr(ar: 'تعديل الملف الشخصي', en: 'Edit Profile'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -525,7 +579,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'نوع الصمام',
+                          AppLanguage.tr(ar: 'نوع الصمام', en: 'Valve Type'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.w500,
@@ -534,7 +588,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          _selectedValveType,
+                          _displayValveType,
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -594,7 +648,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'طريقة الدفع',
+                          AppLanguage.tr(ar: 'طريقة الدفع', en: 'Payment Method'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.w500,
@@ -603,7 +657,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          _selectedPaymentMethod,
+                          _displayPaymentMethod,
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -643,7 +697,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'العناوين المحفوظة',
+                  AppLanguage.tr(ar: 'العناوين المحفوظة', en: 'Saved Addresses'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
@@ -659,7 +713,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                '${_savedAddresses.length} عناوين',
+                AppLanguage.tr(ar: '${_savedAddresses.length} عناوين', en: '${_savedAddresses.length} Addresses'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -708,7 +762,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '+ إضافة عنوان جديد',
+                  AppLanguage.tr(ar: '+ إضافة عنوان جديد', en: '+ Add New Address'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -774,7 +828,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    addr['title'],
+                    _getAddressTitle(addr),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -793,7 +847,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        'افتراضي',
+                        AppLanguage.tr(ar: 'افتراضي', en: 'Default'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -814,7 +868,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       color: colorOnSurfaceVariant,
                     ),
                     visualDensity: VisualDensity.compact,
-                    tooltip: 'تعديل العنوان',
+                    tooltip: AppLanguage.tr(ar: 'تعديل العنوان', en: 'Edit Address'),
                   ),
                   IconButton(
                     onPressed: () => _deleteAddress(id),
@@ -824,7 +878,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       color: colorError,
                     ),
                     visualDensity: VisualDensity.compact,
-                    tooltip: 'حذف العنوان',
+                    tooltip: AppLanguage.tr(ar: 'حذف العنوان', en: 'Delete Address'),
                   ),
                 ],
               ),
@@ -834,7 +888,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 6),
             child: Text(
-              addr['address'],
+              _getAddressText(addr),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 13,
                 height: 1.5,
@@ -843,7 +897,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
             ),
           ),
-          if (addr['hasElevator'] == true || addr['landmark'] != null) ...[
+          if (addr['hasElevator'] == true || _getAddressLandmark(addr) != null) ...[
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(right: 6),
@@ -862,7 +916,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'يوجد مصعد كهربائي',
+                          AppLanguage.tr(ar: 'يوجد مصعد كهربائي', en: 'Elevator available'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.w500,
@@ -871,7 +925,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ],
                     ),
-                  if (addr['landmark'] != null)
+                  if (_getAddressLandmark(addr) != null)
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -882,7 +936,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          addr['landmark'],
+                          _getAddressLandmark(addr) ?? '',
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.w500,
@@ -916,7 +970,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             const SizedBox(width: 6),
             Text(
-              'إعدادات الحساب والخدمة',
+              AppLanguage.tr(ar: 'إعدادات الحساب والخدمة', en: 'Account & Service Settings'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 17,
                 fontWeight: FontWeight.w700,
@@ -944,8 +998,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               // Past orders & Invoices
               _buildSettingsRow(
                 icon: Icons.receipt_long_rounded,
-                title: 'سجل الطلبات والفواتير السابقة',
-                subtitle: 'تاريخ التوصيل والإيصالات الضريبية',
+                title: AppLanguage.tr(ar: 'سجل الطلبات والفواتير السابقة', en: 'Order History & Invoices'),
+                subtitle: AppLanguage.tr(ar: 'تاريخ التوصيل والإيصالات الضريبية', en: 'Delivery dates & tax receipts'),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -959,7 +1013,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        '14 طلب ناجح',
+                        AppLanguage.tr(ar: AppLanguage.tr(ar: '14 طلب ناجح', en: '14 orders completed'), en: '14 orders completed'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -968,8 +1022,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    const Icon(
-                      Icons.chevron_left_rounded,
+                    Icon(
+                      AppLanguage.chevronForward,
                       color: colorOutline,
                       size: 20,
                     ),
@@ -989,10 +1043,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               // Help Center & Support
               _buildSettingsRow(
                 icon: Icons.support_agent_rounded,
-                title: 'مركز المساعدة وبلاغات الدعم الفني',
-                subtitle: 'خدمة العملاء وحل الشكاوى على مدار الساعة',
-                trailing: const Icon(
-                  Icons.chevron_left_rounded,
+                title: AppLanguage.tr(ar: 'مركز المساعدة وبلاغات الدعم الفني', en: 'Help Center & Support'),
+                subtitle: AppLanguage.tr(ar: 'خدمة العملاء وحل الشكاوى على مدار الساعة', en: '24/7 customer service & complaints'),
+                trailing: Icon(
+                  AppLanguage.chevronForward,
                   color: colorOutline,
                   size: 20,
                 ),
@@ -1010,8 +1064,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               // Language Selector Toggle
               _buildSettingsRow(
                 icon: Icons.translate_rounded,
-                title: 'لغة التطبيق',
-                subtitle: 'Language Preferences',
+                title: AppLanguage.tr(ar: 'لغة التطبيق', en: 'App Language'),
+                subtitle: AppLanguage.tr(ar: 'تفضيلات اللغة والاتجاه', en: 'Language & Direction'),
+                onTap: () {
+                  AppLanguage.toggleLanguage();
+                },
                 trailing: Container(
                   padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
@@ -1024,12 +1081,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       _buildLangPill(
                         code: 'ar',
                         label: 'العربية',
-                        isSelected: _selectedLanguage == 'ar',
+                        isSelected: AppLanguage.isArabic,
                       ),
                       _buildLangPill(
                         code: 'en',
                         label: 'English',
-                        isSelected: _selectedLanguage == 'en',
+                        isSelected: !AppLanguage.isArabic,
                       ),
                     ],
                   ),
@@ -1040,8 +1097,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               // Delivery Notifications Toggle Switch
               _buildSettingsRow(
                 icon: Icons.notifications_active_outlined,
-                title: 'إشعارات التوصيل ووصول الكابتن',
-                subtitle: 'تحديث فوري لمركبة التوزيع واقترابها',
+                title: AppLanguage.tr(ar: 'إشعارات التوصيل ووصول الكابتن', en: 'Delivery & Driver Notifications'),
+                subtitle: AppLanguage.tr(ar: 'تحديث فوري لمركبة التوزيع واقترابها', en: 'Real-time vehicle arrival updates'),
                 trailing: Switch.adaptive(
                   value: _notificationsEnabled,
                   activeTrackColor: colorSecondaryContainer,
@@ -1053,12 +1110,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          val
-                              ? 'تم تفعيل إشعارات اقتراب شاحنة الغاز'
-                              : 'تم تعطيل إشعارات التوصيل',
-                          style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
-                        ),
-                        behavior: SnackBarBehavior.floating,
+                      val
+                          ? AppLanguage.tr(
+                              ar: 'تم تفعيل إشعارات اقتراب شاحنة الغاز',
+                              en: 'Truck approach notifications enabled',
+                            )
+                          : AppLanguage.tr(
+                              ar: 'تم تعطيل إشعارات التوصيل',
+                              en: 'Delivery notifications disabled',
+                            ),
+                      style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
+                    ),
+                    behavior: SnackBarBehavior.floating,
                         backgroundColor: const Color(0xFF131B2E),
                         duration: const Duration(seconds: 2),
                       ),
@@ -1071,10 +1134,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               // EMRC Licences & Legal
               _buildSettingsRow(
                 icon: Icons.policy_outlined,
-                title: 'الشروط وتراخيص هيئة الطاقة EMRC',
-                subtitle: 'سياسة الخصوصية ومعايير النقل المعتمدة',
-                trailing: const Icon(
-                  Icons.chevron_left_rounded,
+                title: AppLanguage.tr(ar: 'الشروط وتراخيص هيئة الطاقة EMRC', en: 'EMRC Terms & Energy Licenses'),
+                subtitle: AppLanguage.tr(ar: 'سياسة الخصوصية ومعايير النقل المعتمدة', en: 'Privacy policy & certified transport standards'),
+                trailing: Icon(
+                  AppLanguage.chevronForward,
                   color: colorOutline,
                   size: 20,
                 ),
@@ -1149,12 +1212,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     required String label,
     required bool isSelected,
   }) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
-        setState(() {
-          _selectedLanguage = code;
-        });
+        AppLanguage.setLanguage(code);
       },
+      borderRadius: BorderRadius.circular(8),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -1164,8 +1226,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 4,
+                    offset: const Offset(0, 1),
                   ),
                 ]
               : null,
@@ -1175,7 +1238,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 12,
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-            color: isSelected ? colorOnSurface : colorOnSurfaceVariant,
+            color: isSelected ? colorSecondaryContainer : colorOnSurfaceVariant,
           ),
         ),
       ),
@@ -1216,7 +1279,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(width: 8),
               Text(
-                'طوارئ الغاز والدفاع المدني',
+                AppLanguage.tr(ar: 'طوارئ الغاز والدفاع المدني', en: 'Gas Emergency & Civil Defense'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -1227,7 +1290,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'في حال الاشتباه بأي تسرب للغاز أو حالة طوارئ منزلية، يرجى إخلاء المكان فورا والاتصال بفرق السلامة دون تردد:',
+            AppLanguage.tr(ar: 'في حال الاشتباه بأي تسرب للغاز أو حالة طوارئ منزلية، يرجى إخلاء المكان فورا والاتصال بفرق السلامة دون تردد:', en: 'In case of suspected gas leak or emergency, evacuate immediately and contact safety services:'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12.5,
               height: 1.5,
@@ -1243,7 +1306,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 child: InkWell(
                   onTap: () => _confirmEmergencyCall(
                     number: '911',
-                    title: 'الدفاع المدني والأمن العام (911)',
+                    title: AppLanguage.tr(ar: 'الدفاع المدني والأمن العام (911)', en: 'Civil Defense & Public Security (911)'),
                   ),
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
@@ -1268,7 +1331,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'طوارئ 911',
+                          AppLanguage.tr(ar: 'طوارئ 911', en: 'Emergency 911'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -1287,7 +1350,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 child: InkWell(
                   onTap: () => _confirmEmergencyCall(
                     number: '065000000',
-                    title: 'مركز الغاز الموحد للطوارئ',
+                    title: AppLanguage.tr(ar: 'مركز الغاز الموحد للطوارئ', en: 'Unified Gas Emergency Center'),
                   ),
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
@@ -1312,7 +1375,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'مركز الغاز الموحد',
+                          AppLanguage.tr(ar: 'مركز الغاز الموحد', en: 'Unified Gas Center'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -1356,7 +1419,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'تسجيل الخروج',
+                  AppLanguage.tr(ar: 'تسجيل الخروج', en: 'Log Out'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -1369,7 +1432,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
         const SizedBox(height: 14),
         Text(
-          'إصدار التطبيق v2.4.0',
+          AppLanguage.tr(ar: 'إصدار التطبيق v2.4.0', en: 'App Version v2.4.0'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 11,
             fontWeight: FontWeight.w600,
@@ -1378,7 +1441,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
         const SizedBox(height: 2),
         Text(
-          'غاز الأردن المعتمد (خدمات العاصمة عمان ومحافظة الزرقاء)',
+          AppLanguage.tr(ar: 'غاز الأردن المعتمد (خدمات العاصمة عمان ومحافظة الزرقاء)', en: 'Jordan Gas Certified (Amman & Zarqa Services)'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 11,
             fontWeight: FontWeight.w400,
@@ -1421,23 +1484,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               _buildNavItem(
                 index: 0,
                 icon: Icons.local_gas_station_rounded,
-                label: 'الرئيسية',
+                label: AppLanguage.tr(ar: 'الرئيسية', en: 'Home'),
               ),
               _buildNavItem(
                 index: 1,
                 icon: Icons.inventory_2_outlined,
-                label: 'طلباتي',
+                label: AppLanguage.tr(ar: 'طلباتي', en: 'Orders'),
               ),
               _buildNavItem(
                 index: 2,
                 icon: Icons.notifications_none_rounded,
-                label: 'الإشعارات',
+                label: AppLanguage.tr(ar: 'الإشعارات', en: 'Notifications'),
                 hasBadge: true,
               ),
               _buildNavItem(
                 index: 3,
                 icon: Icons.person_rounded,
-                label: 'حسابي',
+                label: AppLanguage.tr(ar: 'حسابي', en: 'Profile'),
               ),
             ],
           ),
@@ -1544,7 +1607,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     showDialog(
       context: context,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           backgroundColor: colorSurfaceLowest,
@@ -1563,7 +1626,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(width: 10),
               Text(
-                'تعديل الملف الشخصي',
+                AppLanguage.tr(ar: 'تعديل الملف الشخصي', en: 'Edit Profile'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -1578,7 +1641,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 TextField(
                   controller: nameCtrl,
                   decoration: InputDecoration(
-                    labelText: 'الاسم الكامل',
+                    labelText: AppLanguage.tr(ar: 'الاسم الكامل', en: 'Full Name'),
                     labelStyle: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     filled: true,
                     fillColor: colorSurfaceLow,
@@ -1594,7 +1657,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   controller: phoneCtrl,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                    labelText: 'رقم الهاتف',
+                    labelText: AppLanguage.tr(ar: 'رقم الهاتف', en: 'Phone Number'),
                     labelStyle: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     filled: true,
                     fillColor: colorSurfaceLow,
@@ -1610,7 +1673,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   controller: emailCtrl,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'البريد الإلكتروني',
+                    labelText: AppLanguage.tr(ar: 'البريد الإلكتروني', en: 'Email Address'),
                     labelStyle: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     filled: true,
                     fillColor: colorSurfaceLow,
@@ -1628,7 +1691,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             TextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(
-                'إلغاء',
+                AppLanguage.tr(ar: 'إلغاء', en: 'Cancel'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   color: colorOnSurfaceVariant,
                   fontWeight: FontWeight.w600,
@@ -1646,7 +1709,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'تم تحديث البيانات بنجاح',
+                      AppLanguage.tr(ar: 'تم تحديث البيانات بنجاح', en: 'Profile updated successfully'),
                       style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     ),
                     backgroundColor: const Color(0xFF131B2E),
@@ -1662,7 +1725,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
               ),
               child: Text(
-                'حفظ التغييرات',
+                AppLanguage.tr(ar: 'حفظ التغييرات', en: 'Save Changes'),
                 style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.w700),
               ),
             ),
@@ -1677,7 +1740,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
@@ -1700,7 +1763,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'اختر نوع صمام أسطوانة الغاز',
+                AppLanguage.tr(ar: 'اختر نوع صمام أسطوانة الغاز', en: 'Select Gas Valve Type'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -1709,7 +1772,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'تأكد من اختيار الصمام المطابق لمنظم الغاز في منزلك لتفادي مشاكل التركيب',
+                AppLanguage.tr(ar: 'تأكد من اختيار الصمام المطابق لمنظم الغاز في منزلك لتفادي مشاكل التركيب', en: 'Ensure valve matches home regulator to avoid installation issues'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   color: colorOnSurfaceVariant,
@@ -1717,21 +1780,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(height: 16),
               _buildOptionTile(
-                title: 'سريع (كبس أزرق) - Modern Click-on',
-                desc: 'المنظم الحديث بالضغط الأزرق المعتمد في معظم المنازل',
-                isSelected: _selectedValveType.contains('سريع'),
+                title: AppLanguage.tr(ar: 'سريع (كبس أزرق) - Modern Click-on', en: 'Quick Click (Blue Modern) - Click-on'),
+                desc: AppLanguage.tr(ar: 'المنظم الحديث بالضغط الأزرق المعتمد في معظم المنازل', en: 'Modern blue snap-on regulator standard in most homes'),
+                isSelected: _selectedValveType == 'quick',
                 onTap: () {
-                  setState(() => _selectedValveType = 'سريع (كبس أزرق)');
+                  setState(() => _selectedValveType = 'quick');
                   Navigator.pop(ctx);
                 },
               ),
               const SizedBox(height: 10),
               _buildOptionTile(
-                title: 'لولبي تقليدي (سن ناعم) - Screw-on',
-                desc: 'الصمام المعدني القديم بالربط الميكانيكي اليدوي',
-                isSelected: _selectedValveType.contains('لولبي'),
+                title: AppLanguage.tr(ar: 'لولبي تقليدي (سن ناعم) - Screw-on', en: 'Traditional Screw-on (Manual Thread)'),
+                desc: AppLanguage.tr(ar: 'الصمام المعدني القديم بالربط الميكانيكي اليدوي', en: 'Classic manual mechanical threaded valve'),
+                isSelected: _selectedValveType == 'screw',
                 onTap: () {
-                  setState(() => _selectedValveType = 'لولبي (سن يدوي)');
+                  setState(() => _selectedValveType = 'screw');
                   Navigator.pop(ctx);
                 },
               ),
@@ -1747,7 +1810,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
@@ -1770,7 +1833,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'طريقة الدفع الافتراضية',
+                AppLanguage.tr(ar: 'طريقة الدفع الافتراضية', en: 'Default Payment Method'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -1779,31 +1842,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(height: 16),
               _buildOptionTile(
-                title: 'نقدًا عند الاستلام (COD)',
-                desc: 'الدفع المباشر لكابتن التوزيع بعد الفحص والاستلام',
-                isSelected: _selectedPaymentMethod.contains('نقدًا'),
+                title: AppLanguage.tr(ar: 'نقدًا عند الاستلام (COD)', en: 'Cash on Delivery (COD)'),
+                desc: AppLanguage.tr(ar: 'الدفع المباشر لكابتن التوزيع بعد الفحص والاستلام', en: 'Direct payment to driver after inspection'),
+                isSelected: _selectedPaymentMethod == 'cod',
                 onTap: () {
-                  setState(() => _selectedPaymentMethod = 'نقدًا عند الاستلام');
+                  setState(() => _selectedPaymentMethod = 'cod');
                   Navigator.pop(ctx);
                 },
               ),
               const SizedBox(height: 10),
               _buildOptionTile(
-                title: 'كليك (CliQ) - تحويل فوري',
-                desc: 'دفع مباشر عبر الاسم المستعار لكابتن التوصيل',
-                isSelected: _selectedPaymentMethod.contains('كليك'),
+                title: AppLanguage.tr(ar: 'كليك (CliQ) - تحويل فوري', en: 'CliQ - Instant Mobile Transfer'),
+                desc: AppLanguage.tr(ar: 'دفع مباشر عبر الاسم المستعار لكابتن التوصيل', en: 'Direct payment via driver Alias / IBAN'),
+                isSelected: _selectedPaymentMethod == 'cliq',
                 onTap: () {
-                  setState(() => _selectedPaymentMethod = 'دفع فوري عبر كليك CliQ');
+                  setState(() => _selectedPaymentMethod = 'cliq');
                   Navigator.pop(ctx);
                 },
               ),
               const SizedBox(height: 10),
               _buildOptionTile(
-                title: 'بطاقة فيزا / ماستركارد',
-                desc: 'دفع إلكتروني آمن مشفر 100%',
-                isSelected: _selectedPaymentMethod.contains('بطاقة'),
+                title: AppLanguage.tr(ar: 'بطاقة فيزا / ماستركارد', en: 'Visa / MasterCard'),
+                desc: AppLanguage.tr(ar: 'دفع إلكتروني آمن مشفر 100%', en: '100% secure encrypted payment'),
+                isSelected: _selectedPaymentMethod == 'card',
                 onTap: () {
-                  setState(() => _selectedPaymentMethod = 'بطاقة بنكية إلكترونية');
+                  setState(() => _selectedPaymentMethod = 'card');
                   Navigator.pop(ctx);
                 },
               ),
@@ -1871,9 +1934,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   void _showEditAddressModal(Map<String, dynamic> addr) {
-    final titleCtrl = TextEditingController(text: addr['title']);
-    final addressCtrl = TextEditingController(text: addr['address']);
-    final landmarkCtrl = TextEditingController(text: addr['landmark'] ?? '');
+    final titleCtrl = TextEditingController(text: _getAddressTitle(addr));
+    final addressCtrl = TextEditingController(text: _getAddressText(addr));
+    final landmarkCtrl = TextEditingController(text: _getAddressLandmark(addr) ?? '');
     bool hasElevator = addr['hasElevator'] == true;
 
     showModalBottomSheet(
@@ -1882,7 +1945,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       backgroundColor: Colors.transparent,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setSheetState) => Directionality(
-          textDirection: TextDirection.rtl,
+          textDirection: AppLanguage.direction,
           child: Container(
             padding: EdgeInsets.only(
               left: 20,
@@ -1910,7 +1973,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'تعديل تفاصيل العنوان',
+                  AppLanguage.tr(ar: 'تعديل تفاصيل العنوان', en: 'Edit Address Details'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
@@ -1921,7 +1984,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 TextField(
                   controller: titleCtrl,
                   decoration: InputDecoration(
-                    labelText: 'اسم العنوان (مثال: المنزل، الشاليه)',
+                    labelText: AppLanguage.tr(ar: 'اسم العنوان (مثال: المنزل، الشاليه)', en: 'Address Name (e.g. Home, Office)'),
                     labelStyle: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     filled: true,
                     fillColor: colorSurfaceLow,
@@ -1936,7 +1999,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   controller: addressCtrl,
                   maxLines: 2,
                   decoration: InputDecoration(
-                    labelText: 'العنوان بالتفصيل',
+                    labelText: AppLanguage.tr(ar: 'العنوان بالتفصيل', en: 'Detailed Address'),
                     labelStyle: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     filled: true,
                     fillColor: colorSurfaceLow,
@@ -1950,7 +2013,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 TextField(
                   controller: landmarkCtrl,
                   decoration: InputDecoration(
-                    labelText: 'علامة مميزة (اختياري)',
+                    labelText: AppLanguage.tr(ar: 'علامة مميزة (اختياري)', en: 'Nearby Landmark (Optional)'),
                     labelStyle: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     filled: true,
                     fillColor: colorSurfaceLow,
@@ -1965,14 +2028,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   value: hasElevator,
                   activeColor: colorSecondaryContainer,
                   title: Text(
-                    'يتوفر مصعد في المبنى',
+                    AppLanguage.tr(ar: 'يتوفر مصعد في المبنى', en: 'Elevator Available in Building'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   subtitle: Text(
-                    'يساعد كابتن التوصيل في التجهيز المسبق لحمل الأسطوانات',
+                    AppLanguage.tr(ar: 'يساعد كابتن التوصيل في التجهيز المسبق لحمل الأسطوانات', en: 'Helps driver prepare for cylinder carrying'),
                     style: GoogleFonts.ibmPlexSansArabic(fontSize: 11),
                   ),
                   controlAffinity: ListTileControlAffinity.leading,
@@ -1995,7 +2058,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'تم تحديث العنوان بنجاح',
+                          AppLanguage.tr(ar: 'تم تحديث العنوان بنجاح', en: 'Address updated successfully'),
                           style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                         ),
                         behavior: SnackBarBehavior.floating,
@@ -2012,7 +2075,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                   ),
                   child: Text(
-                    'حفظ التعديلات',
+                    AppLanguage.tr(ar: 'حفظ التعديلات', en: 'Save Changes'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
@@ -2031,19 +2094,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     showDialog(
       context: context,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           backgroundColor: colorSurfaceLowest,
           title: Text(
-            'حذف العنوان',
+            AppLanguage.tr(ar: 'حذف العنوان', en: 'Delete Address'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 17,
               fontWeight: FontWeight.w700,
             ),
           ),
           content: Text(
-            'هل أنت متأكد من رغبتك في حذف هذا العنوان من قائمة العناوين المحفوظة؟',
+            AppLanguage.tr(ar: 'هل أنت متأكد من رغبتك في حذف هذا العنوان من قائمة العناوين المحفوظة؟', en: 'Are you sure you want to delete this address from your saved list?'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               color: colorOnSurfaceVariant,
@@ -2053,7 +2116,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             TextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(
-                'تراجع',
+                AppLanguage.tr(ar: 'تراجع', en: 'Cancel'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   color: colorOnSurfaceVariant,
                   fontWeight: FontWeight.w600,
@@ -2069,7 +2132,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'تم حذف العنوان بنجاح',
+                      AppLanguage.tr(ar: 'تم حذف العنوان بنجاح', en: 'Address deleted successfully'),
                       style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     ),
                     behavior: SnackBarBehavior.floating,
@@ -2085,7 +2148,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
               ),
               child: Text(
-                'حذف',
+                AppLanguage.tr(ar: 'حذف', en: 'Delete'),
                 style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.w700),
               ),
             ),
@@ -2101,7 +2164,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           padding: const EdgeInsets.all(22),
           decoration: const BoxDecoration(
@@ -2146,7 +2209,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'تراخيص هيئة الطاقة والمعادن',
+                          AppLanguage.tr(ar: 'تراخيص هيئة الطاقة والمعادن', en: 'EMRC Energy Licenses'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -2167,18 +2230,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               const SizedBox(height: 16),
               _buildEmrcBullet(
-                title: 'ترخيص نقل وتوزيع رقم JO-EMRC-2026/894',
-                desc: 'مرخص رسميًا لنقل وتوزيع أسطوانات الغاز البترولي المسال (LPG) في المملكة الأردنية الهاشمية.',
+                title: AppLanguage.tr(ar: 'ترخيص نقل وتوزيع رقم JO-EMRC-2026/894', en: 'Transport & Distribution License JO-EMRC-2026/894'),
+                desc: AppLanguage.tr(ar: 'مرخص رسميًا لنقل وتوزيع أسطوانات الغاز البترولي المسال (LPG) في المملكة الأردنية الهاشمية.', en: 'Officially licensed for LPG cylinder distribution across Jordan.'),
               ),
               const SizedBox(height: 10),
               _buildEmrcBullet(
-                title: 'مطابقة مواصفات مؤسسة المقاييس (JSMO)',
-                desc: 'جميع الأسطوانات والصمامات تخضع للفحص الميكانيكي الهيدروليكي واختبار التسرب الدوري قبل التحميل.',
+                title: AppLanguage.tr(ar: 'مطابقة مواصفات مؤسسة المقاييس (JSMO)', en: 'JSMO Safety Standard Compliance'),
+                desc: AppLanguage.tr(ar: 'جميع الأسطوانات والصمامات تخضع للفحص الميكانيكي الهيدروليكي واختبار التسرب الدوري قبل التحميل.', en: 'All cylinders and valves undergo hydraulic pressure & leak tests before loading.'),
               ),
               const SizedBox(height: 10),
               _buildEmrcBullet(
-                title: 'تأمين سلامة شامل ومسؤولية مدنية',
-                desc: 'كافة عمليات النقل والتركيب مغطاة بوثيقة تأمين معتمدة تضمن سلامة المستهلك والمنشآت.',
+                title: AppLanguage.tr(ar: 'تأمين سلامة شامل ومسؤولية مدنية', en: 'Comprehensive Safety & Liability Insurance'),
+                desc: AppLanguage.tr(ar: 'كافة عمليات النقل والتركيب مغطاة بوثيقة تأمين معتمدة تضمن سلامة المستهلك والمنشآت.', en: 'All deliveries covered by certified safety insurance policies.'),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -2192,7 +2255,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                 ),
                 child: Text(
-                  'إغلاق',
+                  AppLanguage.tr(ar: 'إغلاق', en: 'Close'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -2255,7 +2318,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     showDialog(
       context: context,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           backgroundColor: colorSurfaceLowest,
@@ -2264,7 +2327,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               const Icon(Icons.phone_in_talk_rounded, color: colorError),
               const SizedBox(width: 8),
               Text(
-                'الاتصال بالطوارئ',
+                AppLanguage.tr(ar: 'الاتصال بالطوارئ', en: 'Emergency Call'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -2273,7 +2336,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ],
           ),
           content: Text(
-            'هل ترغب في الاتصال بـ $title على الرقم $number فوراً؟',
+            AppLanguage.tr(ar: 'هل ترغب في الاتصال بـ $title على الرقم $number فوراً؟', en: 'Do you want to call $title on $number now?'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               color: colorOnSurfaceVariant,
@@ -2283,7 +2346,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             TextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(
-                'إلغاء',
+                AppLanguage.tr(ar: 'إلغاء', en: 'Cancel'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   color: colorOnSurfaceVariant,
                   fontWeight: FontWeight.w600,
@@ -2296,7 +2359,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'جاري الاتصال بـ $number ...',
+                      AppLanguage.tr(ar: 'جاري الاتصال بـ $number ...', en: 'Calling $number ...'),
                       style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     ),
                     backgroundColor: colorError,
@@ -2312,7 +2375,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
               ),
               child: Text(
-                'اتصال الآن',
+                AppLanguage.tr(ar: 'اتصال الآن', en: 'Call Now'),
                 style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.w700),
               ),
             ),
@@ -2326,7 +2389,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     showDialog(
       context: context,
       builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           backgroundColor: colorSurfaceLowest,
@@ -2335,7 +2398,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               const Icon(Icons.logout_rounded, color: colorError),
               const SizedBox(width: 8),
               Text(
-                'تسجيل الخروج',
+                AppLanguage.tr(ar: 'تسجيل الخروج', en: 'Log Out'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -2344,7 +2407,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ],
           ),
           content: Text(
-            'هل أنت متأكد من رغبتك في تسجيل الخروج من التطبيق؟',
+            AppLanguage.tr(ar: 'هل أنت متأكد من رغبتك في تسجيل الخروج من التطبيق؟', en: 'Are you sure you want to log out of the application?'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               color: colorOnSurfaceVariant,
@@ -2354,7 +2417,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             TextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(
-                'إلغاء',
+                AppLanguage.tr(ar: 'إلغاء', en: 'Cancel'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   color: colorOnSurfaceVariant,
                   fontWeight: FontWeight.w600,
@@ -2380,7 +2443,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
               ),
               child: Text(
-                'تأكيد الخروج',
+                AppLanguage.tr(ar: 'تأكيد الخروج', en: 'Confirm Logout'),
                 style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.w700),
               ),
             ),

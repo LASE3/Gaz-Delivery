@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'delivery_location.dart';
+import 'app_language.dart';
 
 class CartAndCheckoutScreen extends StatefulWidget {
   const CartAndCheckoutScreen({super.key});
@@ -13,7 +14,9 @@ class CartAndCheckoutScreen extends StatefulWidget {
 class _CheckoutItem {
   final String id;
   final String name;
+  final String? nameEn;
   final String badge;
+  final String? badgeEn;
   final IconData? badgeIcon;
   final double unitPrice;
   final String imageUrl;
@@ -22,12 +25,17 @@ class _CheckoutItem {
   _CheckoutItem({
     required this.id,
     required this.name,
+    this.nameEn,
     required this.badge,
+    this.badgeEn,
     this.badgeIcon,
     required this.unitPrice,
     required this.imageUrl,
     required this.quantity,
   });
+
+  String get displayName => AppLanguage.isArabic ? name : (nameEn ?? name);
+  String get displayBadge => AppLanguage.isArabic ? badge : (badgeEn ?? badge);
 }
 
 class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
@@ -54,8 +62,14 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
   static const Color colorOnErrorContainer = Color(0xFF93000A);
 
   // Address State
-  String _deliveryAddress =
-      'تلاع العلي، شارع وصفي التل (الجاردنز)، بناء 42، طابق 3، شقة 6';
+  String? _customDeliveryAddress;
+  String get _deliveryAddress =>
+      _customDeliveryAddress ??
+      AppLanguage.tr(
+        ar: 'تلاع العلي، شارع وصفي التل (الجاردنز)، بناء 42، طابق 3، شقة 6',
+        en: 'Tlaa Al-Ali, Wasfi Al-Tal St. (Gardens), Bldg 42, Floor 3, Apt 6',
+      );
+  set _deliveryAddress(String val) => _customDeliveryAddress = val;
 
   // Driver Notes Controller
   late final TextEditingController _notesController;
@@ -68,14 +82,19 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
   void initState() {
     super.initState();
     _notesController = TextEditingController(
-      text: 'المصعد يعمل، يرجى قرع الجرس وتفقد مفتاح الأمان.',
+      text: AppLanguage.tr(
+        ar: 'المصعد يعمل، يرجى قرع الجرس وتفقد مفتاح الأمان.',
+        en: 'Elevator works, please ring the bell and check safety valve.',
+      ),
     );
 
     _cartItems = [
       _CheckoutItem(
         id: 'p1',
         name: 'أسطوانة غاز منزلي معبأة (12.5 كغ)',
+        nameEn: 'Domestic LPG Gas Cylinder (12.5 kg)',
         badge: 'استبدال فارغة (0 د.أ)',
+        badgeEn: 'Empty Exchange (0 JOD)',
         unitPrice: 7.00,
         imageUrl:
             'https://lh3.googleusercontent.com/aida-public/AB6AXuAXDWqWIkSCKsMSuSmawOwkITzMw95vZx6RD_CeQPWtBqyyF1A6ZRwcnTfQcBgzLPN8lB5kPkhDeJGt2j0D9XFO15UWka9_YDXLyETCAW7b4ptLUeSn-H_Prv_mLi8Dgp6uypbq1ycaBfqyvpSyuBCjo4njhOyk-eHlPApbAjzc_VyYQ7g-wC0HPlbgyIpydhe32ITZty0zQlIvHpoaIL56sSwnc_Ae6g1ax8_iF_8HEMlm5cBESnICUw',
@@ -84,7 +103,9 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
       _CheckoutItem(
         id: 'p2',
         name: 'منظم غاز إيطالي أصلي (ساعة غاز)',
+        nameEn: 'Original Italian Gas Regulator',
         badge: 'كفالة سنة',
+        badgeEn: '1-Year Warranty',
         badgeIcon: Icons.verified_rounded,
         unitPrice: 8.50,
         imageUrl:
@@ -142,7 +163,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           decoration: const BoxDecoration(
             color: colorSurfaceLowest,
@@ -176,7 +197,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'تم تأكيد وإرسال طلبك بنجاح!',
+                AppLanguage.tr(ar: 'تم تأكيد وإرسال طلبك بنجاح!', en: 'Order Placed Successfully!'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 20,
@@ -186,7 +207,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'تم استلام طلبك بإجمالي ${_grandTotal.toStringAsFixed(2)} د.أ.\nشاحنة التوزيع في الطريق إلى تلاع العلي (وصول خلال 25-35 دقيقة).\nيرجى تجهيز المبلغ نقداً للكابتن.',
+                AppLanguage.tr(ar: 'تم استلام طلبك بإجمالي ${_grandTotal.toStringAsFixed(2)} د.أ.\nشاحنة التوزيع في الطريق إلى تلاع العلي (وصول خلال 25-35 دقيقة).\nيرجى تجهيز المبلغ نقداً للكابتن.', en: 'Your order was received for ${_grandTotal.toStringAsFixed(2)} JOD.\nDelivery truck on its way (arrival in 25-35 mins).\nPlease prepare exact cash.'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
@@ -211,7 +232,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                     ),
                   ),
                   child: Text(
-                    'العودة للرئيسية',
+                    AppLanguage.tr(ar: 'العودة للرئيسية', en: 'Back to Home'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -229,9 +250,12 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         body: SafeArea(
           bottom: false,
@@ -289,6 +313,8 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
         ),
       ),
     );
+      },
+    );
   }
 
   // HEADER WIDGET
@@ -317,12 +343,12 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                     Navigator.pop(context);
                   }
                 },
-                icon: const Icon(
-                  Icons.arrow_forward_rounded,
+                icon: Icon(
+                  AppLanguage.backIcon,
                   color: colorOnSurface,
                   size: 24,
                 ),
-                tooltip: 'رجوع',
+                tooltip: AppLanguage.tr(ar: 'رجوع', en: 'Back'),
               ),
               const SizedBox(width: 4),
               Container(
@@ -346,7 +372,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
               ),
               const SizedBox(width: 8),
               Text(
-                'إتمام الطلب',
+                AppLanguage.tr(ar: 'إتمام الطلب', en: 'Checkout'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -409,7 +435,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'عنوان التوصيل المعتمد',
+                    AppLanguage.tr(ar: 'عنوان التوصيل المعتمد', en: 'Verified Delivery Address'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -437,7 +463,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'تغيير العنوان',
+                        AppLanguage.tr(ar: 'تغيير العنوان', en: 'Change'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
@@ -470,7 +496,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
               ),
               const SizedBox(width: 6),
               Text(
-                'وقت التوصيل التقديري: 25 - 35 دقيقة',
+                AppLanguage.tr(ar: 'وقت التوصيل التقديري: 25 - 35 دقيقة', en: 'Estimated Delivery: 25 - 35 mins'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   color: colorOnSurfaceVariant,
@@ -519,7 +545,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'سلامتك أولويتنا القصوى',
+                  AppLanguage.tr(ar: 'سلامتك أولويتنا القصوى', en: 'Your Safety is Priority'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -528,7 +554,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'خدمة الفحص المجاني لتهريب الغاز بجهاز كشف التسريب عند التركيب مشمولة دائماً.',
+                  AppLanguage.tr(ar: 'خدمة الفحص المجاني لتهريب الغاز بجهاز كشف التسريب عند التركيب مشمولة دائماً.', en: 'Free leak detection test during installation is always included.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     height: 1.35,
@@ -552,7 +578,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'عناصر الطلب',
+              AppLanguage.tr(ar: 'عناصر الطلب', en: 'Order Items'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -566,7 +592,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                '$_totalItemsCount عناصر في السلة',
+                AppLanguage.tr(ar: '$_totalItemsCount عناصر في السلة', en: '$_totalItemsCount items in cart'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -587,7 +613,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
             ),
             child: Center(
               child: Text(
-                'لا توجد عناصر في السلة حالياً',
+                AppLanguage.tr(ar: 'لا توجد عناصر في السلة حالياً', en: 'Cart is empty'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 14,
                   color: colorOnSurfaceVariant,
@@ -649,7 +675,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      item.name,
+                                      item.displayName,
                                       style: GoogleFonts.ibmPlexSansArabic(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -673,7 +699,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                                     ),
                                     padding: EdgeInsets.zero,
                                     constraints: const BoxConstraints(),
-                                    tooltip: 'حذف المنتج',
+                                    tooltip: AppLanguage.tr(ar: 'حذف المنتج', en: 'Remove Item'),
                                   ),
                                 ],
                               ),
@@ -699,7 +725,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                                       const SizedBox(width: 4),
                                     ],
                                     Text(
-                                      item.badge,
+                                      item.displayBadge,
                                       style: GoogleFonts.ibmPlexSansArabic(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
@@ -782,7 +808,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'د.أ',
+                              AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -835,7 +861,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'ملاحظات إضافية للكابتن',
+          AppLanguage.tr(ar: 'ملاحظات إضافية للكابتن', en: 'Driver Instructions'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 16,
             fontWeight: FontWeight.w700,
@@ -864,7 +890,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
               color: colorOnSurface,
             ),
             decoration: InputDecoration(
-              hintText: 'أضف تفاصيل إضافية عن البناية أو طريقة الدخول...',
+              hintText: AppLanguage.tr(ar: 'أضف تفاصيل إضافية عن البناية أو طريقة الدخول...', en: 'Add building or entry directions...'),
               hintStyle: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 12,
                 color: colorOnSurfaceVariant.withValues(alpha: 0.6),
@@ -886,7 +912,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'طريقة الدفع',
+              AppLanguage.tr(ar: 'طريقة الدفع', en: 'Payment Method'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -908,7 +934,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'نقد فقط',
+                    AppLanguage.tr(ar: 'نقد فقط', en: 'Cash Only'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
@@ -960,7 +986,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'الدفع نقداً عند الاستلام',
+                            AppLanguage.tr(ar: 'الدفع نقداً عند الاستلام', en: 'Cash on Delivery (COD)'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -1013,7 +1039,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'السعر رسمي ومحدد بموجب تسعيرة وزارة الطاقة والثروة المعدنية الأردنية. يُرجى تجهيز المبلغ المطلوب نقداً لتسليمه للكابتن.',
+                        AppLanguage.tr(ar: 'السعر رسمي ومحدد بموجب تسعيرة وزارة الطاقة والثروة المعدنية الأردنية. يُرجى تجهيز المبلغ المطلوب نقداً لتسليمه للكابتن.', en: 'Official price regulated by Jordan Ministry of Energy. Please prepare the cash amount for the driver.'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -1043,7 +1069,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'لا تتوفر وسيلة دفع إلكتروني - نقد فقط',
+                      AppLanguage.tr(ar: 'لا تتوفر وسيلة دفع إلكتروني - نقد فقط', en: 'Electronic payments unavailable - Cash only'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -1080,7 +1106,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Text(
-              'ملخص الفاتورة',
+              AppLanguage.tr(ar: 'ملخص الفاتورة', en: 'Invoice Summary'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -1093,19 +1119,19 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
             child: Column(
               children: [
                 _buildPriceRow(
-                  label: 'مجموع المنتجات',
-                  value: '${_itemsSubtotal.toStringAsFixed(2)} د.أ',
+                  label: AppLanguage.tr(ar: 'مجموع المنتجات', en: 'Items Total'),
+                  value: AppLanguage.tr(ar: '${_itemsSubtotal.toStringAsFixed(2)} د.أ', en: '${_itemsSubtotal.toStringAsFixed(2)} JOD'),
                 ),
                 const SizedBox(height: 8),
                 _buildPriceRow(
-                  label: 'رسوم التوصيل المعتمدة (تلاع العلي)',
-                  value: '${_deliveryFee.toStringAsFixed(2)} د.أ',
+                  label: AppLanguage.tr(ar: 'رسوم التوصيل المعتمدة (تلاع العلي)', en: 'Official Delivery Fee (Tlaa Al-Ali)'),
+                  value: AppLanguage.tr(ar: '${_deliveryFee.toStringAsFixed(2)} د.أ', en: '${_deliveryFee.toStringAsFixed(2)} JOD'),
                 ),
                 const SizedBox(height: 8),
                 _buildPriceRow(
-                  label: 'ضريبة ورسوم خدمات',
-                  badge: '(معفى حكومياً)',
-                  value: '0.00 د.أ',
+                  label: AppLanguage.tr(ar: 'ضريبة ورسوم خدمات', en: 'Tax & Service Fees'),
+                  badge: AppLanguage.tr(ar: '(معفى حكومياً)', en: '(Gov. Exempt)'),
+                  value: AppLanguage.tr(ar: '0.00 د.أ', en: '0.00 JOD'),
                 ),
               ],
             ),
@@ -1126,7 +1152,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'المجموع الإجمالي المطلوب',
+                      AppLanguage.tr(ar: 'المجموع الإجمالي المطلوب', en: 'Total Amount'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -1134,7 +1160,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                       ),
                     ),
                     Text(
-                      'شامل التوصيل والتركيب والفحص',
+                      AppLanguage.tr(ar: 'شامل التوصيل والتركيب والفحص', en: 'Includes delivery, install & test'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -1156,7 +1182,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'د.أ',
+                      AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -1256,7 +1282,7 @@ class _CartAndCheckoutScreenState extends State<CartAndCheckoutScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'تأكيد وإرسال الطلب (${_grandTotal.toStringAsFixed(2)} د.أ)',
+                      AppLanguage.tr(ar: 'تأكيد وإرسال الطلب (${_grandTotal.toStringAsFixed(2)} د.أ)', en: 'Place Order (${_grandTotal.toStringAsFixed(2)} JOD)'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,

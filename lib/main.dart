@@ -54,6 +54,12 @@ class MyApp extends StatelessWidget {
               surface: const Color(0xFFF8F9FF),
             ),
           ),
+          builder: (context, child) {
+            return Directionality(
+              textDirection: isAr ? TextDirection.rtl : TextDirection.ltr,
+              child: child!,
+            );
+          },
           home: const SplashScreen(),
         );
       },

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_screen.dart';
+import 'app_language.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -109,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.white, size: 18),
                 const SizedBox(width: 8),
                 Text(
-                  'تم إرسال رمز التحقق إلى ${_authMethod == 'phone' ? _phoneController.text : _emailController.text}',
+                  AppLanguage.tr(ar: 'تم إرسال رمز التحقق إلى ${_authMethod == 'phone' ? _phoneController.text : _emailController.text}', en: 'Verification code sent to ${_authMethod == 'phone' ? _phoneController.text : _emailController.text}'),
                   style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                 ),
               ],
@@ -136,9 +137,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -174,6 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+      },
     );
   }
 
@@ -225,7 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'غاز الأردن',
+                        AppLanguage.tr(ar: 'غاز الأردن', en: 'Jordan Gas'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -234,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Text(
-                        'توصيل سريع وموثوق',
+                        AppLanguage.tr(ar: 'توصيل سريع وموثوق', en: 'Fast & Reliable Delivery'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
@@ -260,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'عمان والزرقاء',
+                      AppLanguage.tr(ar: 'عمان والزرقاء', en: 'Amman & Zarqa'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -283,7 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'دفء بيتك بضغطة زر',
+                      AppLanguage.tr(ar: 'دفء بيتك بضغطة زر', en: 'Warmth for your home, at a tap'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
@@ -293,7 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'خدمة تبديل وتوصيل أسطوانات الغاز المنزلية فوراً إلى باب منزلك مع فحص الصمام المعتمد.',
+                      AppLanguage.tr(ar: 'خدمة تبديل وتوصيل أسطوانات الغاز المنزلية فوراً إلى باب منزلك مع فحص الصمام المعتمد.', en: 'Instant doorstep cylinder delivery and exchange with certified valve inspection.'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         color: colorOnSurfaceVariant,
@@ -378,7 +384,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             : null,
                       ),
                       child: Text(
-                        'رقم الهاتف',
+                        AppLanguage.tr(ar: 'رقم الهاتف', en: 'Phone Number'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 13,
@@ -421,7 +427,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             : null,
                       ),
                       child: Text(
-                        'البريد الإلكتروني',
+                        AppLanguage.tr(ar: 'البريد الإلكتروني', en: 'Email Address'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 13,
@@ -447,7 +453,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'رقم الهاتف المحمول',
+                  AppLanguage.tr(ar: 'رقم الهاتف المحمول', en: 'Mobile Phone Number'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -455,7 +461,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Text(
-                  'مثال: 07XXXXXXXX',
+                  AppLanguage.tr(ar: 'مثال: 07XXXXXXXX', en: 'e.g.: 07XXXXXXXX'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     color: colorOnSurfaceVariant,
@@ -528,7 +534,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ] else ...[
             Text(
-              'البريد الإلكتروني المسجل',
+              AppLanguage.tr(ar: 'البريد الإلكتروني المسجل', en: 'Registered Email'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -597,8 +603,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text(
                           _isOtpSent
-                              ? 'تسجيل الدخول ومتابعة الطلب'
-                              : 'متابعة / إرسال رمز التحقق',
+                              ? AppLanguage.tr(ar: 'تسجيل الدخول ومتابعة الطلب', en: 'Login & Track Order')
+                              : AppLanguage.tr(ar: 'متابعة / إرسال رمز التحقق', en: 'Continue / Send OTP Code'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -637,7 +643,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'رمز التحقق جاهز للإرسال بـ SMS',
+                      AppLanguage.tr(ar: 'رمز التحقق جاهز للإرسال بـ SMS', en: 'Verification code ready via SMS'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurface,
@@ -655,8 +661,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(width: 4),
                     Text(
                       _countdownSeconds > 0
-                          ? 'إعادة الإرسال: 00:${_countdownSeconds.toString().padLeft(2, '0')}'
-                          : 'يمكنك طلب رمز جديد',
+                          ? AppLanguage.tr(ar: 'إعادة الإرسال: 00:${_countdownSeconds.toString().padLeft(2, '0')}', en: 'Resend in: 00:${_countdownSeconds.toString().padLeft(2, '0')}')
+                          : AppLanguage.tr(ar: 'يمكنك طلب رمز جديد', en: 'You can request a new code'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -683,7 +689,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'أدخل الرمز المكون من 4 أرقام',
+                      AppLanguage.tr(ar: 'أدخل الرمز المكون من 4 أرقام', en: 'Enter 4-digit code'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -696,7 +702,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'تمت إعادة إرسال رمز التحقق بنجاح',
+                              AppLanguage.tr(ar: 'تمت إعادة إرسال رمز التحقق بنجاح', en: 'Code resent successfully'),
                               style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
                               textAlign: TextAlign.center,
                             ),
@@ -710,7 +716,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       },
                       child: Text(
-                        'إعادة إرسال الآن',
+                        AppLanguage.tr(ar: 'إعادة إرسال الآن', en: 'Resend Now'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -787,7 +793,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                'أو سجل عبر',
+                AppLanguage.tr(ar: 'أو سجل عبر', en: 'Or continue with'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   color: colorOnSurfaceVariant,
@@ -873,7 +879,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'ليس لديك حساب؟',
+            AppLanguage.tr(ar: 'ليس لديك حساب؟', en: 'Do not have an account?'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               color: colorOnSurfaceVariant,
@@ -885,7 +891,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    'يمكنك إدخال رقم هاتفك مباشرة لتسجيل حساب جديد والطلب فوراً',
+                    AppLanguage.tr(ar: 'يمكنك إدخال رقم هاتفك مباشرة لتسجيل حساب جديد والطلب فوراً', en: 'Enter your phone number directly to register and order immediately'),
                     style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
                     textAlign: TextAlign.center,
                   ),
@@ -898,7 +904,7 @@ class _LoginScreenState extends State<LoginScreen> {
               );
             },
             child: Text(
-              'إنشاء حساب جديد',
+              AppLanguage.tr(ar: 'إنشاء حساب جديد', en: 'Create New Account'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -946,7 +952,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Text(
-                      'أسطوانات غاز آمنة ومفحوصة',
+                      AppLanguage.tr(ar: 'أسطوانات غاز آمنة ومفحوصة', en: 'Safe & Certified Gas Cylinders'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -963,7 +969,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'معتمدة ومختومة رسمياً وفق مواصفات مصفاة البترول الأردنية مع معاينة الصمام قبل التركيب.',
+                  AppLanguage.tr(ar: 'معتمدة ومختومة رسمياً وفق مواصفات مصفاة البترول الأردنية مع معاينة الصمام قبل التركيب.', en: 'Officially certified and sealed to Jordan Petroleum Refinery standards with pre-install inspection.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     height: 1.4,
@@ -998,7 +1004,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(width: 6),
               Text(
-                'اتصال مشفر وآمن 256-bit',
+                AppLanguage.tr(ar: 'اتصال مشفر وآمن 256-bit', en: '256-bit Secure Encrypted Connection'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   color: colorOnSurfaceVariant,
@@ -1013,7 +1019,7 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              'الأردن',
+              AppLanguage.tr(ar: 'الأردن', en: 'Jordan'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,

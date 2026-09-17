@@ -55,32 +55,32 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
   final List<Map<String, dynamic>> _complaintTypesList = [
     {
       'id': 'delay',
-      'label': 'تأخر وصول الكابتن',
+      'label': AppLanguage.tr(ar: 'تأخر وصول الكابتن', en: 'Driver delay'),
       'icon': Icons.schedule_rounded,
     },
     {
       'id': 'cylinder',
-      'label': 'عيوب الأسطوانة والصمام',
+      'label': AppLanguage.tr(ar: 'عيوب الأسطوانة والصمام', en: 'Cylinder or valve defects'),
       'icon': Icons.propane_tank_rounded,
     },
     {
       'id': 'price',
-      'label': 'خلاف السعر أو الفكة',
+      'label': AppLanguage.tr(ar: 'خلاف السعر أو الفكة', en: 'Pricing or change dispute'),
       'icon': Icons.payments_outlined,
     },
     {
       'id': 'driver',
-      'label': 'سلوك السائق أو الأمان',
+      'label': AppLanguage.tr(ar: 'سلوك السائق أو الأمان', en: 'Driver behavior or safety'),
       'icon': Icons.person_off_outlined,
     },
     {
       'id': 'not_received',
-      'label': 'لم يتم استلام الطلب',
+      'label': AppLanguage.tr(ar: 'لم يتم استلام الطلب', en: 'Order not received'),
       'icon': Icons.wrong_location_outlined,
     },
     {
       'id': 'other',
-      'label': 'موضوع آخر',
+      'label': AppLanguage.tr(ar: 'موضوع آخر', en: 'Other topic'),
       'icon': Icons.help_center_outlined,
     },
   ];
@@ -106,7 +106,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'يرجى كتابة تفاصيل المشكلة (10 أحرف على الأقل) للمتابعة الدقيقة.',
+            AppLanguage.tr(ar: 'يرجى كتابة تفاصيل المشكلة (10 أحرف على الأقل) للمتابعة الدقيقة.', en: 'Please enter problem details (min 10 characters).'),
             style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
           ),
           backgroundColor: colorError,
@@ -137,7 +137,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'تم حذف الصورة المرفقة',
+          AppLanguage.tr(ar: 'تم حذف الصورة المرفقة', en: 'Attached image removed'),
           style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
         ),
         backgroundColor: const Color(0xFF131B2E),
@@ -328,13 +328,13 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
       shadowColor: Colors.black.withValues(alpha: 0.05),
       centerTitle: false,
       leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_forward_rounded,
+        icon: Icon(
+          AppLanguage.backIcon,
           color: colorOnSurface,
           size: 24,
         ),
         onPressed: () => Navigator.pop(context),
-        tooltip: 'رجوع',
+        tooltip: AppLanguage.tr(ar: 'رجوع', en: 'Back'),
       ),
       title: Row(
         children: [
@@ -359,7 +359,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'مركز المساعدة والبلاغات',
+                AppLanguage.tr(ar: 'مركز المساعدة والبلاغات', en: 'Help & Complaints Center'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -455,7 +455,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'تنبيه أمان عاجل',
+                      AppLanguage.tr(ar: 'تنبيه أمان عاجل', en: 'Urgent Safety Alert'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
@@ -472,7 +472,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        'طوارئ 911',
+                        AppLanguage.tr(ar: 'طوارئ 911', en: 'Emergency 911'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -484,7 +484,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'في حال الاشتباه بوجود تسريب غاز كثيف، أغلق محبس الصمام فوراً وتجنب إشعال أي لهب أو قواطع كهربائية، واتصل بالدفاع المدني (911) أو خط طوارئ الغاز المباشر.',
+                  AppLanguage.tr(ar: 'في حال الاشتباه بوجود تسريب غاز كثيف، أغلق محبس الصمام فوراً وتجنب إشعال أي لهب أو قواطع كهربائية، واتصل بالدفاع المدني (911) أو خط طوارئ الغاز المباشر.', en: 'In case of suspected heavy gas leak, close valve immediately, avoid flames or electric switches, and call Civil Defense (911) or gas emergency line.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     height: 1.5,
@@ -498,7 +498,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                   runSpacing: 8,
                   children: [
                     InkWell(
-                      onTap: () => _confirmCall('911', 'الدفاع المدني والأمن العام'),
+                      onTap: () => _confirmCall('911', AppLanguage.tr(ar: 'الدفاع المدني والأمن العام', en: 'Civil Defense & Public Security')),
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -525,7 +525,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              'اتصال بالدفاع المدني 911',
+                              AppLanguage.tr(ar: 'اتصال بالدفاع المدني 911', en: 'Call Civil Defense 911'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 11.5,
                                 fontWeight: FontWeight.w700,
@@ -537,7 +537,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () => _confirmCall('06500427', 'طوارئ الغاز المركزية'),
+                      onTap: () => _confirmCall('06500427', AppLanguage.tr(ar: 'طوارئ الغاز المركزية', en: 'Central Gas Emergency')),
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -564,7 +564,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              'طوارئ الغاز 06-500427',
+                              AppLanguage.tr(ar: 'طوارئ الغاز 06-500427', en: 'Gas Emergency 06-500427'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 11.5,
                                 fontWeight: FontWeight.w700,
@@ -631,7 +631,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'تقديم شكوى أو بلاغ جديد',
+                        AppLanguage.tr(ar: 'تقديم شكوى أو بلاغ جديد', en: 'Submit Complaint or Report'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -639,7 +639,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                         ),
                       ),
                       Text(
-                        'يتم الرد والمتابعة الميدانية خلال أقل من 15 دقيقة',
+                        AppLanguage.tr(ar: 'يتم الرد والمتابعة الميدانية خلال أقل من 15 دقيقة', en: 'Response & follow-up within 15 minutes'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -659,7 +659,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  'رقابة الجودة',
+                  AppLanguage.tr(ar: 'رقابة الجودة', en: 'Quality Control'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
@@ -674,7 +674,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
 
           // Related Order Selector Dropdown
           Text(
-            'الطلب المرتبط بالشكوى',
+            AppLanguage.tr(ar: 'الطلب المرتبط بالشكوى', en: 'Related Order'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               fontWeight: FontWeight.w700,
@@ -699,22 +699,22 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                   fontWeight: FontWeight.w600,
                   color: colorOnSurface,
                 ),
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: '84935',
-                    child: Text('طلب #84935 - الكابتن أحمد الخوالدة (منذ 45 دقيقة)'),
+                    child: Text(AppLanguage.tr(ar: 'طلب #84935 - الكابتن أحمد الخوالدة (منذ 45 دقيقة)', en: 'Order #84935 - Driver Ahmad (45 mins ago)')),
                   ),
                   DropdownMenuItem(
                     value: '84210',
-                    child: Text('طلب #84210 - الكابتن سامر العبادي (أمس)'),
+                    child: Text(AppLanguage.tr(ar: 'طلب #84210 - الكابتن سامر العبادي (أمس)', en: 'Order #84210 - Driver Samer (Yesterday)')),
                   ),
                   DropdownMenuItem(
                     value: '83002',
-                    child: Text('طلب #83002 - الكابتن عمر حداد (25 شباط)'),
+                    child: Text(AppLanguage.tr(ar: 'طلب #83002 - الكابتن عمر حداد (25 شباط)', en: 'Order #83002 - Driver Omar (Feb 25)')),
                   ),
                   DropdownMenuItem(
                     value: 'general',
-                    child: Text('بلاغ عام / لا يتعلق بطلب محدد'),
+                    child: Text(AppLanguage.tr(ar: 'بلاغ عام / لا يتعلق بطلب محدد', en: 'General Notice / Not related to order')),
                   ),
                 ],
                 onChanged: (val) {
@@ -730,7 +730,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
 
           // Complaint Classification Grid
           Text(
-            'تصنيف المشكلة',
+            AppLanguage.tr(ar: 'تصنيف المشكلة', en: 'Issue Category'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               fontWeight: FontWeight.w700,
@@ -803,7 +803,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
 
           // Complaint Details Textarea
           Text(
-            'تفاصيل الشكوى الدقيقة',
+            AppLanguage.tr(ar: 'تفاصيل الشكوى الدقيقة', en: 'Detailed Description'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               fontWeight: FontWeight.w700,
@@ -831,7 +831,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                   ),
                   decoration: InputDecoration(
                     hintText:
-                        'يرجى ذكر المشكلة بالتفصيل (مثال: رائحة عند موضع المحبس، عدم فحص رغوة الصابون، طلب مبلغ إضافي عن الطابق، ...)',
+                        AppLanguage.tr(ar: 'يرجى ذكر المشكلة بالتفصيل (مثال: رائحة عند موضع المحبس، عدم فحص رغوة الصابون، طلب مبلغ إضافي عن الطابق، ...)', en: 'Please describe the issue in detail (e.g. odor near valve, no foam leak test, extra floor fee requested...)'),
                     hintStyle: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       color: colorOutline,
@@ -847,7 +847,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'الحد الأدنى 20 حرفاً لضمان سرعة التحقق',
+                      AppLanguage.tr(ar: 'الحد الأدنى 20 حرفاً لضمان سرعة التحقق', en: 'Minimum 20 characters for fast verification'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 10.5,
                         color: colorOnSurfaceVariant,
@@ -871,7 +871,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
 
           // Photo & Evidence Attachment
           Text(
-            'إرفاق صورة توثيقية (اختياري لكن محبذ)',
+            AppLanguage.tr(ar: 'إرفاق صورة توثيقية (اختياري لكن محبذ)', en: 'Attach Photo Evidence (Optional but recommended)'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               fontWeight: FontWeight.w700,
@@ -961,7 +961,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'إضافة صورة',
+                          AppLanguage.tr(ar: 'إضافة صورة', en: 'Add Photo'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
@@ -1006,7 +1006,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          'جاري الإرسال والتدقيق...',
+                          AppLanguage.tr(ar: 'جاري الإرسال والتدقيق...', en: 'Submitting & verifying...'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -1021,7 +1021,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                         const Icon(Icons.verified_user_rounded, size: 20),
                         const SizedBox(width: 8),
                         Text(
-                          'إرسال الشكوى لفريق الجودة والمتابعة',
+                          AppLanguage.tr(ar: 'إرسال الشكوى لفريق الجودة والمتابعة', en: 'Submit Complaint to Quality Team'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
@@ -1053,7 +1053,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        'تم استلام بلاغك بنجاح',
+                        AppLanguage.tr(ar: 'تم استلام بلاغك بنجاح', en: 'Report Received Successfully'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 15,
                           fontWeight: FontWeight.w800,
@@ -1064,7 +1064,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'رقم التذكرة: $_generatedTicketNumber - يقوم المشرف بالاتصال بك الآن',
+                    AppLanguage.tr(ar: 'رقم التذكرة: $_generatedTicketNumber - يقوم المشرف بالاتصال بك الآن', en: 'Ticket #$_generatedTicketNumber - A supervisor is calling you now'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -1088,7 +1088,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'قنوات المساعدة المباشرة',
+          AppLanguage.tr(ar: 'قنوات المساعدة المباشرة', en: 'Direct Assistance Channels'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 16,
             fontWeight: FontWeight.w700,
@@ -1138,7 +1138,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'محادثة فورية',
+                        AppLanguage.tr(ar: 'محادثة فورية', en: 'Live Chat'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -1147,7 +1147,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'متاح 24/7 مع مشرف الدعم',
+                        AppLanguage.tr(ar: 'متاح 24/7 مع مشرف الدعم', en: 'Available 24/7 with supervisor'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -1157,7 +1157,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       Row(
                         children: [
                           Text(
-                            'بدء المحادثة',
+                            AppLanguage.tr(ar: 'بدء المحادثة', en: 'Start Chat'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -1165,8 +1165,8 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                             ),
                           ),
                           const SizedBox(width: 4),
-                          const Icon(
-                            Icons.arrow_back_rounded,
+                          Icon(
+                            AppLanguage.forwardIcon,
                             size: 14,
                             color: colorSecondary,
                           ),
@@ -1182,7 +1182,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
             // Toll-Free Jordan Call Center Card
             Expanded(
               child: InkWell(
-                onTap: () => _confirmCall('06500427', 'الرقم الموحد لغاز الأردن'),
+                onTap: () => _confirmCall('06500427', AppLanguage.tr(ar: 'الرقم الموحد لغاز الأردن', en: 'Jordan Gas Unified Number')),
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
                   padding: const EdgeInsets.all(14),
@@ -1217,7 +1217,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'الرقم الموحد المجاني',
+                        AppLanguage.tr(ar: 'الرقم الموحد المجاني', en: 'Unified Toll-Free Number'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -1226,7 +1226,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        '06-500-GAS (كافة المحافظات)',
+                        AppLanguage.tr(ar: '06-500-GAS (كافة المحافظات)', en: '06-500-GAS (All Governorates)'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 10.5,
                           color: colorOnSurfaceVariant,
@@ -1238,7 +1238,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                       Row(
                         children: [
                           Text(
-                            'اتصال مباشر',
+                            AppLanguage.tr(ar: 'اتصال مباشر', en: 'Direct Call'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -1246,8 +1246,8 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                             ),
                           ),
                           const SizedBox(width: 4),
-                          const Icon(
-                            Icons.arrow_back_rounded,
+                          Icon(
+                            AppLanguage.forwardIcon,
                             size: 14,
                             color: colorSecondary,
                           ),
@@ -1275,7 +1275,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'سجل البلاغات والشكاوى السابقة',
+              AppLanguage.tr(ar: 'سجل البلاغات والشكاوى السابقة', en: 'Past Reports & Complaints'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -1283,7 +1283,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
               ),
             ),
             Text(
-              'بلاغ 1 مكتمل',
+              AppLanguage.tr(ar: 'بلاغ 1 مكتمل', en: '1 Completed Report'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
@@ -1311,54 +1311,59 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header & Status Badge
+              // Header & Status Badge (Responsive without overflow)
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'شكوى رقم #C-2041',
-                            style: GoogleFonts.ibmPlexSansArabic(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w800,
-                              color: colorOnSurface,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: colorSurfaceHigh,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              'استفسار عن فحص الصمام',
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 6,
+                          runSpacing: 4,
+                          children: [
+                            Text(
+                              AppLanguage.tr(ar: 'شكوى رقم #C-2041', en: 'Complaint #C-2041'),
                               style: GoogleFonts.ibmPlexSansArabic(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 14.5,
+                                fontWeight: FontWeight.w800,
                                 color: colorOnSurface,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        'تاريخ البلاغ: 18 شباط 2025 • مرتبط بطلب #81092',
-                        style: GoogleFonts.ibmPlexSansArabic(
-                          fontSize: 11,
-                          color: colorOutline,
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 7,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: colorSurfaceHigh,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                AppLanguage.tr(ar: 'استفسار عن فحص الصمام', en: 'Valve Inquiry'),
+                                style: GoogleFonts.ibmPlexSansArabic(
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: colorOnSurface,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          AppLanguage.tr(ar: 'تاريخ البلاغ: 18 شباط 2025 • مرتبط بطلب #81092', en: 'Date: Feb 18, 2025 • Order #81092'),
+                          style: GoogleFonts.ibmPlexSansArabic(
+                            fontSize: 11,
+                            color: colorOutline,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+                  const SizedBox(width: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
@@ -1378,7 +1383,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'تمت المعالجة بنجاح',
+                          AppLanguage.tr(ar: 'تمت المعالجة بنجاح', en: 'Resolved'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
@@ -1412,7 +1417,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'ملاحظة مسؤول الجودة (م. رامي المجالي):',
+                          AppLanguage.tr(ar: 'ملاحظة مسؤول الجودة (م. رامي المجالي):', en: 'Quality Supervisor Note (Eng. Rami Al-Majali):'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -1423,7 +1428,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'تم زيارة الموقع من قِبل فني السلامة واستبدال مانع التسريب (الجلدة) فوراً دون أي مقابل، والتأكد من ضغط المنظم باستخدام جهاز الفحص الرقمي.',
+                      AppLanguage.tr(ar: 'تم زيارة الموقع من قِبل فني السلامة واستبدال مانع التسريب (الجلدة) فوراً دون أي مقابل، والتأكد من ضغط المنظم باستخدام جهاز الفحص الرقمي.', en: 'Safety technician visited site and replaced leak gasket free of charge, regulator pressure verified with digital tester.'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11.5,
                         height: 1.45,
@@ -1440,48 +1445,53 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 32,
-                        height: 32,
-                        decoration: const BoxDecoration(
-                          color: colorSecondaryFixed,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.redeem_rounded,
-                            size: 18,
-                            color: colorOnSecondaryFixed,
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(
+                            color: colorSecondaryFixed,
+                            shape: BoxShape.circle,
                           ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'تعويض رمزي معتمد',
-                            style: GoogleFonts.ibmPlexSansArabic(
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.w700,
-                              color: colorOnSurface,
+                          child: const Center(
+                            child: Icon(
+                              Icons.redeem_rounded,
+                              size: 18,
+                              color: colorOnSecondaryFixed,
                             ),
                           ),
-                          Text(
-                            'خصم 2.00 د.أ على طلب التبديل القادم',
-                            style: GoogleFonts.ibmPlexSansArabic(
-                              fontSize: 11,
-                              color: colorOnSurfaceVariant,
-                            ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLanguage.tr(ar: 'تعويض رمزي معتمد', en: 'Courtesy Compensation'),
+                                style: GoogleFonts.ibmPlexSansArabic(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: colorOnSurface,
+                                ),
+                              ),
+                              Text(
+                                AppLanguage.tr(ar: 'خصم 2.00 د.أ على طلب التبديل القادم', en: '2.00 JOD discount on your next exchange'),
+                                style: GoogleFonts.ibmPlexSansArabic(
+                                  fontSize: 11,
+                                  color: colorOnSurfaceVariant,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
+                  const SizedBox(width: 8),
                   Text(
-                    '2.00- د.أ',
+                    AppLanguage.tr(ar: '2.00- د.أ', en: '-2.00 JOD'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 17,
                       fontWeight: FontWeight.w800,
@@ -1513,7 +1523,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
               const Icon(Icons.phone_in_talk_rounded, color: colorSecondary),
               const SizedBox(width: 8),
               Text(
-                'الاتصال بـ $title',
+                AppLanguage.tr(ar: 'الاتصال بـ $title', en: 'Call $title'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -1522,7 +1532,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
             ],
           ),
           content: Text(
-            'هل ترغب في الاتصال بالرقم $number الآن؟',
+            AppLanguage.tr(ar: 'هل ترغب في الاتصال بالرقم $number الآن؟', en: 'Do you want to call $number now?'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
               color: colorOnSurfaceVariant,
@@ -1532,7 +1542,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
             TextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(
-                'إلغاء',
+                AppLanguage.tr(ar: 'إلغاء', en: 'Cancel'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   color: colorOnSurfaceVariant,
                   fontWeight: FontWeight.w600,
@@ -1545,7 +1555,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'جاري الاتصال بـ $number ...',
+                      AppLanguage.tr(ar: 'جاري الاتصال بـ $number ...', en: 'Calling $number ...'),
                       style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                     ),
                     backgroundColor: const Color(0xFF131B2E),
@@ -1561,7 +1571,7 @@ class _HelpComplaintsScreenState extends State<HelpComplaintsScreen> {
                 ),
               ),
               child: Text(
-                'اتصال الآن',
+                AppLanguage.tr(ar: 'اتصال الآن', en: 'Call Now'),
                 style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.w700),
               ),
             ),

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'app_language.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'home_screen.dart';
@@ -31,41 +32,47 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  String _currentLanguage = 'AR';
+  
 
-  final List<Map<String, dynamic>> _slides = [
+  List<Map<String, dynamic>> get _slides => [
     {
-      'step': 'الخطوة الأولى',
-      'title': 'اطلب أسطوانتك بسهولة',
-      'description':
-          'كبستين على التطبيق وبدون مكالمات هاتفية أو انتظار في البرد. الأسطوانة تصل لباب بيتك بسعرها الرسمي.',
+      'step': AppLanguage.tr(ar: 'الخطوة الأولى', en: 'Step 1'),
+      'title': AppLanguage.tr(ar: 'اطلب أسطوانتك بسهولة', en: 'Order Your Cylinder Easily'),
+      'description': AppLanguage.tr(
+        ar: 'كبستين على التطبيق وبدون مكالمات هاتفية أو انتظار في البرد. الأسطوانة تصل لباب بيتك بسعرها الرسمي.',
+        en: 'Two taps on the app without calls or waiting in the cold. Delivered to your doorstep at official tariff.',
+      ),
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuBSp7eMdxo_sNUXnJ4lKghsMx4e_Ye7LB0__jg_2Ob-Aiej_Xy1m9sCcWhudZNlSPi-2T-8L18rsQl4gd0vXP6DMSV0dtc-w290DI8wf5OXmxH6XeKLECBXx1QPXiV6UDON6Z7hMObjkP7sq3gI8umOE9KSak1Ry2Q37a4pcT-6dhXq0-sO-SJYPcZu9jaAEIEYWP7Bx4ltceoqCIGKYP8oNBZVEnUVCJYvmr3fZUOQMCj0dYNPII8B6g',
       'badgeIcon': Icons.local_fire_department_rounded,
-      'badgeText': 'أسطوانات معتمدة ومفحوصة',
+      'badgeText': AppLanguage.tr(ar: 'أسطوانات معتمدة ومفحوصة', en: 'Certified & Inspected Cylinders'),
       'isMap': false,
     },
     {
-      'step': 'الخطوة الثانية',
-      'title': 'تتبع الكابتن مباشرة',
-      'description':
-          'راقب مسار سيارة الغاز خطوة بخطوة على الخريطة الحية مع تقدير فوري ودقيق لوقت وصول الشحنة.',
+      'step': AppLanguage.tr(ar: 'الخطوة الثانية', en: 'Step 2'),
+      'title': AppLanguage.tr(ar: 'تتبع الكابتن مباشرة', en: 'Live Driver Tracking'),
+      'description': AppLanguage.tr(
+        ar: 'راقب مسار سيارة الغاز خطوة بخطوة على الخريطة الحية مع تقدير فوري ودقيق لوقت وصول الشحنة.',
+        en: 'Follow the gas truck path turn-by-turn on live map with accurate real-time arrival estimation.',
+      ),
       'image':
           'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=700&auto=format&fit=crop&q=80',
       'badgeIcon': Icons.navigation_rounded,
-      'badgeText': 'الكابتن في الطريق إليك',
+      'badgeText': AppLanguage.tr(ar: 'الكابتن في الطريق إليك', en: 'Driver is on the way'),
       'isMap': true,
-      'etaText': '8 دقائق',
+      'etaText': AppLanguage.tr(ar: '8 دقائق', en: '8 mins'),
     },
     {
-      'step': 'الخطوة الثالثة',
-      'title': 'استلم وافحص بأمان',
-      'description':
-          'يقوم الموزع بتركيب الأسطوانة وفحص الصمام مجاناً لسلامة عائلتك، وادفع نقداً عند باب البيت بكل أمان.',
+      'step': AppLanguage.tr(ar: 'الخطوة الثالثة', en: 'Step 3'),
+      'title': AppLanguage.tr(ar: 'استلم وافحص بأمان', en: 'Safe Delivery & Inspection'),
+      'description': AppLanguage.tr(
+        ar: 'يقوم الموزع بتركيب الأسطوانة وفحص الصمام مجاناً لسلامة عائلتك، وادفع نقداً عند باب البيت بكل أمان.',
+        en: 'Driver installs cylinder and inspects valve free for family safety. Pay cash safely at door.',
+      ),
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDPseZcHeurRZTom2uZ9GExGAJsyNsMR-HRoeMcicbcxdOxJyNpzu-Sqk8Mg-tJKe0n9mu8m3f3XDLOFWhXdN-LS4i0lUfHK91wBUw6SzYKl403NYa42u-tIGf1Ydqd7454RLjok3WiwE3IBx9LpyZ4SVE2pMHzs82TCKEXkRx6BvYz4ZdxX_-m3nQk5G7oh1MFH4ZTtWxPgNVF_t6HeHSzVK3JJ4mc4TUYjLXfXoRf9VR3PQNYH7PmBw',
       'badgeIcon': Icons.verified_user_rounded,
-      'badgeText': 'فحص التسريب مجاني 100%',
+      'badgeText': AppLanguage.tr(ar: 'فحص التسريب مجاني 100%', en: '100% Free Leak Inspection'),
       'isMap': false,
     },
   ];
@@ -106,16 +113,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _toggleLanguage() {
-    setState(() {
-      _currentLanguage = _currentLanguage == 'AR' ? 'EN' : 'AR';
-    });
+    AppLanguage.toggleLanguage();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          _currentLanguage == 'EN'
-              ? 'Language changed to English'
-              : 'تم تغيير اللغة إلى العربية',
+          AppLanguage.isArabic
+              ? 'تم تغيير اللغة إلى العربية'
+              : 'Language changed to English',
           style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
           textAlign: TextAlign.center,
         ),
@@ -131,9 +136,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final isLastSlide = _currentPage == _slides.length - 1;
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         body: SafeArea(
           child: Padding(
@@ -200,6 +208,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
     );
+      },
+    );
   }
 
   // 1. TOP BAR CONTROLS
@@ -235,7 +245,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    _currentLanguage == 'AR' ? 'EN' : 'عربي',
+                    AppLanguage.isArabic ? 'English' : 'عربي',
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -269,7 +279,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'عَمّان • الزرقاء',
+                      AppLanguage.tr(ar: 'عَمّان • الزرقاء', en: 'Amman • Zarqa'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -287,7 +297,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   child: Text(
-                    'تخطي',
+                    AppLanguage.tr(ar: 'تخطي', en: 'Skip'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -517,7 +527,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           const SizedBox(width: 6),
           Text(
-            'خدمة معتمدة تغطي كافة مناطق عمّان والزرقاء',
+            AppLanguage.tr(ar: 'خدمة معتمدة تغطي كافة مناطق عمّان والزرقاء', en: 'Certified service covering all Amman & Zarqa regions'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -552,7 +562,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  isLastSlide ? 'ابدأ الآن' : 'التالي',
+                  isLastSlide ? AppLanguage.tr(ar: 'ابدأ الآن', en: 'Get Started') : AppLanguage.tr(ar: 'التالي', en: 'Next'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -562,7 +572,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Icon(
                   isLastSlide
                       ? Icons.rocket_launch_rounded
-                      : Icons.arrow_back_rounded,
+                      : AppLanguage.forwardIcon,
                   size: 20,
                 ),
               ],
@@ -576,7 +586,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'لديك حساب بالفعل؟',
+              AppLanguage.tr(ar: 'لديك حساب بالفعل؟', en: 'Already have an account?'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 13,
                 color: colorOnSurfaceVariant,
@@ -588,7 +598,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: Text(
-                  'تسجيل الدخول',
+                  AppLanguage.tr(ar: 'تسجيل الدخول', en: 'Log In'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'app_language.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'onboarding_screen.dart';
@@ -36,11 +37,11 @@ class _SplashScreenState extends State<SplashScreen>
   static const Color colorSecondaryContainer = Color(0xFFFD651E);
 
   // Loading Step Simulation
-  final List<Map<String, dynamic>> _steps = [
-    {'progress': 0.35, 'text': 'جاري فحص أقرب شاحنات التوزيع...'},
-    {'progress': 0.68, 'text': 'التحقق من مخزون أسطوانات الغاز المتوفر...'},
-    {'progress': 0.92, 'text': 'تحديد نقطة التوصيل وتأكيد المسار...'},
-    {'progress': 1.00, 'text': 'جاهز لطلب أسطوانتك!'},
+  List<Map<String, dynamic>> get _steps => [
+    {'progress': 0.35, 'text': AppLanguage.tr(ar: 'جاري فحص أقرب شاحنات التوزيع...', en: 'Locating nearest distribution trucks...')},
+    {'progress': 0.68, 'text': AppLanguage.tr(ar: 'التحقق من مخزون أسطوانات الغاز المتوفر...', en: 'Verifying cylinder stock availability...')},
+    {'progress': 0.92, 'text': AppLanguage.tr(ar: 'تحديد نقطة التوصيل وتأكيد المسار...', en: 'Setting delivery point & route...')},
+    {'progress': 1.00, 'text': AppLanguage.tr(ar: 'جاهز لطلب أسطوانتك!', en: 'Ready to order your cylinder!')},
   ];
 
   int _currentStepIndex = 0;
@@ -113,9 +114,12 @@ class _SplashScreenState extends State<SplashScreen>
         _steps[_currentStepIndex]['progress'] as double;
     final currentText = _steps[_currentStepIndex]['text'] as String;
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         body: SafeArea(
           child: LayoutBuilder(
@@ -157,6 +161,8 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       ),
     );
+      },
+    );
   }
 
   // 1. TOP AREA
@@ -193,7 +199,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'عمّان • الزرقاء',
+                  AppLanguage.tr(ar: 'عمّان • الزرقاء', en: 'Amman • Zarqa'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -228,7 +234,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'شبكة التوزيع المباشر',
+                  AppLanguage.tr(ar: 'شبكة التوزيع المباشر', en: 'Direct Distribution Network'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -326,7 +332,7 @@ class _SplashScreenState extends State<SplashScreen>
                     const Icon(Icons.bolt, size: 12, color: Colors.white),
                     const SizedBox(width: 2),
                     Text(
-                      'سريع وآمن',
+                      AppLanguage.tr(ar: 'سريع وآمن', en: 'Fast & Safe'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -348,7 +354,7 @@ class _SplashScreenState extends State<SplashScreen>
           textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
-              'غاز',
+              AppLanguage.tr(ar: 'غاز', en: 'GAS'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 34,
                 fontWeight: FontWeight.w900,
@@ -378,7 +384,7 @@ class _SplashScreenState extends State<SplashScreen>
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
-            'المنصة الوطنية المعتمدة لتوزيع الغاز المنزلي',
+            AppLanguage.tr(ar: 'المنصة الوطنية المعتمدة لتوزيع الغاز المنزلي', en: 'National Household Gas Distribution Platform'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -390,7 +396,7 @@ class _SplashScreenState extends State<SplashScreen>
 
         // Slogans
         Text(
-          'دِفء بيتك، بضغطة زر',
+          AppLanguage.tr(ar: 'دِفء بيتك، بضغطة زر', en: 'Warmth for your home, at a tap'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -401,7 +407,7 @@ class _SplashScreenState extends State<SplashScreen>
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 300),
           child: Text(
-            'توصيل أسطوانات الغاز ومستلزماتها بأعلى درجات الأمان في عمّان والزرقاء',
+            AppLanguage.tr(ar: 'توصيل أسطوانات الغاز ومستلزماتها بأعلى درجات الأمان في عمّان والزرقاء', en: 'Safe delivery of gas cylinders & accessories across Amman & Zarqa'),
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 13,
@@ -505,14 +511,14 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'متوسط وقت الوصول الفعلي: ',
+                  AppLanguage.tr(ar: 'متوسط وقت الوصول الفعلي: ', en: 'Average arrival time: '),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     color: colorOnSurfaceVariant,
                   ),
                 ),
                 Text(
-                  '١٤ دقيقة',
+                  AppLanguage.tr(ar: '١٤ دقيقة', en: '14 minutes'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
@@ -569,7 +575,7 @@ class _SplashScreenState extends State<SplashScreen>
                     Row(
                       children: [
                         Text(
-                          'هيئة تنظيم قطاع الطاقة والمعادن',
+                          AppLanguage.tr(ar: 'هيئة تنظيم قطاع الطاقة والمعادن', en: 'Energy & Minerals Regulatory Commission'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -597,7 +603,10 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'معتمد رسمياً وفق معايير السلامة العامة ومواصفات مصفاة البترول الأردنية',
+                      AppLanguage.tr(
+                        ar: 'معتمد رسمياً وفق معايير السلامة العامة ومواصفات مصفاة البترول الأردنية',
+                        en: 'Officially certified per public safety standards & Jordan Petroleum Refinery specs',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -630,7 +639,10 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      'صمامات محكمة الإغلاق',
+                      AppLanguage.tr(
+                        ar: 'صمامات محكمة الإغلاق',
+                        en: 'Hermetically Sealed Valves',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -653,7 +665,10 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      'وزن مدقق (١٢.٥ كغ)',
+                      AppLanguage.tr(
+                        ar: 'وزن مدقق (١٢.٥ كغ)',
+                        en: 'Certified Weight (12.5 kg)',
+                      ),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -678,7 +693,10 @@ class _SplashScreenState extends State<SplashScreen>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'المملكة الأردنية الهاشمية 🇯🇴',
+            AppLanguage.tr(
+              ar: 'المملكة الأردنية الهاشمية 🇯🇴',
+              en: 'Hashemite Kingdom of Jordan 🇯🇴',
+            ),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 11,
               fontWeight: FontWeight.w500,

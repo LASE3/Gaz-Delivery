@@ -291,12 +291,12 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       Navigator.pop(context);
                     }
                   },
-                  icon: const Icon(
-                    Icons.arrow_forward_rounded,
+                  icon: Icon(
+                    AppLanguage.backIcon,
                     color: colorOnSurface,
                     size: 24,
                   ),
-                  tooltip: 'رجوع',
+                  tooltip: AppLanguage.tr(ar: 'رجوع', en: 'Back'),
                 )
               else
                 IconButton(
@@ -310,7 +310,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     color: colorSecondary,
                     size: 22,
                   ),
-                  tooltip: 'معاينة البث المباشر للتتبع',
+                  tooltip: AppLanguage.tr(ar: 'معاينة البث المباشر للتتبع', en: 'Preview Live Tracking'),
                 ),
               Container(
                 width: 32,
@@ -337,7 +337,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _isOrderDelivered ? 'غاز | GAS' : 'تتبع التوصيل المباشر',
+                    _isOrderDelivered ? AppLanguage.tr(ar: 'غاز | GAS', en: 'Jordan Gas') : AppLanguage.tr(ar: 'تتبع التوصيل المباشر', en: 'Live Delivery Tracking'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -366,7 +366,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                   color: colorOnSurfaceVariant,
                   size: 24,
                 ),
-                tooltip: 'الدعم الفني',
+                tooltip: AppLanguage.tr(ar: 'الدعم الفني', en: 'Support'),
               ),
               Container(
                 width: 34,
@@ -430,7 +430,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                           const Icon(Icons.flash_on, color: colorSecondary, size: 18),
                           const SizedBox(width: 6),
                           Text(
-                            'محاكاة استلام الطلب بنجاح:',
+                            AppLanguage.tr(ar: 'محاكاة استلام الطلب بنجاح:', en: 'Simulate successful delivery:'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -456,7 +456,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                           ),
                         ),
                         child: Text(
-                          'تم الاستلام الآن',
+                          AppLanguage.tr(ar: 'تم الاستلام الآن', en: 'Received Now'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
@@ -580,7 +580,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        'بث مباشر لنظام التتبع (GPS)',
+                        AppLanguage.tr(ar: 'بث مباشر لنظام التتبع (GPS)', en: 'Live GPS Tracking Feed'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -612,7 +612,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'شارع المدينة المنورة',
+                        AppLanguage.tr(ar: 'شارع المدينة المنورة', en: 'Madina Munawwara St'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -667,7 +667,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         Row(
                           children: [
                             Text(
-                              '6 دقائق',
+                              AppLanguage.tr(ar: '6 دقائق', en: '6 mins'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
@@ -685,7 +685,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Text(
-                                'وصول سريع',
+                                AppLanguage.tr(ar: 'وصول سريع', en: 'Fast Arrival'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
@@ -696,7 +696,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                           ],
                         ),
                         Text(
-                          'المسافة المتبقية: 1.2 كم • خلدا / تلاع العلي',
+                          AppLanguage.tr(ar: 'المسافة المتبقية: 1.2 كم • خلدا / تلاع العلي', en: 'Distance left: 1.2 km • Khalda / Tlaa Al-Ali'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 11,
                             color: colorOnSurfaceVariant,
@@ -764,7 +764,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'حالة وصول الغاز',
+                AppLanguage.tr(ar: 'حالة وصول الغاز', en: 'Gas Delivery Status'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -772,7 +772,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 ),
               ),
               Text(
-                'طلب رقم #84935',
+                AppLanguage.tr(ar: 'طلب رقم #84935', en: 'Order #84935'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -812,25 +812,25 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 children: [
                   _buildStepItem(
                     icon: Icons.check,
-                    label: 'استلام الطلب',
+                    label: AppLanguage.tr(ar: 'استلام الطلب', en: 'Order Received'),
                     isCompleted: true,
                     isActive: false,
                   ),
                   _buildStepItem(
                     icon: Icons.check,
-                    label: 'تأكيد المستودع',
+                    label: AppLanguage.tr(ar: 'تأكيد المستودع', en: 'Depot Confirmed'),
                     isCompleted: true,
                     isActive: false,
                   ),
                   _buildStepItem(
                     icon: Icons.local_shipping_rounded,
-                    label: 'في الطريق',
+                    label: AppLanguage.tr(ar: 'في الطريق', en: 'On the Way'),
                     isCompleted: false,
                     isActive: true,
                   ),
                   _buildStepItem(
                     icon: Icons.home_rounded,
-                    label: 'تم التسليم',
+                    label: AppLanguage.tr(ar: 'تم التسليم', en: 'Delivered'),
                     isCompleted: false,
                     isActive: false,
                     onTap: () {
@@ -985,7 +985,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                             children: [
                               Text(
                                 AppLanguage.tr(
-                                  ar: 'الكابتن أحمد الخوالدة',
+                                  ar: AppLanguage.tr(ar: 'الكابتن أحمد الخوالدة', en: 'Driver Ahmad Al-Khawaldeh'),
                                   en: 'Captain Ahmad Al-Khawaldeh',
                                 ),
                                 style: GoogleFonts.ibmPlexSansArabic(
@@ -1087,7 +1087,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'فني غاز معتمد من الدفاع المدني الأردني',
+                        AppLanguage.tr(ar: 'فني غاز معتمد من الدفاع المدني الأردني', en: 'Certified Gas Technician - Jordan Civil Defense'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -1095,7 +1095,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         ),
                       ),
                       Text(
-                        'فحص صمامات احترافي وتفريغ هواء آمن معتمد',
+                        AppLanguage.tr(ar: 'فحص صمامات احترافي وتفريغ هواء آمن معتمد', en: 'Professional valve test & certified safe air purging'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 10,
                           color: colorOnSurfaceVariant,
@@ -1120,7 +1120,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            'جاري الاتصال بالكابتن أحمد (0790000000)...',
+                            AppLanguage.tr(ar: 'جاري الاتصال بالكابتن أحمد (0790000000)...', en: 'Calling driver Ahmad (0790000000)...'),
                             style: GoogleFonts.ibmPlexSansArabic(),
                             textAlign: TextAlign.center,
                           ),
@@ -1143,7 +1143,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     ),
                     icon: const Icon(Icons.phone_rounded, size: 18),
                     label: Text(
-                      'اتصال بالكابتن',
+                      AppLanguage.tr(ar: 'اتصال بالكابتن', en: 'Call Driver'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1172,7 +1172,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         const Icon(Icons.chat_bubble_outline_rounded, size: 18),
                         const SizedBox(width: 6),
                         Text(
-                          'محادثة فورية',
+                          AppLanguage.tr(ar: 'محادثة فورية', en: 'Live Chat'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -1211,7 +1211,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'رسائل سريعة للكابتن:',
+                AppLanguage.tr(ar: 'رسائل سريعة للكابتن:', en: 'Quick Messages to Driver:'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   color: colorOnSurfaceVariant,
@@ -1223,9 +1223,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 physics: const BouncingScrollPhysics(),
                 child: Row(
                   children: [
-                    _buildQuickChip(0, 'أنا بالبناية الآن 👋'),
-                    _buildQuickChip(1, 'رن الجرس عند الوصول 🔔'),
-                    _buildQuickChip(2, 'طابق ثالث بمصعد 🛗'),
+                    _buildQuickChip(0, AppLanguage.tr(ar: 'أنا بالبناية الآن 👋', en: 'I am at the building now 👋')),
+                    _buildQuickChip(1, AppLanguage.tr(ar: 'رن الجرس عند الوصول 🔔', en: 'Ring bell upon arrival 🔔')),
+                    _buildQuickChip(2, AppLanguage.tr(ar: 'طابق ثالث بمصعد 🛗', en: '3rd floor with elevator 🛗')),
                   ],
                 ),
               ),
@@ -1255,7 +1255,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'تم إرسال: "$text" للكابتن',
+                AppLanguage.tr(
+                  ar: 'تم إرسال: "$text" للكابتن',
+                  en: 'Sent: "$text" to captain',
+                ),
                 style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
                 textAlign: TextAlign.center,
               ),
@@ -1310,7 +1313,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'إرشادات الأمان المنزلية',
+                  AppLanguage.tr(ar: 'إرشادات الأمان المنزلية', en: 'Home Safety Guidelines'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -1319,7 +1322,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'تأكد من وجود الختم الحراري وسلامة صمام الأمان على الأسطوانة. الكابتن مجهّز بمانع تسريب معتمد لفحص التركيب مجاناً.',
+                  AppLanguage.tr(ar: 'تأكد من وجود الختم الحراري وسلامة صمام الأمان على الأسطوانة. الكابتن مجهّز بمانع تسريب معتمد لفحص التركيب مجاناً.', en: 'Verify heat seal and safety valve integrity. Driver is equipped to test installation free of charge.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     height: 1.4,
@@ -1363,7 +1366,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'تفاصيل الشحنة',
+                    AppLanguage.tr(ar: 'تفاصيل الشحنة', en: 'Shipment Details'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -1387,7 +1390,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'نقداً عند الاستلام',
+                      AppLanguage.tr(ar: 'نقداً عند الاستلام', en: 'Cash on Delivery'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -1424,7 +1427,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'أسطوانة غاز منزلي (12.5 كغ)',
+                        AppLanguage.tr(ar: 'أسطوانة غاز منزلي (12.5 كغ)', en: 'Household LPG Cylinder (12.5 kg)'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -1432,7 +1435,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         ),
                       ),
                       Text(
-                        'استبدال أسطوانة فارغة بأسطوانة ممتلئة',
+                        AppLanguage.tr(ar: 'استبدال أسطوانة فارغة بأسطوانة ممتلئة', en: 'Exchange empty cylinder with filled one'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 10,
                           color: colorOnSurfaceVariant,
@@ -1443,7 +1446,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 ],
               ),
               Text(
-                '7.00 د.أ',
+                AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1477,7 +1480,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'ساعة غاز إيطالي (منظم ضغط عالي)',
+                        AppLanguage.tr(ar: 'ساعة غاز إيطالي (منظم ضغط عالي)', en: 'Italian Gas Regulator (High Performance)'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -1485,7 +1488,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         ),
                       ),
                       Text(
-                        'مع خرطوم أمان ومربطين مجاناً',
+                        AppLanguage.tr(ar: 'مع خرطوم أمان ومربطين مجاناً', en: 'With safety hose & 2 clamps free'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 10,
                           color: colorOnSurfaceVariant,
@@ -1496,7 +1499,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 ],
               ),
               Text(
-                '10.00 د.أ',
+                AppLanguage.tr(ar: '10.00 د.أ', en: '10.00 JOD'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1511,14 +1514,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'أجرة التوصيل والتركيب',
+                AppLanguage.tr(ar: 'أجرة التوصيل والتركيب', en: 'Delivery & Install Fee'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   color: colorOnSurfaceVariant,
                 ),
               ),
               Text(
-                'مجاني بمناسبة الشتاء',
+                AppLanguage.tr(ar: 'مجاني بمناسبة الشتاء', en: 'Free Winter Promotion'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -1536,7 +1539,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'المجموع الكلي المطلوب',
+                    AppLanguage.tr(ar: 'المجموع الكلي المطلوب', en: 'Total Amount Due'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -1544,7 +1547,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     ),
                   ),
                   Text(
-                    'شامل الضريبة وفحص التسريب',
+                    AppLanguage.tr(ar: 'شامل الضريبة وفحص التسريب', en: 'Includes tax & leak inspection'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 10,
                       color: colorOnSurfaceVariant,
@@ -1566,7 +1569,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'د.أ',
+                    AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -1604,7 +1607,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
               ),
               const SizedBox(width: 6),
               Text(
-                'مركز المساعدة والدعم الفني المباشر',
+                AppLanguage.tr(ar: 'مركز المساعدة والدعم الفني المباشر', en: 'Help & Live Support Center'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -1708,7 +1711,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
               ),
               const SizedBox(width: 6),
               Text(
-                'طلب منجز ومغلق',
+                AppLanguage.tr(ar: 'طلب منجز ومغلق', en: 'Order Completed & Closed'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -1720,7 +1723,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
         ),
         const SizedBox(height: 8),
         Text(
-          'تم تسليم الطلب بنجاح!',
+          AppLanguage.tr(ar: 'تم تسليم الطلب بنجاح!', en: 'Order Delivered Successfully!'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -1729,7 +1732,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
         ),
         const SizedBox(height: 4),
         Text(
-          'نتمنى لكم استخداماً آمناً ودافئاً في منزلكم.',
+          AppLanguage.tr(ar: 'نتمنى لكم استخداماً آمناً ودافئاً في منزلكم.', en: 'Wishing you a safe and warm home.'),
           textAlign: TextAlign.center,
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 13,
@@ -1765,7 +1768,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'رقم الفاتورة المرجعية',
+                    AppLanguage.tr(ar: 'رقم الفاتورة المرجعية', en: 'Reference Invoice Number'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 11,
                       color: colorOnSurfaceVariant,
@@ -1796,7 +1799,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'اليوم 02:45 م (18 دقيقة)',
+                      AppLanguage.tr(ar: 'اليوم 02:45 م (18 دقيقة)', en: 'Today 02:45 PM (18 mins)'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -1834,7 +1837,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'أسطوانة غاز منزلي 12.5 كغ',
+                        AppLanguage.tr(ar: 'أسطوانة غاز منزلي 12.5 كغ', en: 'LPG Gas Cylinder 12.5 kg'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -1842,7 +1845,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         ),
                       ),
                       Text(
-                        'استبدال أسطوانة فارغة',
+                        AppLanguage.tr(ar: 'استبدال أسطوانة فارغة', en: 'Exchange empty cylinder'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -1853,7 +1856,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 ],
               ),
               Text(
-                '7.00 د.أ',
+                AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1886,7 +1889,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'منظم ضغط غاز إيطالي أصلي',
+                        AppLanguage.tr(ar: 'منظم ضغط غاز إيطالي أصلي', en: 'Original Italian Gas Regulator'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -1894,7 +1897,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         ),
                       ),
                       Text(
-                        'ضمان عام كامل',
+                        AppLanguage.tr(ar: 'ضمان عام كامل', en: '1 Year Full Warranty'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -1905,7 +1908,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 ],
               ),
               Text(
-                '10.00 د.أ',
+                AppLanguage.tr(ar: '10.00 د.أ', en: '10.00 JOD'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1938,7 +1941,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'فحص تسريب صمام الأمان مجاناً',
+                          AppLanguage.tr(ar: 'فحص تسريب صمام الأمان مجاناً', en: 'Free Valve Leak Inspection'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -1946,7 +1949,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                           ),
                         ),
                         Text(
-                          'تم فحص مانع التسريب بمحلول الفحص بنجاح',
+                          AppLanguage.tr(ar: 'تم فحص مانع التسريب بمحلول الفحص بنجاح', en: 'Leak barrier verified with inspection solution'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 10,
                             color: colorOnSurfaceVariant,
@@ -1963,7 +1966,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    'مكتمل',
+                    AppLanguage.tr(ar: 'مكتمل', en: 'Completed'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -1989,7 +1992,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'المبلغ المستلم نقداً',
+                      AppLanguage.tr(ar: 'المبلغ المستلم نقداً', en: 'Amount Received in Cash'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -1997,7 +2000,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       ),
                     ),
                     Text(
-                      '17.00 د.أ',
+                      AppLanguage.tr(ar: '17.00 د.أ', en: '17.00 JOD'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
@@ -2017,7 +2020,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
-                        'تم استلام المبلغ بالكامل نقداً ومطابقته بواسطة الكابتن',
+                        AppLanguage.tr(ar: 'تم استلام المبلغ بالكامل نقداً ومطابقته بواسطة الكابتن', en: 'Amount fully collected in cash and verified by driver'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           color: colorOnSurfaceVariant,
@@ -2037,11 +2040,11 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
   // Driver Rating Card
   Widget _buildDriverRatingCard() {
     final List<Map<String, dynamic>> tags = [
-      {'icon': Icons.timer_outlined, 'label': 'التزام بالوقت والسرعة'},
-      {'icon': Icons.sentiment_very_satisfied_outlined, 'label': 'لباقة وحسن تعامل'},
-      {'icon': Icons.health_and_safety_outlined, 'label': 'إجراء فحص الأمان والصمام'},
-      {'icon': Icons.fitness_center_outlined, 'label': 'المساعدة بنقل الأسطوانة'},
-      {'icon': Icons.calculate_outlined, 'label': 'الدقة بالحساب النقدي'},
+      {'icon': Icons.timer_outlined, 'label': AppLanguage.tr(ar: 'التزام بالوقت والسرعة', en: 'Punctual & Fast')},
+      {'icon': Icons.sentiment_very_satisfied_outlined, 'label': AppLanguage.tr(ar: 'لباقة وحسن تعامل', en: 'Polite & Friendly')},
+      {'icon': Icons.health_and_safety_outlined, 'label': AppLanguage.tr(ar: 'إجراء فحص الأمان والصمام', en: 'Performed Safety & Valve Test')},
+      {'icon': Icons.fitness_center_outlined, 'label': AppLanguage.tr(ar: 'المساعدة بنقل الأسطوانة', en: 'Helped Carrying Cylinder')},
+      {'icon': Icons.calculate_outlined, 'label': AppLanguage.tr(ar: 'الدقة بالحساب النقدي', en: 'Accurate Cash Change')},
     ];
 
     return Container(
@@ -2114,7 +2117,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'الكابتن أحمد الخوالدة',
+                      AppLanguage.tr(ar: 'الكابتن أحمد الخوالدة', en: 'Driver Ahmad Al-Khawaldeh'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -2122,7 +2125,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       ),
                     ),
                     Text(
-                      'مركبة توزيع معتمدة • لوحة 42-8921',
+                      AppLanguage.tr(ar: 'مركبة توزيع معتمدة • لوحة 42-8921', en: 'Certified Delivery Truck • Plate 42-8921'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -2149,7 +2152,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     ],
                   ),
                   Text(
-                    '1,420+ توصيلة',
+                    AppLanguage.tr(ar: '1,420+ توصيلة', en: '1,420+ Deliveries'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 10,
                       color: colorOnSurfaceVariant,
@@ -2163,7 +2166,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
 
           // Rating Prompt
           Text(
-            'كيف كانت تجربة التوصيل والتعامل مع الكابتن؟',
+            AppLanguage.tr(ar: 'كيف كانت تجربة التوصيل والتعامل مع الكابتن؟', en: 'How was your delivery experience with the driver?'),
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 14,
@@ -2173,7 +2176,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
           ),
           const SizedBox(height: 4),
           Text(
-            'تقييمك يساعدنا على الحفاظ على معايير السلامة والخدمة المتميزة لطواقمنا في الميدان.',
+            AppLanguage.tr(ar: 'تقييمك يساعدنا على الحفاظ على معايير السلامة والخدمة المتميزة لطواقمنا في الميدان.', en: 'Your rating helps maintain safety standards and premium service for field crews.'),
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 11,
@@ -2209,7 +2212,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              'ما الذي أعجبك في خدمة الكابتن؟',
+              AppLanguage.tr(ar: 'ما الذي أعجبك في خدمة الكابتن؟', en: 'What did you like about the service?'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -2272,7 +2275,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              'ملاحظات إضافية (اختياري)',
+              AppLanguage.tr(ar: 'ملاحظات إضافية (اختياري)', en: 'Additional Notes (Optional)'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -2292,7 +2295,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
               maxLines: 3,
               style: GoogleFonts.ibmPlexSansArabic(fontSize: 12, color: colorOnSurface),
               decoration: InputDecoration(
-                hintText: 'أضف ملاحظات إضافية عن أداء الكابتن (اختياري)...',
+                hintText: AppLanguage.tr(ar: 'أضف ملاحظات إضافية عن أداء الكابتن (اختياري)...', en: 'Add driver feedback (optional)...'),
                 hintStyle: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 11,
                   color: colorOnSurfaceVariant.withValues(alpha: 0.7),
@@ -2338,7 +2341,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'جاري حفظ تقييمك...',
+                        AppLanguage.tr(ar: 'جاري حفظ تقييمك...', en: 'Saving rating...'),
                         style: GoogleFonts.ibmPlexSansArabic(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -2353,7 +2356,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        _isRatingSubmitted ? 'شكراً لملاحظاتك!' : 'إرسال التقييم',
+                        _isRatingSubmitted ? AppLanguage.tr(ar: 'شكراً لملاحظاتك!', en: 'Thank you for your rating!') : AppLanguage.tr(ar: 'إرسال التقييم', en: 'Submit Rating'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -2382,7 +2385,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
               ),
             ),
             child: Text(
-              'العودة للرئيسية',
+              AppLanguage.tr(ar: 'العودة للرئيسية', en: 'Back to Home'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -2424,7 +2427,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'تنبيه أمان وسلامة منزلية:',
+                  AppLanguage.tr(ar: 'تنبيه أمان وسلامة منزلية:', en: 'Home Safety Advisory:'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -2433,7 +2436,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'في حال ملاحظة أي رائحة غاز، يرجى إغلاق المفتاح فوراً والتواصل مع طوارئ الدفاع المدني 911 أو الدعم الفني.',
+                  AppLanguage.tr(ar: 'في حال ملاحظة أي رائحة غاز، يرجى إغلاق المفتاح فوراً والتواصل مع طوارئ الدفاع المدني 911 أو الدعم الفني.', en: 'If you smell gas, close valve immediately and contact Civil Defense 911 or support.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     height: 1.4,
@@ -2468,10 +2471,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(0, Icons.local_fire_department_rounded, 'الرئيسية'),
-              _buildNavItem(1, Icons.receipt_long_rounded, 'طلباتي', hasBadge: true),
-              _buildNavItem(2, Icons.notifications_rounded, 'الإشعارات'),
-              _buildNavItem(3, Icons.person_rounded, 'حسابي'),
+              _buildNavItem(0, Icons.local_fire_department_rounded, AppLanguage.tr(ar: 'الرئيسية', en: 'Home')),
+              _buildNavItem(1, Icons.receipt_long_rounded, AppLanguage.tr(ar: 'طلباتي', en: 'Orders'), hasBadge: true),
+              _buildNavItem(2, Icons.notifications_rounded, AppLanguage.tr(ar: 'الإشعارات', en: 'Notifications')),
+              _buildNavItem(3, Icons.person_rounded, AppLanguage.tr(ar: 'حسابي', en: 'Profile')),
             ],
           ),
         ),

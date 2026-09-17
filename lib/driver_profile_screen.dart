@@ -227,7 +227,10 @@ class DriverProfileScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                ' (1,240+ تقييم)',
+                                AppLanguage.tr(
+                                  ar: ' (1,240+ تقييم)',
+                                  en: ' (1,240+ reviews)',
+                                ),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 10.5,
                                   color: colorOnSurfaceVariant,

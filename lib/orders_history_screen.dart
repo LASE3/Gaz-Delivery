@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'app_language.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'home_screen.dart';
@@ -51,7 +52,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppLanguage.direction,
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
@@ -80,7 +81,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'فاتورة ضريبية رسمية',
+                        AppLanguage.tr(ar: 'فاتورة ضريبية رسمية', en: 'Official Tax Invoice'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -88,7 +89,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                         ),
                       ),
                       Text(
-                        'طلب $orderNumber • $date',
+                        AppLanguage.tr(ar: 'طلب $orderNumber • $date', en: 'Order #$orderNumber • $date'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 12,
                           color: colorOnSurfaceVariant,
@@ -104,7 +105,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      'مدفوع نقداً',
+                      AppLanguage.tr(ar: 'مدفوع نقداً', en: 'Paid in Cash'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -116,7 +117,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
               ),
               const Divider(height: 24, color: colorSurfaceContainer),
               Text(
-                'عنوان التوصيل',
+                AppLanguage.tr(ar: 'عنوان التوصيل', en: 'Delivery Address'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -141,7 +142,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'تفاصيل البنود والأسعار',
+                AppLanguage.tr(ar: 'تفاصيل البنود والأسعار', en: 'Items & Price Breakdown'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -179,7 +180,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'المجموع الإجمالي الشامل:',
+                    AppLanguage.tr(ar: 'المجموع الإجمالي الشامل:', en: 'Total Amount:'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -187,7 +188,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                     ),
                   ),
                   Text(
-                    '$total د.أ',
+                    AppLanguage.tr(ar: '$total د.أ', en: '$total JOD'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -211,7 +212,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                   ),
                   icon: const Icon(Icons.download_rounded, size: 20),
                   label: Text(
-                    'تحميل إيصال الفاتورة (PDF)',
+                    AppLanguage.tr(ar: 'تحميل إيصال الفاتورة (PDF)', en: 'Download Invoice Receipt (PDF)'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -235,7 +236,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
             const Icon(Icons.check_circle, color: Colors.white, size: 18),
             const SizedBox(width: 8),
             Text(
-              'تمت إضافة $title إلى سلة التسوق بنجاح',
+              AppLanguage.tr(ar: 'تمت إضافة $title إلى سلة التسوق بنجاح', en: '$title added to cart successfully'),
               style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
             ),
           ],
@@ -250,9 +251,12 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         // Header
         appBar: PreferredSize(
@@ -292,7 +296,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'غاز الأردن | GAS',
+                      AppLanguage.tr(ar: 'غاز الأردن | GAS', en: 'Jordan Gas | GAS'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -301,7 +305,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                       ),
                     ),
                     Text(
-                      'سجل الطلبات • Order History',
+                      AppLanguage.tr(ar: 'سجل الطلبات • Order History', en: 'Order History & Invoices'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -409,6 +413,8 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
         bottomNavigationBar: _buildBottomNavigation(),
       ),
     );
+      },
+    );
   }
 
   // 1. Filter Navigation Tabs
@@ -452,7 +458,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'الطلبات النشطة',
+                      AppLanguage.tr(ar: 'الطلبات النشطة', en: 'Active Orders'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: _selectedFilter == 'active'
@@ -518,7 +524,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'الطلبات المكتملة',
+                    AppLanguage.tr(ar: 'الطلبات المكتملة', en: 'Completed'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       fontWeight: _selectedFilter == 'completed'
@@ -564,7 +570,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'الملغاة',
+                    AppLanguage.tr(ar: 'الملغاة', en: 'Cancelled'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       fontWeight: _selectedFilter == 'cancelled'
@@ -604,7 +610,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'الطلب النشط حالياً',
+                  AppLanguage.tr(ar: 'الطلب النشط حالياً', en: 'Current Active Order'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -614,7 +620,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
               ],
             ),
             Text(
-              'يصل خلال 12 دقيقة',
+              AppLanguage.tr(ar: 'يصل خلال 12 دقيقة', en: 'Arriving in 12 mins'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -681,7 +687,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'اليوم، 11:42 ص',
+                              AppLanguage.tr(ar: 'اليوم، 11:42 ص', en: 'Today, 11:42 AM'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 11,
                                 color: colorOnSurfaceVariant,
@@ -705,7 +711,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                'الكابتن في الطريق إليك',
+                                AppLanguage.tr(ar: 'الكابتن في الطريق إليك', en: 'Driver is on the way'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
@@ -740,14 +746,14 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'تم التأكيد',
+                          AppLanguage.tr(ar: 'تم التأكيد', en: 'Confirmed'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 10,
                             color: colorOnSurfaceVariant,
                           ),
                         ),
                         Text(
-                          'في الطريق (حي الجامعة)',
+                          AppLanguage.tr(ar: 'في الطريق (حي الجامعة)', en: 'On the Way (University District)'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -755,7 +761,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                           ),
                         ),
                         Text(
-                          'الوصول والتوصيل',
+                          AppLanguage.tr(ar: 'الوصول والتوصيل', en: 'Arrival & Delivery'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 10,
                             color: colorOnSurfaceVariant,
@@ -796,7 +802,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'أسطوانة غاز منزلي 12.5 كغ',
+                                  AppLanguage.tr(ar: 'أسطوانة غاز منزلي 12.5 كغ', en: 'LPG Gas Cylinder 12.5 kg'),
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -804,7 +810,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'تبديل أسطوانة حديدية فارغة',
+                                  AppLanguage.tr(ar: 'تبديل أسطوانة حديدية فارغة', en: 'Exchange empty steel cylinder'),
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 11,
                                     color: colorOnSurfaceVariant,
@@ -815,7 +821,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                           ],
                         ),
                         Text(
-                          '1× 7.00 د.أ',
+                          AppLanguage.tr(ar: '1× 7.00 د.أ', en: '1× 7.00 JOD'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -850,7 +856,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'منظّم وساعة غاز إيطالي',
+                                  AppLanguage.tr(ar: 'منظّم وساعة غاز إيطالي', en: 'Italian Gas Regulator & Gauge'),
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -858,7 +864,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'صمام أمان أوتوماتيكي أصلي',
+                                  AppLanguage.tr(ar: 'صمام أمان أوتوماتيكي أصلي', en: 'Original automatic safety valve'),
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 11,
                                     color: colorOnSurfaceVariant,
@@ -869,7 +875,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                           ],
                         ),
                         Text(
-                          '1× 10.00 د.أ',
+                          AppLanguage.tr(ar: '1× 10.00 د.أ', en: '1× 10.00 JOD'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -900,14 +906,14 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'طريقة الدفع المحجوزة',
+                                    AppLanguage.tr(ar: 'طريقة الدفع المحجوزة', en: 'Selected Payment Method'),
                                     style: GoogleFonts.ibmPlexSansArabic(
                                       fontSize: 10,
                                       color: colorOnSurfaceVariant,
                                     ),
                                   ),
                                   Text(
-                                    'نقداً عند الاستلام',
+                                    AppLanguage.tr(ar: 'نقداً عند الاستلام', en: 'Cash on Delivery (COD)'),
                                     style: GoogleFonts.ibmPlexSansArabic(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
@@ -923,7 +929,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                             textBaseline: TextBaseline.alphabetic,
                             children: [
                               Text(
-                                'المجموع: ',
+                                AppLanguage.tr(ar: 'المجموع: ', en: 'Total: '),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 11,
                                   color: colorOnSurfaceVariant,
@@ -939,7 +945,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                               ),
                               const SizedBox(width: 2),
                               Text(
-                                'د.أ',
+                                AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
@@ -998,7 +1004,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'أحمد المجالي',
+                                      AppLanguage.tr(ar: 'أحمد المجالي', en: 'Ahmad Al-Majali'),
                                       style: GoogleFonts.ibmPlexSansArabic(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -1034,7 +1040,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                                   ],
                                 ),
                                 Text(
-                                  'ديانا هيونداي (مركبة رقم: 14-88920)',
+                                  AppLanguage.tr(ar: 'ديانا هيونداي (مركبة رقم: 14-88920)', en: 'Hyundai Truck (Plate: 14-88920)'),
                                   style: GoogleFonts.ibmPlexSansArabic(
                                     fontSize: 11,
                                     color: colorOnSurfaceVariant,
@@ -1049,7 +1055,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'جاري الاتصال بالكابتن أحمد: 0790000000',
+                                  AppLanguage.tr(ar: 'جاري الاتصال بالكابتن أحمد: 0790000000', en: 'Calling driver Ahmad: 0790000000'),
                                   style: GoogleFonts.ibmPlexSansArabic(),
                                   textAlign: TextAlign.center,
                                 ),
@@ -1103,7 +1109,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                               icon: const Icon(Icons.chat_bubble_outline_rounded,
                                   size: 16),
                               label: Text(
-                                'محادثة',
+                                AppLanguage.tr(ar: 'محادثة', en: 'Chat'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
@@ -1138,7 +1144,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                               ),
                               icon: const Icon(Icons.near_me_rounded, size: 16),
                               label: Text(
-                                'تتبع مباشر',
+                                AppLanguage.tr(ar: 'تتبع مباشر', en: 'Live Track'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
@@ -1191,7 +1197,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                 Row(
                   children: [
                     Text(
-                      'الدفع نقداً فقط عند الاستلام لجميع الطلبات',
+                      AppLanguage.tr(ar: 'الدفع نقداً فقط عند الاستلام لجميع الطلبات', en: 'Cash payment on delivery for all orders'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -1207,7 +1213,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        'معتمد',
+                        AppLanguage.tr(ar: 'معتمد', en: 'Certified'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 9,
                           fontWeight: FontWeight.bold,
@@ -1219,7 +1225,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  'امتثالاً لتعليمات هيئة تنظيم قطاع الطاقة والمعادن الأردنية (EMRC)، يُحاسب الموزع المعتمد بالتعرفة الرسمية للأسطوانة مباشرة عند باب منزلك مع فحص صمام الأمان مجاناً.',
+                  AppLanguage.tr(ar: 'امتثالاً لتعليمات هيئة تنظيم قطاع الطاقة والمعادن الأردنية (EMRC)، يُحاسب الموزع المعتمد بالتعرفة الرسمية للأسطوانة مباشرة عند باب منزلك مع فحص صمام الأمان مجاناً.', en: 'In compliance with Jordan EMRC regulations, authorized distributors charge official tariff directly at your doorstep with complimentary safety valve inspection.'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 11,
                     color: colorOnSurfaceVariant,
@@ -1243,7 +1249,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'سجل الطلبات السابقة',
+              AppLanguage.tr(ar: 'سجل الطلبات السابقة', en: 'Past Orders History'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -1251,7 +1257,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
               ),
             ),
             Text(
-              'إجمالي المكتمل: 14 طلب',
+              AppLanguage.tr(ar: 'إجمالي المكتمل: 14 طلب', en: 'Total Completed: 14 Orders'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 11,
                 color: colorOnSurfaceVariant,
@@ -1264,13 +1270,13 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
         // Order 1: Khilda
         _buildHistoricalOrderCard(
           orderNumber: '#84920',
-          date: '12 شباط 2025',
-          title: '1× أسطوانة غاز + رسوم طابق رابع',
-          address: 'عمان، خلدا - قرب إشارة البنك العربي',
+          date: AppLanguage.tr(ar: '12 شباط 2025', en: 'Feb 12, 2025'),
+          title: AppLanguage.tr(ar: '1× أسطوانة غاز + رسوم طابق رابع', en: '1× Gas Cylinder + 4th Floor Fee'),
+          address: AppLanguage.tr(ar: 'عمان، خلدا - قرب إشارة البنك العربي', en: 'Amman, Khalda - Near Arab Bank'),
           total: '8.50',
           items: [
-            {'title': '1× أسطوانة غاز منزلي 12.5 كغ', 'price': '7.00 د.أ'},
-            {'title': 'رسوم صعود طابق رابع (بدون مصعد)', 'price': '1.50 د.أ'},
+            {'title': AppLanguage.tr(ar: '1× أسطوانة غاز منزلي 12.5 كغ', en: '1× LPG Gas Cylinder 12.5 kg'), 'price': AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD')},
+            {'title': AppLanguage.tr(ar: 'رسوم صعود طابق رابع (بدون مصعد)', en: '4th floor stair fee (no elevator)'), 'price': AppLanguage.tr(ar: '1.50 د.أ', en: '1.50 JOD')},
           ],
           hasReorder: true,
         ),
@@ -1279,13 +1285,13 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
         // Order 2: Tla' Al-Ali
         _buildHistoricalOrderCard(
           orderNumber: '#84102',
-          date: '18 كانون الثاني 2025',
-          title: '1× أسطوانة غاز منزلي 12.5 كغ',
-          address: 'عمان، تلاع العلي - خلف سوق السلطان',
+          date: AppLanguage.tr(ar: '18 كانون الثاني 2025', en: 'Jan 18, 2025'),
+          title: AppLanguage.tr(ar: '1× أسطوانة غاز منزلي 12.5 كغ', en: '1× LPG Gas Cylinder 12.5 kg'),
+          address: AppLanguage.tr(ar: 'عمان، تلاع العلي - خلف سوق السلطان', en: 'Amman, Tlaa Al-Ali - Behind Sultan Market'),
           total: '7.00',
           items: [
-            {'title': '1× أسطوانة غاز منزلي 12.5 كغ', 'price': '7.00 د.أ'},
-            {'title': 'فحص صمام الأمان الإلكتروني', 'price': 'مجاني 0.00 د.أ'},
+            {'title': AppLanguage.tr(ar: '1× أسطوانة غاز منزلي 12.5 كغ', en: '1× LPG Gas Cylinder 12.5 kg'), 'price': AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD')},
+            {'title': AppLanguage.tr(ar: 'فحص صمام الأمان الإلكتروني', en: 'Electronic valve inspection'), 'price': AppLanguage.tr(ar: 'مجاني 0.00 د.أ', en: 'Free 0.00 JOD')},
           ],
           hasReorder: false,
         ),
@@ -1294,13 +1300,13 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
         // Order 3: Abdoun
         _buildHistoricalOrderCard(
           orderNumber: '#83590',
-          date: '28 كانون الأول 2024',
-          title: '2× أسطوانة غاز + خرطوم أمان إيطالي',
-          address: 'عمان، عبدون الشمالي - قرب الدوار الرابع',
+          date: AppLanguage.tr(ar: '28 كانون الأول 2024', en: 'Dec 28, 2024'),
+          title: AppLanguage.tr(ar: '2× أسطوانة غاز + خرطوم أمان إيطالي', en: '2× Gas Cylinders + Safety Hose'),
+          address: AppLanguage.tr(ar: 'عمان، عبدون الشمالي - قرب الدوار الرابع', en: 'Amman, North Abdoun - Near 4th Circle'),
           total: '17.50',
           items: [
-            {'title': '2× أسطوانة غاز منزلي 12.5 كغ', 'price': '14.00 د.أ'},
-            {'title': '1× خرطوم أمان إيطالي 1.5 متر', 'price': '3.50 د.أ'},
+            {'title': AppLanguage.tr(ar: '2× أسطوانة غاز منزلي 12.5 كغ', en: '2× LPG Gas Cylinders 12.5 kg'), 'price': AppLanguage.tr(ar: '14.00 د.أ', en: '14.00 JOD')},
+            {'title': AppLanguage.tr(ar: '1× خرطوم أمان إيطالي 1.5 متر', en: '1× Italian Safety Hose 1.5m'), 'price': AppLanguage.tr(ar: '3.50 د.أ', en: '3.50 JOD')},
           ],
           hasReorder: true,
         ),
@@ -1376,7 +1382,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                         size: 13, color: colorSecondary),
                     const SizedBox(width: 4),
                     Text(
-                      'تم التسليم بنجاح',
+                      AppLanguage.tr(ar: 'تم التسليم بنجاح', en: 'Delivered Successfully'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -1439,7 +1445,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                     ),
                   ),
                   Text(
-                    'د.أ',
+                    AppLanguage.tr(ar: 'د.أ', en: 'JOD'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
@@ -1476,7 +1482,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                       ),
                       icon: const Icon(Icons.receipt_long_rounded, size: 15),
                       label: Text(
-                        'الفاتورة التفصيلية',
+                        AppLanguage.tr(ar: 'الفاتورة التفصيلية', en: 'View Invoice'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -1501,7 +1507,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                       ),
                       icon: const Icon(Icons.replay_rounded, size: 15),
                       label: Text(
-                        'إعادة الطلب بنقرة',
+                        AppLanguage.tr(ar: 'إعادة الطلب بنقرة', en: '1-Click Reorder'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -1534,7 +1540,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
                 ),
                 icon: const Icon(Icons.rate_review_outlined, size: 15),
                 label: Text(
-                  'عرض الفاتورة والتقييم',
+                  AppLanguage.tr(ar: 'عرض الفاتورة والتقييم', en: 'Invoice & Rate Driver'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -1582,7 +1588,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
           ),
           const SizedBox(height: 14),
           Text(
-            'لا توجد طلبات ملغاة',
+            AppLanguage.tr(ar: 'لا توجد طلبات ملغاة', en: 'No Cancelled Orders'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -1591,7 +1597,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'جميع طلبات الوقود والغاز الخاصة بك تم إنجازها وتسليمها بسلامة تامة عبر شبكة موزعينا المعتمدين.',
+            AppLanguage.tr(ar: 'جميع طلبات الوقود والغاز الخاصة بك تم إنجازها وتسليمها بسلامة تامة عبر شبكة موزعينا المعتمدين.', en: 'All your fuel and gas orders have been completed and delivered safely through our network.'),
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12,
@@ -1615,7 +1621,7 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
               ),
             ),
             child: Text(
-              'الرجوع إلى النشطة',
+              AppLanguage.tr(ar: 'الرجوع إلى النشطة', en: 'Back to Active'),
               style: GoogleFonts.ibmPlexSansArabic(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -1650,23 +1656,23 @@ class _OrdersHistoryScreenState extends State<OrdersHistoryScreen> {
               _buildNavItem(
                 index: 0,
                 icon: Icons.local_gas_station_rounded,
-                label: 'الرئيسية',
+                label: AppLanguage.tr(ar: 'الرئيسية', en: 'Home'),
               ),
               _buildNavItem(
                 index: 1,
                 icon: Icons.inventory_2_outlined,
-                label: 'طلباتي',
+                label: AppLanguage.tr(ar: 'طلباتي', en: 'Orders'),
               ),
               _buildNavItem(
                 index: 2,
                 icon: Icons.notifications_none_rounded,
-                label: 'الإشعارات',
+                label: AppLanguage.tr(ar: 'الإشعارات', en: 'Alerts'),
                 hasBadge: true,
               ),
               _buildNavItem(
                 index: 3,
                 icon: Icons.person_rounded,
-                label: 'حسابي',
+                label: AppLanguage.tr(ar: 'حسابي', en: 'Profile'),
               ),
             ],
           ),

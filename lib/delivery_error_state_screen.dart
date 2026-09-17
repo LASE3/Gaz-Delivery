@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'app_language.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'delivery_location.dart';
@@ -76,7 +77,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                 const Icon(Icons.wifi, color: Colors.white, size: 18),
                 const SizedBox(width: 8),
                 Text(
-                  'تم تحديث بيانات الاتصال بنجاح',
+                  AppLanguage.tr(ar: 'تم تحديث بيانات الاتصال بنجاح', en: 'Contact info updated successfully'),
                   style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
                 ),
               ],
@@ -97,7 +98,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'يرجى إدخال رقم الهاتف أولاً',
+            AppLanguage.tr(ar: 'يرجى إدخال رقم الهاتف أولاً', en: 'Please enter phone number first'),
             style: GoogleFonts.ibmPlexSansArabic(fontSize: 13),
             textAlign: TextAlign.center,
           ),
@@ -118,7 +119,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
             const Icon(Icons.check_circle, color: Colors.white, size: 18),
             const SizedBox(width: 8),
             Text(
-              'تم تسجيل رقمك! سنرسل لك إشعاراً ورصيد 3 دنانير فور توفر الخدمة.',
+              AppLanguage.tr(ar: 'تم تسجيل رقمك! سنرسل لك إشعاراً ورصيد 3 دنانير فور توفر الخدمة.', en: 'Number registered! We will notify you with 3 JOD credit upon launch.'),
               style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
             ),
           ],
@@ -141,7 +142,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
             const Icon(Icons.access_time_filled, color: Colors.white, size: 18),
             const SizedBox(width: 8),
             Text(
-              'تم حجز أولوية! سيتم توجيه أول شاحنة متاحة إلى موقعك.',
+              AppLanguage.tr(ar: 'تم حجز أولوية! سيتم توجيه أول شاحنة متاحة إلى موقعك.', en: 'Priority booked! Next available truck will be dispatched.'),
               style: GoogleFonts.ibmPlexSansArabic(fontSize: 12),
             ),
           ],
@@ -156,9 +157,12 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        return Directionality(
+          textDirection: AppLanguage.direction,
+          child: Scaffold(
         backgroundColor: colorBackground,
         // Top App Bar
         appBar: PreferredSize(
@@ -182,8 +186,8 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                       color: colorSurfaceContainer,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.arrow_forward_ios_rounded,
+                    child: Icon(
+                      AppLanguage.chevronBack,
                       size: 16,
                       color: colorOnSurface,
                     ),
@@ -205,7 +209,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'حالات الخدمة والتوصيل',
+                  AppLanguage.tr(ar: 'حالات الخدمة والتوصيل', en: 'Delivery & Service States'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -282,6 +286,8 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
         ),
       ),
     );
+      },
+    );
   }
 
   // 1. CONNECTIVITY BANNER
@@ -315,7 +321,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'اتصال الشبكة ضعيف أو غير مستقر',
+                    AppLanguage.tr(ar: 'اتصال الشبكة ضعيف أو غير مستقر', en: 'Weak or unstable connection'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -323,7 +329,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                     ),
                   ),
                   Text(
-                    'يتم تحديث خرائط التوزيع في وضع عدم الاتصال',
+                    AppLanguage.tr(ar: 'يتم تحديث خرائط التوزيع في وضع عدم الاتصال', en: 'Maps updating in offline mode'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 10,
                       color: colorOnSurfaceVariant,
@@ -359,7 +365,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                       ),
                     )
                   : Text(
-                      'إعادة المحاولة',
+                      AppLanguage.tr(ar: 'إعادة المحاولة', en: 'Retry'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -385,17 +391,17 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
         children: [
           _buildTabItem(
             id: 'out',
-            label: 'خارج التغطية',
+            label: AppLanguage.tr(ar: 'خارج التغطية', en: 'Out of Range'),
           ),
           const SizedBox(width: 4),
           _buildTabItem(
             id: 'busy',
-            label: 'ضغط التوزيع',
+            label: AppLanguage.tr(ar: 'ضغط التوزيع', en: 'High Demand'),
           ),
           const SizedBox(width: 4),
           _buildTabItem(
             id: 'cart',
-            label: 'السلة فارغة',
+            label: AppLanguage.tr(ar: 'السلة فارغة', en: 'Empty Cart'),
           ),
         ],
       ),
@@ -514,7 +520,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                               size: 11, color: colorSecondary),
                           const SizedBox(width: 2),
                           Text(
-                            'مرخّص',
+                            AppLanguage.tr(ar: 'مرخّص', en: 'Certified'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 9,
                               fontWeight: FontWeight.bold,
@@ -550,7 +556,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'إربد والعقبة والمحافظات الأخرى غير مفعلة',
+                      AppLanguage.tr(ar: 'إربد والعقبة والمحافظات الأخرى غير مفعلة', en: 'Irbid, Aqaba & other governorates not yet active'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -564,7 +570,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
 
               // Copy
               Text(
-                'نعتذر، الخدمة غير متاحة في هذا الموقع حالياً',
+                AppLanguage.tr(ar: 'نعتذر، الخدمة غير متاحة في هذا الموقع حالياً', en: 'Sorry, service is not available in this location currently'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 17,
@@ -574,7 +580,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
               ),
               const SizedBox(height: 6),
               Text(
-                'وفقاً للوائح قطاع الطاقة والمعادن وتصاريح أسطول الغاز السائل المعتمد، تغطي مركباتنا حالياً محافظتي العاصمة عمّان والزرقاء فقط لضمان معايير السلامة التامة والتوصيل السريع.',
+                AppLanguage.tr(ar: 'وفقاً للوائح قطاع الطاقة والمعادن وتصاريح أسطول الغاز السائل المعتمد، تغطي مركباتنا حالياً محافظتي العاصمة عمّان والزرقاء فقط لضمان معايير السلامة التامة والتوصيل السريع.', en: 'Per EMRC regulations and fleet permits, deliveries currently cover Amman & Zarqa only to ensure safety standards and quick response.'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 12,
@@ -606,7 +612,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                   ),
                   icon: const Icon(Icons.explore_rounded, size: 18),
                   label: Text(
-                    'تغيير العنوان إلى عمّان أو الزرقاء',
+                    AppLanguage.tr(ar: 'تغيير العنوان إلى عمّان أو الزرقاء', en: 'Change address to Amman or Zarqa'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -635,7 +641,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'أبلغني فور توفر الخدمة في حيي',
+                          AppLanguage.tr(ar: 'أبلغني فور توفر الخدمة في حيي', en: 'Notify me when service launches in my area'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -646,7 +652,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'سجّل رقم هاتفك وسنرسل لك إشعاراً مع رصيد ترحيبي 3 دنانير عند تدشين الأسطول في منطقتك.',
+                      AppLanguage.tr(ar: 'سجّل رقم هاتفك وسنرسل لك إشعاراً مع رصيد ترحيبي 3 دنانير عند تدشين الأسطول في منطقتك.', en: 'Enter your phone number and receive 3 JOD credit when service opens in your neighborhood.'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -670,7 +676,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                                   horizontal: 16),
                             ),
                             child: Text(
-                              'تسجيل',
+                              AppLanguage.tr(ar: 'تسجيل', en: 'Register'),
                               style: GoogleFonts.ibmPlexSansArabic(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -754,7 +760,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'نطاق التغطية المرخّص اليوم',
+                    AppLanguage.tr(ar: 'نطاق التغطية المرخّص اليوم', en: 'Licensed Coverage Today'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -769,7 +775,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      'تحديث فوري',
+                      AppLanguage.tr(ar: 'تحديث فوري', en: 'Live Update'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -796,7 +802,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'محافظة عمّان',
+                                AppLanguage.tr(ar: 'محافظة عمّان', en: 'Amman Governorate'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -815,7 +821,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            '٢٤ شاحنة • ١٨ دقيقة وصول',
+                            AppLanguage.tr(ar: '٢٤ شاحنة • ١٨ دقيقة وصول', en: '24 Trucks • 18 min arrival'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 10,
                               color: colorOnSurfaceVariant,
@@ -840,7 +846,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'محافظة الزرقاء',
+                                AppLanguage.tr(ar: 'محافظة الزرقاء', en: 'Zarqa Governorate'),
                                 style: GoogleFonts.ibmPlexSansArabic(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -859,7 +865,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            '١١ شاحنة • ٢٦ دقيقة وصول',
+                            AppLanguage.tr(ar: '١١ شاحنة • ٢٦ دقيقة وصول', en: '11 Trucks • 26 min arrival'),
                             style: GoogleFonts.ibmPlexSansArabic(
                               fontSize: 10,
                               color: colorOnSurfaceVariant,
@@ -941,7 +947,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
 
           // Title & Body
           Text(
-            'كافة سيارات الغاز منشغلة في قطاعك',
+            AppLanguage.tr(ar: 'كافة سيارات الغاز منشغلة في قطاعك', en: 'All gas trucks busy in your sector'),
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 17,
@@ -951,7 +957,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'الطلب مرتفع حالياً في منطقتك (دوار عبدون ومحيطه). نلبي الطلبات بالتسلسل، وسيتوفر موزع متاح خلال دقائق.',
+            AppLanguage.tr(ar: 'الطلب مرتفع حالياً في منطقتك (دوار عبدون ومحيطه). نلبي الطلبات بالتسلسل، وسيتوفر موزع متاح خلال دقائق.', en: 'High demand in your area. Orders fulfilled sequentially, truck available in minutes.'),
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12,
@@ -974,7 +980,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'وقت الانتظار التقريبي للتفريغ',
+                      AppLanguage.tr(ar: 'وقت الانتظار التقريبي للتفريغ', en: 'Estimated Wait Time'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -982,7 +988,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                       ),
                     ),
                     Text(
-                      '١٤ دقيقة',
+                      AppLanguage.tr(ar: '١٤ دقيقة', en: '14 minutes'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -1013,14 +1019,14 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'أمامك في الطابور: ٣ منازل',
+                      AppLanguage.tr(ar: 'أمامك في الطابور: ٣ منازل', en: 'Ahead in queue: 3 homes'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
                       ),
                     ),
                     Text(
-                      'شاحنة أقرب قطاع: حي الياسمين',
+                      AppLanguage.tr(ar: 'شاحنة أقرب قطاع: حي الياسمين', en: 'Nearest truck sector: Al-Yasmin'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,
@@ -1047,7 +1053,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                 ),
               ),
               child: Text(
-                'حجز أولوية عند توفر الشاحنة القادمة',
+                AppLanguage.tr(ar: 'حجز أولوية عند توفر الشاحنة القادمة', en: 'Reserve priority for next truck'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1092,7 +1098,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            'سلتك فارغة تماماً',
+            AppLanguage.tr(ar: 'سلتك فارغة تماماً', en: 'Your Cart is Empty'),
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 17,
               fontWeight: FontWeight.w800,
@@ -1101,7 +1107,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'لم تقم بإضافة أي أسطوانات غاز أو ملحقات أمان (منظمات وخراطيم) بعد. أضف أسطوانتك المنزلية بنقرة واحدة.',
+            AppLanguage.tr(ar: 'لم تقم بإضافة أي أسطوانات غاز أو ملحقات أمان (منظمات وخراطيم) بعد. أضف أسطوانتك المنزلية بنقرة واحدة.', en: 'You have not added cylinders or safety accessories yet. Add with one tap.'),
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
               fontSize: 12,
@@ -1141,7 +1147,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'أسطوانة غاز منزلية (تبديل)',
+                          AppLanguage.tr(ar: 'أسطوانة غاز منزلية (تبديل)', en: 'LPG Gas Cylinder (Exchange)'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -1149,7 +1155,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                           ),
                         ),
                         Text(
-                          'وزن صافي ١٢.٥ كغم • فحص تسريب مجاني',
+                          AppLanguage.tr(ar: 'وزن صافي ١٢.٥ كغم • فحص تسريب مجاني', en: '12.5 kg Net Weight • Free Leak Test'),
                           style: GoogleFonts.ibmPlexSansArabic(
                             fontSize: 10,
                             color: colorOnSurfaceVariant,
@@ -1160,7 +1166,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                   ],
                 ),
                 Text(
-                  '7.00 د.أ',
+                  AppLanguage.tr(ar: '7.00 د.أ', en: '7.00 JOD'),
                   style: GoogleFonts.ibmPlexSansArabic(
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
@@ -1195,7 +1201,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
               ),
               icon: const Icon(Icons.add_shopping_cart_rounded, size: 18),
               label: Text(
-                'إضافة لطلب السريع وتصفح الملحقات',
+                AppLanguage.tr(ar: 'إضافة لطلب السريع وتصفح الملحقات', en: 'Quick Add & Browse Accessories'),
                 style: GoogleFonts.ibmPlexSansArabic(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1214,7 +1220,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'حالات الخدمة الإضافية',
+          AppLanguage.tr(ar: 'حالات الخدمة الإضافية', en: 'Other Service Scenarios'),
           style: GoogleFonts.ibmPlexSansArabic(
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -1260,7 +1266,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'سلتك فارغة من أسطوانات الغاز',
+                        AppLanguage.tr(ar: 'سلتك فارغة من أسطوانات الغاز', en: 'Cart empty of gas cylinders'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -1268,7 +1274,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                         ),
                       ),
                       Text(
-                        'سعر التبديل الرسمي: 7.00 د.أ شامل التوصيل',
+                        AppLanguage.tr(ar: 'سعر التبديل الرسمي: 7.00 د.أ شامل التوصيل', en: 'Official exchange: 7.00 JOD incl. delivery'),
                         style: GoogleFonts.ibmPlexSansArabic(
                           fontSize: 10,
                           color: colorOnSurfaceVariant,
@@ -1293,7 +1299,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    'تصفح المنتجات',
+                    AppLanguage.tr(ar: 'تصفح المنتجات', en: 'Browse Products'),
                     style: GoogleFonts.ibmPlexSansArabic(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -1328,7 +1334,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'بروتوكول السلامة المنزلي',
+                      AppLanguage.tr(ar: 'بروتوكول السلامة المنزلي', en: 'Home Safety Protocol'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -1337,7 +1343,7 @@ class _DeliveryErrorStateScreenState extends State<DeliveryErrorStateScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'يتولى السائق المعتمد فحص جلدة الصمام وتركيب المنظم في موقعك مجاناً للتأكد من عدم وجود أي تسريب غازي قبل استلام القيمة.',
+                      AppLanguage.tr(ar: 'يتولى السائق المعتمد فحص جلدة الصمام وتركيب المنظم في موقعك مجاناً للتأكد من عدم وجود أي تسريب غازي قبل استلام القيمة.', en: 'Certified driver inspects valve gasket and installs regulator free of charge to confirm safety before collecting payment.'),
                       style: GoogleFonts.ibmPlexSansArabic(
                         fontSize: 11,
                         color: colorOnSurfaceVariant,

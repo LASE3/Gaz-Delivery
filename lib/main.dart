@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+
+import 'app_language.dart';
+import 'page_transitions.dart';
+import 'splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 
@@ -9,56 +20,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+    return ValueListenableBuilder<String>(
+      valueListenable: AppLanguage.currentLanguage,
+      builder: (context, langCode, child) {
+        final bool isAr = langCode == 'ar';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+        return MaterialApp(
+          title: isAr ? 'غاز الأردن - توصيل الغاز المنزلي' : 'Jordan Gas - Domestic Delivery',
+          debugShowCheckedModeBanner: false,
+          locale: Locale(langCode),
+          theme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: const Color(0xFFF8F9FF),
+            textTheme: isAr
+                ? GoogleFonts.ibmPlexSansArabicTextTheme(
+                    Theme.of(context).textTheme,
+                  )
+                : GoogleFonts.ibmPlexSansTextTheme(
+                    Theme.of(context).textTheme,
+                  ),
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: AppSmoothPageTransitionsBuilder(),
+                TargetPlatform.iOS: AppSmoothPageTransitionsBuilder(),
+                TargetPlatform.windows: AppSmoothPageTransitionsBuilder(),
+                TargetPlatform.macOS: AppSmoothPageTransitionsBuilder(),
+                TargetPlatform.linux: AppSmoothPageTransitionsBuilder(),
+              },
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFFFD651E),
+              primary: const Color(0xFFFD651E),
+              surface: const Color(0xFFF8F9FF),
+            ),
+          ),
+          home: const SplashScreen(),
+        );
+      },
     );
   }
 }
